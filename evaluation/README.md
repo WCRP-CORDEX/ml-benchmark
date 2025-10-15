@@ -32,7 +32,7 @@ This module provides the set of evaluation diagnostics recommended by CORDEX-ML-
 
 ```python
 import xarray as xr
-from evaluation import indices, diagnostics
+import indices, diagnostics
 
 target = xr.open_dataset("target_tasmax.nc")
 pred = xr.open_dataset("prediction_tasmax.nc")
@@ -57,7 +57,7 @@ psd_target, psd_pred = diagnostics.psd(target, pred, var="tasmax")
 
 ```python
 import xarray as xr
-from evaluation import indices, diagnostics
+import indices, diagnostics
 
 target = xr.open_dataset("target_pr.nc")
 pred = xr.open_dataset("prediction_pr.nc")
@@ -82,7 +82,7 @@ psd_target, psd_pred = diagnostics.psd(target, pred, var="pr")
 
 ```python
 import xarray as xr
-from evaluation import diagnostics
+import diagnostics
 
 # Load joint target dataset with both variables
 target = xr.open_dataset("target_joint.nc")
