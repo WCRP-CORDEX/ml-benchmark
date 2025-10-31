@@ -281,3 +281,79 @@ def psd(
     psd_x1_da = xr.DataArray(avg_psd_x1, dims=["wavenumber"], name="PSD_x1")
 
     return psd_x0_da, psd_x1_da
+
+def frequency_index_bias(
+    x0: xr.Dataset,
+    x1: xr.Dataset,
+    var: str,
+    thresholds: list[float],
+    season: str | None = None,
+) -> xr.Dataset:
+    """
+    Compute the Frequency Index Bias (FBI) for precipitation events above thresholds.
+
+    For each threshold, computes the ratio between the number of events in x1
+    (predicted) and x0 (ground truth) above that threshold. Also computes a
+    single aggregate metric measuring the deviation from the perfect score (1.0).
+
+    Parameters
+    ----------
+    x0 : xr.Dataset
+        Ground truth dataset.
+    x1 : xr.Dataset
+        Predicted dataset.
+    var : str
+        Variable name to analyse.
+    thresholds : list[float]
+        List of precipitation thresholds to evaluate.
+    season : str | None, optional
+        Season to filter before computing the FBI.
+
+    Returns
+    -------
+    xr.Dataset
+        Dataset containing:
+        - ``frequency_bias``: Frequency ratio for each threshold.
+        - ``frequency_bias_mad``: Mean Absolute Deviation from perfect score (1.0),
+          measuring how far the FBI is from the perfect value on average.
+    """
+    x0 = _filter_by_season(x0, season)
+    x1 = _filter_by_season(x1, season)
+
+    x0_da = x0[var]
+    x1_da = x1[var]
+
+    fbi_ratios = {}
+    for threshold in thresholds:
+        x0_count = (x0_da > threshold).sum().values
+        x1_count = (x1_da > threshold).sum().values
+        
+        ratio = float(x1_count) / float(x0_count) if x0_count > 0 else np.nan
+        fbi_ratios[f"threshold_{threshold}"] = ratio
+
+    fbi_da = xr.DataArray(
+        list(fbi_ratios.values()),
+        dims=["threshold"], 
+        coords={"threshold": thresholds},
+        name="FBI",
+    )
+
+    fbi_values = np.array(list(fbi_ratios.values()))
+    valid_mask = ~np.isnan(fbi_values)
+    if np.any(valid_mask):
+        mean_absolute_deviation = np.mean(np.abs(fbi_values[valid_mask] - 1.0))
+    else:
+        mean_absolute_deviation = np.nan
+
+    fbi_mad_da = xr.DataArray(
+        mean_absolute_deviation,
+        name="frequency_bias_mad",
+        attrs={"long_name": "Mean Absolute Deviation from perfect FBI score (1.0)"},
+    )
+
+    return xr.Dataset(
+        {
+            "frequency_bias": fbi_da,
+            "frequency_bias_mad": fbi_mad_da,
+        }
+    )
