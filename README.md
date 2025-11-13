@@ -4,7 +4,7 @@ CORDEX ML-Bench is a benchmark designed to evaluate the performance of machine l
 
 ## Dataset Overview
 
-The benchmark covers three geographic domains: New Zealand (NZ), Europe (ALPS) and South Africa (SA) with 0.11º target resolution. Training and evaluation datasets (NetCDF files, approximately 5 GB per domain) for each region are publicly available on [Zenodo](https://zenodo.org/records/15797226). These include predictor (Z, U, V, T, Q at 850, 700, 500, and 300 hPa) and predictand (daily temperature and precipitation) derived from different Regional Climate Models (RCMs) driven by renalysis data (ERA5) and Global Climate Models (GCMs), enabling systematic evaluation under both historical and future climate conditions. More information in [./data](/data)
+The benchmark covers three geographic domains: New Zealand (NZ), Europe (ALPS) and South Africa (SA) with 0.11º target resolution. Training and evaluation datasets (NetCDF files, approximately 5 GB per domain) for each region are publicly available on [Zenodo](https://zenodo.org/records/17517423). These include predictor (Z, U, V, T, Q at 850, 700, 500, and 300 hPa) and predictand (daily temperature and precipitation) derived from different Regional Climate Models (RCMs) driven by renalysis data (ERA5) and Global Climate Models (GCMs), enabling systematic evaluation under both historical and future climate conditions. More information in [./data](/data)
 
 ## Experiments
 
