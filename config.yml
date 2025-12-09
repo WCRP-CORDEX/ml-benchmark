@@ -17,16 +17,12 @@ training:
 # Model configuration
 model:
   architecture: "spagan"
-  input_channels: 1
+  input_channels: 15
   output_channels: 1
-  hidden_dims: [64, 128, 256]
-  activation: "relu"
-  dropout: 0.0
 
 # Evaluation configuration
 evaluation:
-  metrics: ["mse", "mae", "rmse"]
-  save_predictions: true
+  metrics: ["rmse"]
   plot_results: true
   output_dir: "results"
 
