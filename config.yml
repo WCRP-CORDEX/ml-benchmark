@@ -21,8 +21,11 @@ training:
 # Model configuration
 model:
   architecture: "spagan"
-  input_channels: 15
-  output_channels: 1
+  filter_size: 32
+  n_input_channels: 15
+  n_output_channels: 1
+  dropout_seed: 42
+  dropout_ratio: 0.2
 
 # Evaluation configuration
 evaluation:

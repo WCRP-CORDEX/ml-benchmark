@@ -16,11 +16,11 @@ class CustomDropout(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         device = x.device
-        batch, channels, time, height, width = x.shape
+        batch, channels, height, width = x.shape
 
-        mask_shape = (batch, channels, 1, height, width)
+        mask_shape = (batch, channels, height, width)
         mask = torch.bernoulli(torch.ones(mask_shape, device=device) * (1 - self.p))
-        mask = mask.repeat(1, 1, time, 1, 1) / (1 - self.p)
+        mask = mask.repeat(1, 1, 1, 1) / (1 - self.p)
 
         return x * mask
 
@@ -124,11 +124,14 @@ class Constraint(nn.Module):
 
 
 class Generator(nn.Module):
-    def __init__(self):
+    def __init__(self, cf):
         super().__init__()
 
-        self.filter_size = 32
-        self.n_input_channels = 15
+        self.filter_size = cf.filter_size
+        self.n_input_channels = cf.n_input_channels
+        self.n_output_channels = cf.n_output_channels
+        self.dropout_seed = cf.dropout_seed
+        self.dropout_ratio = cf.dropout_ratio
         self._initialize_layers()
 
     def _initialize_layers(self):
@@ -164,33 +167,35 @@ class Generator(nn.Module):
 
         self.output_conv = nn.Sequential(
             nn.ReflectionPad2d((1, 1, 1, 1)),
-            nn.Conv2d(f, 1, kernel_size=(3, 3), padding=0),
+            nn.Conv2d(f, self.n_output_channels, kernel_size=(3, 3), padding=0),
         )
-        self.linout = nn.Linear(128*128, 128*128)
+        # self.linout = nn.Linear(128*128, 128*128)
 
         self.constraint_layer = Constraint()
 
-    def forward(self, x: torch.Tensor, dropout_seed: int = 1234) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, dropout_seed: int = None) -> torch.Tensor:
+        if dropout_seed is None:
+            dropout_seed = self.dropout_seed
         x1 = self.res1(x)
-        x1 = CustomDropout(p=0.2, d_seed=dropout_seed)(x1)
+        x1 = CustomDropout(p=self.dropout_ratio, d_seed=dropout_seed)(x1)
         x2_stay = self.res2(x1)
         # x2_stay = x1
 
         x2 = self.down0(x2_stay)
         x2 = self.res3b(x2)
-        x2 = CustomDropout(p=0.2, d_seed=dropout_seed)(x2)
+        x2 = CustomDropout(p=self.dropout_ratio, d_seed=dropout_seed)(x2)
         x2 = self.upu1(x2)
 
         x2 = x2_stay + x2
         x2 = self.res3(x2)
-        x2 = CustomDropout(p=0.2, d_seed=dropout_seed)(x2)
+        x2 = CustomDropout(p=self.dropout_ratio, d_seed=dropout_seed)(x2)
 
         x2 = self.up0(x2)
         x2 = self.res4(x2)
 
         x2 = self.up1(x2)
         x2 = self.res5(x2)
-        x2 = CustomDropout(p=0.2, d_seed=dropout_seed)(x2)
+        x2 = CustomDropout(p=self.dropout_ratio, d_seed=dropout_seed)(x2)
 
         x2 = self.up4(x2)
         x2 = self.res8(x2)
@@ -198,7 +203,7 @@ class Generator(nn.Module):
 
         output = self.output_conv(x2)
         output = torch.flatten(output, start_dim=1)
-        output = self.linout(output)
+        # output = self.linout(output)
 
 
         # Avoid in-place operation to prevent gradient computation error
