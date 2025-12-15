@@ -9,7 +9,7 @@ body:
       value: |
         Thanks for submitting to CORDEX ML-Benchmark! 
         Please carefully fill out each field below with details about your prediction submission.
-        For more information, see the [format_predictions README](../blob/main/format_predictions/README.md).
+        For more information, see the format_predictions.
 
   # General Information
   - type: markdown
@@ -25,16 +25,9 @@ body:
         - **activity_id**: ML-Benchmark
         - **product**: emulator-output
 
-  - type: input
-    id: benchmark_id
+  - type: markdown
     attributes:
-      label: Benchmark Version ID
-      description: >
-        Identifier for the benchmark version
-      placeholder: "v1.0.0"
-      value: "v1.0.0"
-    validations:
-      required: true
+      value: "**benchmark_id**: v1.0.0"
 
   - type: input
     id: creation_date
