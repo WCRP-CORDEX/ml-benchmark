@@ -32,8 +32,8 @@ body:
       label: Submission Archive Name
       description: >
         Name of the zip file containing the predictions to be submitted to the cluster.
-        Must follow the format: {emulator_id}_{training_id}_{institution_id}.zip
-      placeholder: "DeepESD_v1_m1_IFCA.zip"
+        Must follow the format: {emulator\_id}\_{training\_id}\_{institution\_id}.zip
+      placeholder: "`DeepESD-v1_m1_IFCA.zip`"
     validations:
       required: true
 
@@ -93,8 +93,8 @@ body:
     attributes:
       label: Emulator ID
       description: >
-        Short identifier for the emulation method family (e.g., DeepESD_v1, XGBoost_v2)
-      placeholder: "DeepESD"
+        Short identifier for the emulation method family (e.g., DeepESD-v1, XGBoost-v2)
+      placeholder: "DeepESD-v1"
     validations:
       required: true
 
