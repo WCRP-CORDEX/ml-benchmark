@@ -12,9 +12,9 @@ body:
         For more information, see the [format_predictions README](../blob/main/format_predictions/README.md).
 
   # General Information
-  - type: section
+  - type: markdown
     attributes:
-      description: "General submission information"
+      value: "## General Information"
 
   - type: markdown
     attributes:
@@ -47,9 +47,9 @@ body:
       required: true
 
   # Institution Information
-  - type: section
+  - type: markdown
     attributes:
-      description: "Institution and contact details"
+      value: "## Institution and Contact Details"
 
   - type: input
     id: institution_id
@@ -83,9 +83,9 @@ body:
       required: true
 
   # Emulator Information
-  - type: section
+  - type: markdown
     attributes:
-      description: "Details about the emulation/prediction method"
+      value: "## Emulation Method Details"
 
   - type: input
     id: emulator_id
@@ -109,9 +109,9 @@ body:
       required: true
 
   # Training Configuration
-  - type: section
+  - type: markdown
     attributes:
-      description: "Training setup and configuration"
+      value: "## Training Setup and Configuration"
 
   - type: input
     id: training_id
@@ -138,9 +138,9 @@ body:
       required: true
 
   # Output Characteristics
-  - type: section
+  - type: markdown
     attributes:
-      description: "Output and realization information"
+      value: "## Output and Realization Information"
 
   - type: dropdown
     id: stochastic_output
@@ -179,9 +179,9 @@ body:
       required: false
 
   # References and Reproducibility
-  - type: section
+  - type: markdown
     attributes:
-      description: "References and reproducibility"
+      value: "## References and Reproducibility"
 
   - type: input
     id: reference_url
@@ -204,9 +204,9 @@ body:
       required: true
 
   # Additional Information
-  - type: section
+  - type: markdown
     attributes:
-      description: "Additional notes (optional)"
+      value: "## Additional Notes (Optional)"
 
   - type: textarea
     id: additional_notes
