@@ -2,6 +2,9 @@
 
 CORDEX ML-Bench is a benchmark designed to evaluate the performance of machine learning–based climate downscaling models across different domains. It provides standardized training and evaluation experiments, along with the corresponding datasets. Example notebooks are included to facilitate ease of use and ensure reproducibility. This repository contains all the materials, instructions, and datasets required to train and evaluate climate downscaling models using the CORDEX ML-Bench framework.
 
+**Development Status Notice**  
+*This repository is currently under active development. As a result, the structure, documentation, datasets and experimental protocols may change in the near future. Users should be aware that updates may require adjustments to existing workflows. We recommend regularly checking for updates.*
+
 ## Dataset Overview
 
 The benchmark covers three geographic domains: New Zealand (NZ), Europe (ALPS) and South Africa (SA) with 0.11º target resolution. Training and evaluation datasets (NetCDF files, approximately 5 GB per domain) for each region are publicly available on [Zenodo](https://zenodo.org/records/17957264). These include predictor (Z, U, V, T, Q at 850, 700, 500, and 300 hPa) and predictand (daily temperature and precipitation) derived from different Regional Climate Models (RCMs) driven by renalysis data (ERA5) and Global Climate Models (GCMs), enabling systematic evaluation under both historical and future climate conditions. More information in [./data](/data)
@@ -30,13 +33,13 @@ CORDEX ML-Bench includes a collection of state-of-the-art ML-based methods, with
 
 The following scoreboard presents basic evaluation results for all contributing models (see *** for contribution instructions).
 
-| Model               | RMSE (°C) | MAE (°C) | R²    | Training Time (hrs) | Inference Speed (samples/sec) |
+| Model              | RMSE (°C)  | MAE (°C)  | R²    | Training Time     | Inference Speed (samples/sec) |
 |--------------------|------------|-----------|-------|-------------------|-------------------------------|
-| DeepESD            | 1.12       | 0.85      | 0.91  | 5.2               | 120                           |
-| LSTM               | 1.05       | 0.80      | 0.93  | 12.4              | 85                            |
-| Transformer        | 0.98       | 0.75      | 0.95  | 18.7              | 65                            |
-| U-Net              | 1.00       | 0.78      | 0.94  | 10.5              | 90                            |
-| GraphConvNet       | 1.15       | 0.88      | 0.89  | 14.0              | 70                            |
+| Model1             | XXX        | XXX       | XXX   | XXX               | XXX                           |
+| Model2             | XXX        | XXX       | XXX   | XXX               | XXX                           |
+| Model3             | XXX        | XXX       | XXX   | XXX               | XXX                           |
+| Model4             | XXX        | XXX       | XXX   | XXX               | XXX                           |
+| Model5             | XXX        | XXX       | XXX   | XXX               | XXX                           |
 
 ## Requirements
 
@@ -72,20 +75,3 @@ Link to the pre-print
 ## Contact
 
 Include an issue in this repository
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
