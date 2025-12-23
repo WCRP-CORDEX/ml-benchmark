@@ -6,25 +6,25 @@ The following tables include a more detailed overview of the different evaluatio
 
 | Training Setup | Inference Set | Evaluation Type | Notes | Eval | Required |
 |----------------|---------------|----------------|-------|------|----------|
-| ESD “pseudo-reality”<br>Period: 1961–1980<br>Static fields: Yes/No | historical (1981–2000) | PP cross-validation | Same GCM used in training, perfectly | Error, Clim | X |
-|  | historical (1981–2000) | Imperfect cross-validation | Same GCM, but imperfectly | Error, Clim | X |
+| ESD “pseudo-reality”<br>Period: 1961–1980<br>Static fields: Yes/No | Historical (1981–2000) | PP cross-validation | Same GCM, perfectly | Error, Clim | X |
+|  | Historical (1981–2000) | Imperfect cross-validation | Same GCM, imperfectly | Error, Clim | X |
 |  | 2041–2060 + 2081–2100 | Extrapolation | Same GCM, perfectly | change signal | X |
-|  | 2041–2060 + 2081–2100 | Extrapolation | Same GCM, imperfectly | change signal | X |
-|  | 2081–2100 | Extrapolation / Soft transferability | Different GCM, perfectly | change signal | X |
+|  | 2041–2060 + 2081–2100 | Extrapolation & Hard Transferability| Same GCM, imperfectly | change signal | X |
+|  | 2081–2100 | Extrapolation & Soft transferability | Different GCM, perfectly | change signal | X |
 
 
 *Evaluation for the Emulator training experiment*
 
 | Training Setup | Inference Set | Evaluation Type | Notes | Eval | Required |
 |----------------|---------------|----------------|-------|------|----------|
-| Emulator hist + future<br>Period: 1961–1980 + 2081–2100<br>Static fields: Yes/No | historical (1981–2000) | PP cross-validation | Same GCM used in training, perfectly | Error, Clim | X |
-|  | historical (1981–2000) | Imperfect cross-validation | Same GCM, but imperfectly | Error, Clim | X |
-|  | historical (1981–2000) |  | Different GCM, perfectly | Error, Clim | X |
-|  | historical (1981–2000) |  | Different GCM, imperfectly | Error, Clim | X |
-|  | 2041–2060 + 2081–2100 | Extrapolation | Same GCM, perfectly | change signal | X |
-|  | 2041–2060 + 2081–2100 | Extrapolation | Same GCM, imperfectly | change signal | X |
-|  | 2041–2060 + 2081–2100 | Extrapolation / Hard transferability | Different GCM, perfectly | change signal | X |
-|  | 2041–2060 + 2081–2100 | Extrapolation / Hard transferability | Different GCM, imperfectly | change signal | X |
+| Emulator hist + future<br>Period: 1961–1980 + 2081–2100<br>Static fields: Yes/No | Historical (1981–2000) | PP cross-validation | Same GCM, perfectly | Error, Clim | X |
+|  | Historical (1981–2000) | Imperfect cross-validation | Same GCM, imperfectly | Error, Clim | X |
+|  | Historical (1981–2000) |  | Different GCM, perfectly | Error, Clim | X |
+|  | Historical (1981–2000) |  | Different GCM, imperfectly | Error, Clim | X |
+|  | 2041–2060 + 2081–2100 | Interpolation | Same GCM, perfectly | change signal | X |
+|  | 2041–2060 + 2081–2100 | Interpolation | Same GCM, imperfectly | change signal | X |
+|  | 2041–2060 + 2081–2100 | Hard transferability | Different GCM, perfectly | change signal | X |
+|  | 2041–2060 + 2081–2100 | Hard transferability | Different GCM, imperfectly | change signal | X |
 
 
 ## Baseline Models
