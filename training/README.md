@@ -1,3 +1,11 @@
+## Training and Submission
+
+This directory contains illustrative scripts and notebooks to help you get started with training models and generating submissions for the CORDEX ML-Bench:
+
+- **`training.ipynb`**: A notebook to visualize and learn how to train a model on the benchmark data.
+- **`training.py`**: A simple script to train all models across all training experiments and domains.
+- **`submission.py`**: This script demonstrates how to generate a submission for the benchmark. It runs predictions for all available test predictor files and organizes the outputs according to the required submission structure. For additional details on submission formatting, refer to the [official documentation](https://docs.google.com/document/d/1zM6Aza1glzBJ8Ewvhu0_0vcm5dvctJ65Bypt1gnN2ck/edit?usp=sharing).
+
 ## Evaluation Experiments
 
 The following tables include a more detailed overview of the different evaluation experiments for the two available training experiments.

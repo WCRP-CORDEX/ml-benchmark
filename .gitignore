@@ -1,5 +1,6 @@
 *.nc
 *.pt
+*.zip
 **/models/
 **/__pycache__/
 **/models/
@@ -7,3 +8,4 @@
 **/.ipynb_checkpoints/
 !format_predictions/templates/*.nc
 format_predictions/generate_templates.py
+**/submission_files/
