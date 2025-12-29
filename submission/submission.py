@@ -6,6 +6,7 @@ them according to the required directory structure.
 """
 
 import os
+import sys
 import xarray as xr
 import numpy as np
 import torch
@@ -13,15 +14,42 @@ import torch.nn as nn
 import zipfile
 import glob
 
+# Import format_predictions
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from format_predictions.format import set_cordex_ml_benchmark_attributes
+
 # Set paths
 DATA_PATH = '../data/Bench-data'
-MODELS_PATH = './models'
+MODELS_PATH = '../training/models'
 OUTPUT_BASE = './submission_files'
+TEMPLATES_PATH = '../format_predictions/templates'
 
-# Set the name of the contribution
+# Set the metadata of the contribution
 EMULATOR_ID = "DeepESD-v1"
 INSTITUTION_ID = "IFCA"
 TRAINING_ID = "m1"
+
+# CORDEX ML-Benchmark attributes
+CORDEX_ATTRS = {'project_id': 'CORDEX',
+                'activity_id': 'ML-Benchmark',
+                'product': 'emulator-output',
+                'benchmark_id': 'v1.0',
+                'institution_id': INSTITUTION_ID,
+                'institution': 'Instituto de Física de Cantabria (IFCA), CSIC-Universidad de Cantabria',
+                'contact': 'Contact person, email@example.com',
+                'creation_date': '2025-03-20',
+                'emulator_id': EMULATOR_ID,
+                'emulator': 'Deep convolutional neural network including 3 convolution and one dense layer, with ReLU activation functions.',
+                'training_id': TRAINING_ID,
+                'training': (
+                    'Standardized input data at gridbox level using mean/std of reanalysis in training period. '
+                    'No bias adjustment performed. Training on historical and future experiments.'
+                            ),
+                'stochastic_output': 'no',
+                'version_realization': '',
+                'version_realization_info': '',
+                'reference_url': 'https://doi.org/10.5194/gmd-15-6747-2022',
+                'reproducibility_url': 'https://zenodo.org/records/6828304'}
 
 # Set the device
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -99,7 +127,7 @@ def run_prediction(domain, experiment, use_orog, predictor_path):
     x_test_arr = ds_test_stand.to_array().transpose("time", "variable", "lat", "lon").values
     x_test_tensor = torch.from_numpy(x_test_arr).float().to(DEVICE)
 
-    # 2. Orography
+    # Get orography
     orog_arr = None
     if use_orog:
         orog_path = f'{DATA_PATH}/{domain}/{domain}_domain/train/{experiment}/predictors/Static_fields.nc'
@@ -107,20 +135,17 @@ def run_prediction(domain, experiment, use_orog, predictor_path):
         orog_arr = orog.values.flatten()
         orog_arr = orog_arr / np.max(orog_arr)
 
-    # 3. Predict for both pr and tasmax
-    results = {}
-    
-    # Load training target to get the correct number of gridpoints in the predictand
-    gcm_train = DOMAIN_INFO[domain]['train_gcm']
+    # Predict for both pr and tasmax
+    ds_out = xr.Dataset(coords={'time': ds_test.time})
     spatial_dims = DOMAIN_INFO[domain]['spatial_dims']
-
-    period_train = '1961-1980' if experiment == 'ESD_pseudo_reality' else '1961-1980_2080-2099'
-    target_path = f'{DATA_PATH}/{domain}/{domain}_domain/train/{experiment}/target/pr_tasmax_{gcm_train}_{period_train}.nc'
-    ds_target = xr.open_dataset(target_path)
-    n_gridpoints = ds_target[spatial_dims[0]].size * ds_target[spatial_dims[1]].size
 
     # Iterate over the variables to predict
     for var in ['pr', 'tasmax']:
+        # Load template for coordinates and variable attributes
+        template_path = os.path.join(TEMPLATES_PATH, f'{var}_{domain}.nc')
+        ds_template = xr.open_dataset(template_path)
+        n_gridpoints = ds_template[spatial_dims[0]].size * ds_template[spatial_dims[1]].size
+
         # Set the model name
         orog_suffix = "orog" if use_orog else "no_orog"
         model_name = f'DeepESD_{experiment}_{domain}_{var}_{orog_suffix}.pt'
@@ -136,16 +161,20 @@ def run_prediction(domain, experiment, use_orog, predictor_path):
         with torch.no_grad():
             preds = model(x_test_tensor).cpu().numpy()
         
-        # Unstack back to 2D grid using target dimensions
-        preds_reshaped = preds.reshape(len(ds_test.time), ds_target[spatial_dims[0]].size, ds_target[spatial_dims[1]].size)
-        results[var] = (('time',) + spatial_dims, preds_reshaped)
+        # Unstack back to 2D grid using template dimensions
+        preds_reshaped = preds.reshape(len(ds_test.time), ds_template[spatial_dims[0]].size, ds_template[spatial_dims[1]].size)
+        
+        # Create DataArray with template's spatial coords and attributes
+        da = xr.DataArray(preds_reshaped,
+                          coords={'time': ds_test.time, **{dim: ds_template[dim] for dim in spatial_dims}},
+                          dims=('time',) + spatial_dims,
+                          name=var,
+                          attrs=ds_template[var].attrs)
+        ds_out[var] = da
 
-    # Create output dataset with time from test and spatial coords from target
-    out_coords = {'time': ds_test.time}
-    for dim in spatial_dims:
-        out_coords[dim] = ds_target[dim]
+    # Set benchmark-compliant global attributes
+    ds_out = set_cordex_ml_benchmark_attributes(ds_out, CORDEX_ATTRS)
     
-    ds_out = xr.Dataset(results, coords=out_coords)
     return ds_out
 
 # Main execution
