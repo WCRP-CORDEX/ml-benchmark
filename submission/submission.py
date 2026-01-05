@@ -55,7 +55,7 @@ CORDEX_ATTRS = {'project_id': 'CORDEX',
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # MMap the different domains to training GCMs and spatial dimensions
-DOMAIN_INFO = {'ALPS': {'train_gcm': 'CNRM-CM5', 'spatial_dims': ('x', 'y')},
+DOMAIN_INFO = {'ALPS': {'train_gcm': 'CNRM-CM5', 'spatial_dims': ('y', 'x')},
                'NZ': {'train_gcm': 'ACCESS-CM2', 'spatial_dims': ('lat', 'lon')},
                'SA': {'train_gcm': 'ACCESS-CM2', 'spatial_dims': ('lat', 'lon')}}
 
@@ -166,7 +166,7 @@ def run_prediction(domain, experiment, use_orog, predictor_path):
         
         # Create DataArray with template's spatial coords and attributes
         da = xr.DataArray(preds_reshaped,
-                          coords={'time': ds_test.time, **{dim: ds_template[dim] for dim in spatial_dims}},
+                          coords={**ds_template.coords, 'time': ds_test.time},
                           dims=('time',) + spatial_dims,
                           name=var,
                           attrs=ds_template[var].attrs)
