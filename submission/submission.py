@@ -55,7 +55,7 @@ CORDEX_ATTRS = {'project_id': 'CORDEX',
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # MMap the different domains to training GCMs and spatial dimensions
-DOMAIN_INFO = {'ALPS': {'train_gcm': 'CNRM-CM5', 'spatial_dims': ('y', 'x')},
+DOMAIN_INFO = {'ALPS': {'train_gcm': 'CNRM-CM5', 'spatial_dims': ('x', 'y')},
                'NZ': {'train_gcm': 'ACCESS-CM2', 'spatial_dims': ('lat', 'lon')},
                'SA': {'train_gcm': 'ACCESS-CM2', 'spatial_dims': ('lat', 'lon')}}
 
@@ -162,7 +162,14 @@ def run_prediction(domain, experiment, use_orog, predictor_path):
             preds = model(x_test_tensor).cpu().numpy()
         
         # Unstack back to 2D grid using template dimensions
-        preds_reshaped = preds.reshape(len(ds_test.time), ds_template[spatial_dims[0]].size, ds_template[spatial_dims[1]].size)
+        # It is necessary to set the order due to differences in lat/lon and x/y spatial dimensions
+        if domain == 'NZ' or domain == 'SA':
+            order = 'C'
+        elif domain == 'ALPS':
+            order = 'F'
+            
+        preds_reshaped = preds.reshape(len(ds_test.time), ds_template[spatial_dims[0]].size, ds_template[spatial_dims[1]].size,
+                                       order=order)
         
         # Create DataArray with template's spatial coords and attributes
         da = xr.DataArray(preds_reshaped,
