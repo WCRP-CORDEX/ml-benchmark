@@ -65,7 +65,8 @@ These packages can be installed using any package management tool.
 
 ## Contributing to the benchmark
 
-The [./format_predictions](./format_predictions) directory provides utilities and templates to help users structure their model outputs in the required NetCDF format for CORDEX ML-Bench evaluation. It includes ready-to-use NetCDF templates and helper functions for setting the appropriate metadata attributes.
+The [./format_predictions](./format_predictions) directory provides utilities and templates to help users structure their model outputs in the required NetCDF format for CORDEX ML-Bench evaluation. It includes ready-to-use NetCDF templates.
+
 Please note that this directory is currently intended for internal use and may be subject to modification prior to public release.
 
 ## Citation

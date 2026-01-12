@@ -16,40 +16,12 @@ import glob
 
 # Import format_predictions
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from format_predictions.format import set_cordex_ml_benchmark_attributes
 
 # Set paths
 DATA_PATH = '../data/Bench-data'
 MODELS_PATH = '../training/models'
 OUTPUT_BASE = './submission_files'
 TEMPLATES_PATH = '../format_predictions/templates'
-
-# Set the metadata of the contribution
-EMULATOR_ID = "DeepESD-v1"
-INSTITUTION_ID = "IFCA"
-TRAINING_ID = "m1"
-
-# CORDEX ML-Benchmark attributes
-CORDEX_ATTRS = {'project_id': 'CORDEX',
-                'activity_id': 'ML-Benchmark',
-                'product': 'emulator-output',
-                'benchmark_id': 'v1.0',
-                'institution_id': INSTITUTION_ID,
-                'institution': 'Instituto de Física de Cantabria (IFCA), CSIC-Universidad de Cantabria',
-                'contact': 'Contact person, email@example.com',
-                'creation_date': '2025-03-20',
-                'emulator_id': EMULATOR_ID,
-                'emulator': 'Deep convolutional neural network including 3 convolution and one dense layer, with ReLU activation functions.',
-                'training_id': TRAINING_ID,
-                'training': (
-                    'Standardized input data at gridbox level using mean/std of reanalysis in training period. '
-                    'No bias adjustment performed. Training on historical and future experiments.'
-                            ),
-                'stochastic_output': 'no',
-                'version_realization': '',
-                'version_realization_info': '',
-                'reference_url': 'https://doi.org/10.5194/gmd-15-6747-2022',
-                'reproducibility_url': 'https://zenodo.org/records/6828304'}
 
 # Set the device
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -179,9 +151,6 @@ def run_prediction(domain, experiment, use_orog, predictor_path):
                           attrs=ds_template[var].attrs)
         ds_out[var] = da
 
-    # Set benchmark-compliant global attributes
-    ds_out = set_cordex_ml_benchmark_attributes(ds_out, CORDEX_ATTRS)
-    
     return ds_out
 
 # Main execution
@@ -227,7 +196,7 @@ if __name__ == "__main__":
                     ds_preds.to_netcdf(os.path.join(out_dir, out_filename))
 
     # ZIP the submission
-    zip_filename = f"{EMULATOR_ID}_{INSTITUTION_ID}_{TRAINING_ID}.zip"
+    zip_filename = "submission.zip"
     zip_path = os.path.join(OUTPUT_BASE, zip_filename)
 
     print(f"\nCreating submission package: {zip_path}")
