@@ -13,7 +13,7 @@ The following tables include a more detailed overview of the different evaluatio
 
 | Training Setup | Inference Set | Evaluation Type | Notes | Eval | Required |
 |----------------|---------------|----------------|-------|------|----------|
-| ESD “pseudo-reality”<br>Period: 1961–1980<br>Static fields: Yes/No | Historical (1981–2000) | Perfect Cross-Validation | Same GCM, perfectly | Error, Clim | X |
+| ESD “pseudo-reality”<br>Period: 1961–1980 | Historical (1981–2000) | Perfect Cross-Validation | Same GCM, perfectly | Error, Clim | X |
 |  | Historical (1981–2000) | Imperfect Cross-Validation | Same GCM, imperfectly | Error, Clim | X |
 |  | 2041–2060 + 2081–2100 | Perfect Extrapolation | Same GCM, perfectly | change signal | X |
 |  | 2041–2060 + 2081–2100 | Imperfect Extrapolation| Same GCM, imperfectly | change signal | X |
@@ -24,7 +24,7 @@ The following tables include a more detailed overview of the different evaluatio
 
 | Training Setup | Inference Set | Evaluation Type | Notes | Eval | Required |
 |----------------|---------------|----------------|-------|------|----------|
-| Emulator hist + future<br>Period: 1961–1980 + 2081–2100<br>Static fields: Yes/No | Historical (1981–2000) | Perfect Cross-Validation | Same GCM, perfectly | Error, Clim | X |
+| Emulator hist + future<br>Period: 1961–1980 + 2081–2100 | Historical (1981–2000) | Perfect Cross-Validation | Same GCM, perfectly | Error, Clim | X |
 |  | Historical (1981–2000) | Imperfect Cross-Validation | Same GCM, imperfectly | Error, Clim | X |
 |  | Historical (1981–2000) | Perfect Cross-Validation (Hard Transferability) | Different GCM, perfectly | Error, Clim | X |
 |  | Historical (1981–2000) | Imperfect Cross-Validation (Hard Transferability) | Different GCM, imperfectly | Error, Clim | X |

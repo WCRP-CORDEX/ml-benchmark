@@ -34,32 +34,19 @@ DOMAIN_INFO = {'ALPS': {'train_gcm': 'CNRM-CM5', 'spatial_dims': ('x', 'y')},
 # Set the experiments to run
 EXPERIMENTS = ['ESD_pseudo_reality', 'Emulator_hist_future']
 
-# Set the orography options
-OROG_OPTIONS = [True, False]
-
-# DeepESD model (accepts orography as input)
+# DeepESD model
 class DeepESD(nn.Module):
-    def __init__(self, x_shape, y_shape, filters_last_conv, device, orog_data=None):
+    def __init__(self, x_shape, y_shape, filters_last_conv, device):
         super(DeepESD, self).__init__()
         self.x_shape = x_shape
         self.y_shape = y_shape
         self.filters_last_conv = filters_last_conv
-        self.orog_data = orog_data
-        self.orog_embed_dim = 128
-
-        if self.orog_data is not None:
-            self.orog_data = torch.from_numpy(orog_data).float().to(device)
-            if len(self.orog_data.shape) == 1:
-                self.orog_data = self.orog_data.unsqueeze(0)
 
         self.conv_1 = nn.Conv2d(in_channels=self.x_shape[1], out_channels=50, kernel_size=3, padding=1)
         self.conv_2 = nn.Conv2d(in_channels=50, out_channels=25, kernel_size=3, padding=1)
         self.conv_3 = nn.Conv2d(in_channels=25, out_channels=self.filters_last_conv, kernel_size=3, padding=1)
 
         input_size_linear = self.x_shape[2] * self.x_shape[3] * self.filters_last_conv
-        if self.orog_data is not None:
-            self.orog_embed = nn.Linear(in_features=self.orog_data.shape[1], out_features=self.orog_embed_dim)
-            input_size_linear += self.orog_embed_dim
 
         self.out = nn.Linear(in_features=input_size_linear, out_features=self.y_shape[1])
 
@@ -68,11 +55,6 @@ class DeepESD(nn.Module):
         x = torch.relu(self.conv_2(x))
         x = torch.relu(self.conv_3(x))
         x = torch.flatten(x, start_dim=1)
-
-        if self.orog_data is not None:
-            orog_embed = torch.relu(self.orog_embed(self.orog_data))
-            orog_embed = orog_embed.repeat(x.size(0), 1)
-            x = torch.cat((x, orog_embed), dim=1)
 
         return self.out(x)
 
@@ -89,7 +71,7 @@ def get_training_stats(domain, experiment):
     return ds.mean('time'), ds.std('time')
 
 # Computes the predictions for a specific predictor file
-def run_prediction(domain, experiment, use_orog, predictor_path):
+def run_prediction(domain, experiment, predictor_path):
     ds_test = xr.open_dataset(predictor_path)
     if domain == 'SA': ds_test = ds_test.drop_vars('time_bnds', errors='ignore')
     
@@ -98,14 +80,6 @@ def run_prediction(domain, experiment, use_orog, predictor_path):
     ds_test_stand = (ds_test - mean_train) / std_train
     x_test_arr = ds_test_stand.to_array().transpose("time", "variable", "lat", "lon").values
     x_test_tensor = torch.from_numpy(x_test_arr).float().to(DEVICE)
-
-    # Get orography
-    orog_arr = None
-    if use_orog:
-        orog_path = f'{DATA_PATH}/{domain}/{domain}_domain/train/{experiment}/predictors/Static_fields.nc'
-        orog = xr.open_dataset(orog_path)['orog']
-        orog_arr = orog.values.flatten()
-        orog_arr = orog_arr / np.max(orog_arr)
 
     # Predict for both pr and tasmax
     ds_out = xr.Dataset(coords={'time': ds_test.time})
@@ -119,13 +93,12 @@ def run_prediction(domain, experiment, use_orog, predictor_path):
         n_gridpoints = ds_template[spatial_dims[0]].size * ds_template[spatial_dims[1]].size
 
         # Set the model name
-        orog_suffix = "orog" if use_orog else "no_orog"
-        model_name = f'DeepESD_{experiment}_{domain}_{var}_{orog_suffix}.pt'
+        model_name = f'DeepESD_{experiment}_{domain}_{var}.pt'
         model_path = os.path.join(MODELS_PATH, model_name)
         
         # Initialize and load model
         model = DeepESD(x_shape=x_test_arr.shape, y_shape=(None, n_gridpoints), 
-                        filters_last_conv=1, device=DEVICE, orog_data=orog_arr).to(DEVICE)
+                        filters_last_conv=1, device=DEVICE).to(DEVICE)
         model.load_state_dict(torch.load(model_path, weights_only=True, map_location=DEVICE))
         model.eval()
         
@@ -178,28 +151,24 @@ if __name__ == "__main__":
             # Extract the filename
             filename = parts[-1]
             
-            # Iterate over the experiments and orography options
+            # Iterate over the experiments
             for experiment in EXPERIMENTS:
-                for use_orog in OROG_OPTIONS:
-                    orog_label = "OROG" if use_orog else "NO_OROG"
-                    exp_folder = f"{experiment}_{orog_label}"
-                    
-                    print(f"  Predicting {filename} for {exp_folder}...")
-                    
-                    ds_preds = run_prediction(domain, experiment, use_orog, pred_path)
-                    
-                    # Build output path: Domain_Domain/Exp_OROG/period/condition/
-                    out_dir = os.path.join(OUTPUT_BASE, f"{domain}_Domain", exp_folder, period_folder, condition)
-                    os.makedirs(out_dir, exist_ok=True)
-                    
-                    out_filename = f"Predictions_pr_tasmax_{filename}"
-                    ds_preds.to_netcdf(os.path.join(out_dir, out_filename))
+                print(f"Predicting {filename} for {experiment}...")
+                
+                ds_preds = run_prediction(domain, experiment, pred_path)
+                
+                # Build output path: Domain_Domain/Experiment/period/condition/
+                out_dir = os.path.join(OUTPUT_BASE, f"{domain}_Domain", experiment, period_folder, condition)
+                os.makedirs(out_dir, exist_ok=True)
+                
+                out_filename = f"Predictions_pr_tasmax_{filename}"
+                ds_preds.to_netcdf(os.path.join(out_dir, out_filename))
 
     # ZIP the submission
     zip_filename = "submission.zip"
     zip_path = os.path.join(OUTPUT_BASE, zip_filename)
 
-    print(f"\nCreating submission package: {zip_path}")
+    print(f"Creating submission package: {zip_path}")
     with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
         for root, dirs, files in os.walk(OUTPUT_BASE):
             for file in files:
@@ -207,4 +176,4 @@ if __name__ == "__main__":
                 rel_path = os.path.relpath(abs_path, OUTPUT_BASE)
                 zipf.write(abs_path, rel_path)
 
-    print("\nDone!")
+    print("Done!")
