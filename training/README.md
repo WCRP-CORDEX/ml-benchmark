@@ -11,27 +11,27 @@ The following tables include a more detailed overview of the different evaluatio
 
 *Evaluation for the ESD pseudo-reality training experiment*
 
-| Training Setup | Inference Set | Evaluation Type | Notes | Eval | Required |
-|----------------|---------------|----------------|-------|------|----------|
-| ESD “pseudo-reality”<br>Period: 1961–1980 | Historical (1981–2000) | Perfect Cross-Validation | Same GCM, perfectly | Error, Clim | X |
-|  | Historical (1981–2000) | Imperfect Cross-Validation | Same GCM, imperfectly | Error, Clim | X |
-|  | 2041–2060 + 2081–2100 | Perfect Extrapolation | Same GCM, perfectly | change signal | X |
-|  | 2041–2060 + 2081–2100 | Imperfect Extrapolation| Same GCM, imperfectly | change signal | X |
-|  | 2081–2100 | Perfect Extrapolation (Hard Transferability) | Different GCM, perfectly | change signal | X |
+| Training Setup | Test Period | Test Experiment | Notes | Eval | 
+|----------------|---------------|----------------|-------|------|
+| ESD “pseudo-reality”<br>Period: 1961–1980 | Historical (1981–2000) | Perfect Cross-Validation | Same GCM, perfect predictors | Error, Clim | 
+|  | Historical (1981–2000) | Imperfect Cross-Validation | Same GCM, imperfect predictors | Error, Clim | 
+|  | 2041–2060 + 2081–2100 | Perfect Extrapolation | Same GCM, perfectly | change signal | 
+|  | 2041–2060 + 2081–2100 | Imperfect Extrapolation| Same GCM, imperfectly | change signal | 
+|  | 2081–2100 | Perfect Extrapolation (Hard Transferability) | Different GCM, perfectly | change signal | 
 
 
 *Evaluation for the Emulator training experiment*
 
-| Training Setup | Inference Set | Evaluation Type | Notes | Eval | Required |
-|----------------|---------------|----------------|-------|------|----------|
-| Emulator hist + future<br>Period: 1961–1980 + 2081–2100 | Historical (1981–2000) | Perfect Cross-Validation | Same GCM, perfectly | Error, Clim | X |
-|  | Historical (1981–2000) | Imperfect Cross-Validation | Same GCM, imperfectly | Error, Clim | X |
-|  | Historical (1981–2000) | Perfect Cross-Validation (Hard Transferability) | Different GCM, perfectly | Error, Clim | X |
-|  | Historical (1981–2000) | Imperfect Cross-Validation (Hard Transferability) | Different GCM, imperfectly | Error, Clim | X |
-|  | 2041–2060 + 2081–2100 | Perfect Interpolation | Same GCM, perfectly | change signal | X |
-|  | 2041–2060 + 2081–2100 | Imperfect Interpolation | Same GCM, imperfectly | change signal | X |
-|  | 2041–2060 + 2081–2100 | Perfect Interpolation (Hard Transferability) | Different GCM, perfectly | change signal | X |
-|  | 2041–2060 + 2081–2100 | Imperfect Interpolation (Hard Transferability) | Different GCM, imperfectly | change signal | X |
+| Training Setup | Test Period | Test Experiment | Notes | Eval | 
+|----------------|---------------|----------------|-------|------|
+| Emulator hist + future<br>Period: 1961–1980 + 2081–2100 | Historical (1981–2000) | Perfect Cross-Validation | Same GCM, perfectly | Error, Clim | 
+|  | Historical (1981–2000) | Imperfect Cross-Validation | Same GCM, imperfectly | Error, Clim | 
+|  | Historical (1981–2000) | Perfect Cross-Validation (Hard Transferability) | Different GCM, perfectly | Error, Clim | 
+|  | Historical (1981–2000) | Imperfect Cross-Validation (Hard Transferability) | Different GCM, imperfectly | Error, Clim | 
+|  | 2041–2060 + 2081–2100 | Perfect Interpolation | Same GCM, perfectly | change signal | 
+|  | 2041–2060 + 2081–2100 | Imperfect Interpolation | Same GCM, imperfectly | change signal | 
+|  | 2041–2060 + 2081–2100 | Perfect Interpolation (Hard Transferability) | Different GCM, perfectly | change signal | 
+|  | 2041–2060 + 2081–2100 | Imperfect Interpolation (Hard Transferability) | Different GCM, imperfectly | change signal | 
 
 
 ## Baseline Models
