@@ -1,6 +1,6 @@
 ## Dataset Overview
 
-The CORDEX ML-Bench dataset is publicly available at [Zenodo](https://zenodo.org/records/15797226) as a `zip` file containing all the NetCDF files for the different training and evaluation experiments. The notebook `./data_download.ipynb` provides code for downloading this data (for any of the domains included so far). The data is around 5 GB per domain. After downloading, `./experiments.ipynb` provides a walkthrough of the data, helping users understand which data to use for training, which to use for evaluation, and what each dataset represents. We encourage users to carefully review this notebook to become familiar with the benchmark.
+The CORDEX ML-Bench dataset is publicly available at [Zenodo](https://zenodo.org/records/15797226) as a `zip` file containing all the NetCDF files for the different training and test experiments. The notebook `./data_download.ipynb` provides code for downloading this data (for any of the domains included so far). The data is around 5 GB per domain. After downloading, `./experiments.ipynb` provides a walkthrough of the data, helping users understand which data to use for training, which to use for evaluation, and what each dataset represents. We encourage users to carefully review this notebook to become familiar with the benchmark.
 
 The CORDEX ML-Bench dataset spans three geographic domains:
 
@@ -20,17 +20,19 @@ The CORDEX ML-Bench dataset spans three geographic domains:
 <br><br>
 </div>
 
-Each region includes structured training and testing data derived from dynamically downscaled Global Climate Models (GCMs), allowing systematic evaluation in both historical and future climates.
+Each region includes structured training and testing data derived from a particular Regional Climate Model (RCM) driven by different Global Climate Models (GCMs), allowing systematic evaluation across a range of experiments assessing different downscaling challenges.
 
 The dataset provides two core training experiments:
 
-- **ESD Pseudo-Reality (1961–1980)**: A 20-year historical training period using a single GCM, designed to mimic ESD training. 
-- **Emulator Hist+Future (1961–1980 + 2081–2100)**: A more comprehensive 40-year training period combining historical and future climates. This experiment supports evaluation of extrapolative skill, including transferability across GCMs. 
+- **ESD Pseudo-Reality**: A 20-year(1961–1980) historical training period using a single GCM, designed to mimic the training of standard Empirical Statistical Downscaling (ESD). 
+- **Emulator Hist+Future**: A more comprehensive 40-year (1961–1980 + 2081–2100) training period combining historical and future climates, focused on training RCM downscaling emulators.
+  
+Predictors and target (predictand) for these experiments correspond to upscaled (large-scale) predictors and high-resolution predictands from the RCM, following the perfect training approach (Rampal et al. 2024).
 
-For each training setup, the dataset enables evaluation across multiple test periods and inference conditions:
+The test dataset are common for both training setups and enable evaluation across multiple test experiments, based on different combinations of periods and perfect (from RCMs) and imperfect (from the driving GCM) predictors:
 
-- **Historical (1981–2000)**: For both perfect and imperfect inference.
-- **Mid-century (2041–2060) and End-century (2081–2100)**: To assess extrapolation to future climates, including hard transferability scenarios using unseen GCMs.
+- **Historical (1981–2000)**: For cross-validation test experiments, using both perfect and imperfect predictors.
+- **Mid-century (2041–2060) and End-century (2081–2100)**: For interpolation and extrapolation test experiments, using both perfect and imperfect predictors.
 
 ## Data Structure
 
@@ -45,10 +47,19 @@ Domain/
 │   ├── Emulator_hist_future/
 │   │   ├── predictors/
 │   │   └── target/
-├── test/
-│   ├── historical/
-│   ├── mid_century/
-│   └── end_century/
+└── test/
+    ├── historical/
+    │   ├── predictors/
+    │   │   ├── perfect/
+    │   │   └── imperfect/
+    ├── mid_century/
+    │   ├── predictors/
+    │   │   ├── perfect/
+    │   │   └── imperfect/
+    └── end_century/
+        └── predictors/
+            ├── perfect/
+            └── imperfect/
 ```
 
 
