@@ -23,21 +23,21 @@ The benchmark includes two training modes and the corresponding test experiments
 |  | Historical (1981–2000) | Imperfect Cross-Validation | Same GCM, imperfect predictors | Error, Clim | 
 |  | 2041–2060 + 2081–2100 | Perfect Extrapolation | Same GCM, perfectly | change signal | 
 |  | 2041–2060 + 2081–2100 | Imperfect Extrapolation| Same GCM, imperfectly | change signal | 
-|  | 2081–2100 | Perfect Extrapolation (Hard Transferability) | Different GCM, perfectly | change signal | 
+|  | 2081–2100 | Perfect Extrapolation (GCM Transferability) | Different GCM, perfectly | change signal | 
 
 
-- **Experiment 2: Emulator Hist+Future**: A 40-year (1961–1980 + 2081–2100) training period combining present and future climates, focused on testing transferability of emulators.
+- **Experiment 2: Emulator Hist+Future**: A 40-year (1961–1980 + 2081–2100) training period combining present and future climates, focused on testing interpolation and transferability of emulators.
 
 | Training Setup | Test Period | Test Experiment | Notes | Eval | 
 |----------------|---------------|----------------|-------|------|
 | Emulator hist + future<br>Period: 1961–1980 + 2081–2100 | Historical (1981–2000) | Perfect Cross-Validation | Same GCM, perfectly | Error, Clim | 
 |  | Historical (1981–2000) | Imperfect Cross-Validation | Same GCM, imperfectly | Error, Clim | 
-|  | Historical (1981–2000) | Perfect Cross-Validation (Hard Transferability) | Different GCM, perfectly | Error, Clim | 
-|  | Historical (1981–2000) | Imperfect Cross-Validation (Hard Transferability) | Different GCM, imperfectly | Error, Clim | 
+|  | Historical (1981–2000) | Perfect Cross-Validation (GCM Transferability) | Different GCM, perfectly | Error, Clim | 
+|  | Historical (1981–2000) | Imperfect Cross-Validation (GCM Transferability) | Different GCM, imperfectly | Error, Clim | 
 |  | 2041–2060 + 2081–2100 | Perfect Interpolation | Same GCM, perfectly | change signal | 
 |  | 2041–2060 + 2081–2100 | Imperfect Interpolation | Same GCM, imperfectly | change signal | 
-|  | 2041–2060 + 2081–2100 | Perfect Interpolation (Hard Transferability) | Different GCM, perfectly | change signal | 
-|  | 2041–2060 + 2081–2100 | Imperfect Interpolation (Hard Transferability) | Different GCM, imperfectly | change signal | 
+|  | 2041–2060 + 2081–2100 | Perfect Interpolation (GCM Transferability) | Different GCM, perfectly | change signal | 
+|  | 2041–2060 + 2081–2100 | Imperfect Interpolation (GCM Transferability) | Different GCM, imperfectly | change signal | 
 
 
 ## Evaluation
@@ -45,7 +45,7 @@ The benchmark includes two training modes and the corresponding test experiments
 A comprehensive set of evaluation metrics and accompanying code for assessing ML-based downscaling methods within the CORDEX ML-Bench framework is provided in this repository. Additional information and illustrative notebooks demonstrating their use are available in [./evaluation](/evaluation)
 
 
-## Contributing Models
+## Contributions and Scoreboard
 
 CORDEX ML-Bench includes a collection of state-of-the-art ML-based methods, with reproducible code provided in some cases. This allows users to benchmark the performance of their own models against well-established reference approaches. The table below summarizes the available models and provides links to their respective implementation repositories.
 
