@@ -15,10 +15,7 @@ The benchmark covers three geographic domains: New Zealand (NZ), Europe (ALPS) a
 
 The benchmark includes two training modes and the corresponding test experiments focusing on the standard (ESD) and emulation climate downscaling approaches:
 
-- **ESD Pseudo-Reality**: A 20-year (1961–1980) training period in present climate conditions, designed to mimic the standard statistical climate downscaling approach and test extrapolation capabilities of the methods. 
-- **Emulator Hist+Future**: A 40-year (1961–1980 + 2081–2100) training period combining present and future climates, focused on testing transferability of emulators.
-
-*Test experiments for the ESD pseudo-reality training mode*
+- **Experiment 1: ESD Pseudo-Reality**: A 20-year (1961–1980) training period in present climate conditions, designed to mimic the standard statistical climate downscaling approach and test extrapolation capabilities of the methods. 
 
 | Training Setup | Test Period | Test Experiment | Notes | Eval | 
 |----------------|---------------|----------------|-------|------|
@@ -29,7 +26,7 @@ The benchmark includes two training modes and the corresponding test experiments
 |  | 2081–2100 | Perfect Extrapolation (Hard Transferability) | Different GCM, perfectly | change signal | 
 
 
-*Test experiments for the Emulator training mode*
+- **Experiment 2: Emulator Hist+Future**: A 40-year (1961–1980 + 2081–2100) training period combining present and future climates, focused on testing transferability of emulators.
 
 | Training Setup | Test Period | Test Experiment | Notes | Eval | 
 |----------------|---------------|----------------|-------|------|
