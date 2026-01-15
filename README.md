@@ -40,21 +40,23 @@ The benchmark includes two training modes and the corresponding test experiments
 |  | 2041–2060 + 2081–2100 | Imperfect Interpolation (GCM Transferability) | Different GCM, imperfectly | change signal | 
 
 
-## Evaluation
+## Model Training and Evaluation
 
 A comprehensive set of evaluation metrics and accompanying code for assessing ML-based downscaling methods within the CORDEX ML-Bench framework is provided in this repository. Additional information and illustrative notebooks demonstrating their use are available in [./evaluation](/evaluation)
 
+## Submitting contributions [PROVISIONAL]
 
-## Contributions and Scoreboard
+The registration and submission process is managed ****
 
-CORDEX ML-Bench includes a collection of state-of-the-art ML-based methods, with reproducible code provided in some cases. This allows users to benchmark the performance of their own models against well-established reference approaches. The table below summarizes the available models and provides links to their respective implementation repositories.
+The submission and automatic benchmarking process allows users to benchmark the performance of their own models against well-established reference approaches. The table below summarizes the contributing models and provides links to their respective implementation repositories when available (this table is automatically updated with new submissions).
 
 | Model       | Description | Reference | Implementation |
 |-------------|-------------|-----------|----------------|
 | DeepESD     | Convolutional neural network  | [Baño-Medina et al., 2024](https://gmd.copernicus.org/articles/15/6747/2022/) | [GitHub repository]() |
 | ****        | | | |
 
-## Scoreboard
+
+## Scoreboard [PROVISIONAL]
 
 The following scoreboard presents basic evaluation results for all contributing models (see *** for contribution instructions).
 
