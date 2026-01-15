@@ -9,7 +9,9 @@ This repository contains all the materials, instructions, and datasets required 
 
 ## Dataset Overview
 
-The benchmark covers three geographic regions: New Zealand (NZ), Europe (ALPS) and South Africa (SA) with ~10km target resolution. Training and test datasets (NetCDF files, approximately 5 GB per domain) are provided for each region, including common predictors (Z, U, V, T, Q at 850, 700, 500, and 300 hPa) and predictands (daily temperature and precipitation). More information in [./data](/data)
+The benchmark covers three geographic regions: New Zealand (NZ), Europe (ALPS) and South Africa (SA) with ~10km target resolution. Training and test datasets (NetCDF files, approximately 5 GB per domain) are provided for each region, including common predictors (Z, U, V, T, Q at 850, 700, 500, and 300 hPa, as well as model orography) and predictands (daily temperature and precipitation). More information in [./data](/data)
+
+<img src="/images/CORDEX_ML-bench_domains.png" alt="NZ Domain" width="600"/>
 
 ## Experiments
 
