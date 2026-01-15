@@ -1,5 +1,5 @@
 """
-Simplified submission script for the CORDEX Benchmark. 
+Simplified submission script for the CORDEX ML-Benchmark. 
 
 This script generates predictions for all available test files and formats 
 them according to the required directory structure.
@@ -164,8 +164,8 @@ if __name__ == "__main__":
                 out_filename = f"Predictions_pr_tasmax_{filename}"
                 ds_preds.to_netcdf(os.path.join(out_dir, out_filename))
 
-    # ZIP the submission
-    zip_filename = "submission.zip"
+    # ZIP the submission using the "emulator_id" code specified in the registration
+    zip_filename = "emulator_id.zip"  # replace the "emulator_id" text
     zip_path = os.path.join(OUTPUT_BASE, zip_filename)
 
     print(f"Creating submission package: {zip_path}")
