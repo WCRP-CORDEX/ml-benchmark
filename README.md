@@ -25,14 +25,9 @@ For both experiments, training is based on perfect (upscaled) predictors from th
 |----------------|---------------|----------------|------|
 | Test1: Perfect Cross-Validation | Historical (1981–2000) | Perfect (from RCM), same GCM | Error, Clim | 
 | Test2: Imperfect Cross-Validation | Historical (1981–2000) | Imperfect (from GCM), same GCM | Error, Clim | 
-
-
-| Training Setup | Test Period | Test Experiment | Notes | Eval | 
-|----------------|---------------|----------------|-------|------|
-| ESD “pseudo-reality”<br>Period: 1961–1980 | Historical (1981–2000) | Perfect Cross-Validation | Same GCM, perfect predictors | Error, Clim | 
-|  | 2041–2060 + 2081–2100 | Perfect Extrapolation | Same GCM, perfect predictors | change signal for mid/final term | 
-|  | 2041–2060 + 2081–2100 | Imperfect Extrapolation| Same GCM, imperfect predictors | change signal for mid/final term| 
-|  | 2041–2060 + 2081–2100 | Perfect Extrapolation (GCM Transferability) | Different GCM, perfect predictors  | change signal for mid/final term | 
+| Test3: Perfect Extrapolation | 2041–2060 + 2081–2100 | Perfect (from RCM), same GCM | change signal for mid/final term | 
+| Test4: Imperfect Extrapolation | 2041–2060 + 2081–2100 | Imperfect (from GCM), same GCM | change signal for mid/final term | 
+| Test5: Perfect Extrapolation (GCM Transferability) | 2041–2060 + 2081–2100 | Perfect (from RCM), different GCM | change signal for mid/final term | 
 
 
 - **Experiment 2: Emulator Hist+Future**: A 40-year (1961–1980 + 2081–2100) training period combining present and future climates, focused on testing interpolation and transferability of emulators.
@@ -41,34 +36,27 @@ For both experiments, training is based on perfect (upscaled) predictors from th
 |----------------|---------------|----------------|------|
 | Test1: Perfect Cross-Validation | Historical (1981–2000) | Perfect (from RCM), same GCM | Error, Clim | 
 | Test2: Imperfect Cross-Validation | Historical (1981–2000) | Imperfect (from GCM), same GCM | Error, Clim | 
-
-
-| Training Setup | Test Period | Test Experiment | Notes | Eval | 
-|----------------|---------------|----------------|-------|------|
-|  | Historical (1981–2000) | Perfect Cross-Validation (GCM Transferability) | Different GCM, perfect predictors  | Error, Clim | 
-|  | Historical (1981–2000) | Imperfect Cross-Validation (GCM Transferability) | Different GCM, imperfect predictors  | Error, Clim | 
-|  | 2041–2060  | Perfect Interpolation | Same GCM, perfect predictors  | change signal | 
-|  | 2041–2060  | Imperfect Interpolation | Same GCM, imperfect predictors  | change signal | 
-|  | 2041–2060 | Perfect Interpolation (GCM Transferability) | Different GCM, perfect predictors  | change signal | 
-|  | 2041–2060 | Imperfect Interpolation (GCM Transferability) | Different GCM, imperfect predictors  | change signal | 
+| Test3: Perfect Interpolation  | 2041–2060  | Perfect (from RCM), same GCM | Change signal | 
+| Test4: Imperfect Interpolation | 2041–2060  | Imperfect (from GCM), same GCM | Change signal | 
+| Test5: Perfect Interpolation (GCM Transferability) | 2041–2060  | Perfect (from RCM), different GCM | Change signal | 
+| Test6: Imperfect Interpolation (GCM Transferability) | 2041–2060  | Imperfect (from GCM), different GCM | Change signal | 
 
 
 ## Model Training and Evaluation
 
 A comprehensive set of evaluation metrics and accompanying code for assessing ML-based downscaling methods within the CORDEX ML-Bench framework is provided in this repository. Additional information and illustrative notebooks demonstrating their use are available in [./evaluation](/evaluation)
 
-
-The [./format_predictions](./format_predictions) directory provides utilities and templates to help users structure their model outputs in the required NetCDF format for CORDEX ML-Bench evaluation. It includes ready-to-use NetCDF templates.
+## Contributing to the benchmark [PROVISIONAL]
 
 Please note that this directory is currently intended for internal use and may be subject to modification prior to public release.
 
-## Contributing to the benchmark [PROVISIONAL]
+Benchmarking allows users to benchmark the performance of their own models against well-established reference approaches. Contributing to the online benchmarking (with automatic evaluation and  results publicly available in the benchmark table) requires model registration and uploading the test results for the different experiments. The registration and submission process is managed ****
 
-## Submitting contributions
+The [./format_predictions](./format_predictions) directory provides utilities and templates to help users structure their model outputs in the required NetCDF format for CORDEX ML-Bench evaluation. It includes ready-to-use NetCDF templates.
 
-The registration and submission process is managed ****
+The table below summarizes the contributing models and provides links to their respective implementation repositories when available (this table is automatically updated with new submissions).
 
-The submission and automatic benchmarking process allows users to benchmark the performance of their own models against well-established reference approaches. The table below summarizes the contributing models and provides links to their respective implementation repositories when available (this table is automatically updated with new submissions).
+## Models contributing to the benchmark [PROVISIONAL]
 
 | Model       | Description | Reference | Implementation |
 |-------------|-------------|-----------|----------------|
