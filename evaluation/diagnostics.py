@@ -4,8 +4,10 @@ from typing import Any, Callable
 
 import numpy as np
 import xarray as xr
+from tqdm import tqdm
 
 from numpy import fft
+from scipy.stats import wasserstein_distance_nd
 
 def _filter_by_season(x: xr.Dataset, season: str | None) -> xr.Dataset:
     """
@@ -281,3 +283,72 @@ def psd(
     psd_x1_da = xr.DataArray(avg_psd_x1, dims=["wavenumber"], name="PSD_x1")
 
     return psd_x0_da, psd_x1_da
+
+def wasserstein_distance(
+    x0: xr.Dataset,
+    x1: xr.Dataset,
+    var: str,
+    season: str | None = None,
+    spatial: bool = False,
+) -> float | xr.Dataset:
+    """
+    Compute the Wasserstein distance between x0 and x1 datasets.
+
+    Parameters
+    ----------
+    x0 : xr.Dataset
+        Ground truth dataset.
+    x1 : xr.Dataset
+        Predicted dataset.
+    var : str
+        Variable name to analyse.
+    season : str | None, optional
+        Season to filter before computing the Wasserstein distance.
+    spatial : bool, default False
+        If True, compute distance at each grid point across time dimension.
+        If False, compute a single scalar distance by flattening both datasets.
+
+    Returns
+    -------
+    float or xr.Dataset
+        If spatial=False: single Wasserstein distance value.
+        If spatial=True: Wasserstein distance field with same spatial dimensions as input.
+    """
+    x0 = _filter_by_season(x0, season)
+    x1 = _filter_by_season(x1, season)
+
+    x0_da = x0[var]
+    x1_da = x1[var]
+
+    if not spatial:
+        x0_flat = np.nan_to_num(x0_da.values, nan=0.0).flatten()
+        x1_flat = np.nan_to_num(x1_da.values, nan=0.0).flatten()
+
+        print('Computing Wasserstein distance...')
+        distance = wasserstein_distance_nd(u_values=x0_flat, v_values=x1_flat)
+        return distance
+
+    else:
+        x0_np = np.nan_to_num(x0_da.values, nan=0.0)
+        x1_np = np.nan_to_num(x1_da.values, nan=0.0)
+
+        time_dim = x0_np.shape[0]
+        spatial_shape = x0_np.shape[1:]
+        x0_reshaped = x0_np.reshape(time_dim, -1)
+        x1_reshaped = x1_np.reshape(time_dim, -1)
+
+        n_spatial = x0_reshaped.shape[1]
+        distances = np.zeros(n_spatial)
+
+        for i in tqdm(range(n_spatial), desc="Computing Wasserstein distances"):
+            x0_temporal = x0_reshaped[:, i].flatten()
+            x1_temporal = x1_reshaped[:, i].flatten()
+            distances[i] = wasserstein_distance_nd(x0_temporal, x1_temporal)
+
+        distance_field = distances.reshape(spatial_shape)
+
+        wd_da = x0.isel(time=0).copy(deep=True)
+        wd_da.attrs = {}
+        wd_da[var].values = distance_field
+
+        return wd_da
