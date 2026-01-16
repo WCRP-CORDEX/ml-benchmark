@@ -7,9 +7,9 @@ The notebook `./data_download.ipynb` explains how to download the data for the d
 The dataset spans three geographic regions, each defined over domains of identical size (i.e., the same number of grid boxes in both predictor and predictand spaces, illustrated below by the wind and temperature fields, respectively). For each domain, the dataset comprises data derived from a single Regional Climate Model (RCM) driven by two different Global Climate Models (GCMs). The first GCM is used for both training and testing, while the other is used exclusively for testing transferability. 
 
 -  **New Zealand (NZ) – 0.11° resolution** <br>
-RCM model: _CCAM_ (from CORDEX-CMIP6) <br>
-Driving GCM model 1 (training and test): _ACCESS-CM2 (historical and ssp370 scenarios)_ <br>
-Driving GCM model 2 (test transferability): _EC-Earth3 (historical and ssp370 scenarios)_ <br>
+RCM model: _CCAM-2203_ (from [CORDEX-CMIP6](https://wcrp-cordex.github.io/simulation-status/CORDEX_CMIP6_status.html#AUS-12)) <br>
+Driving GCM model 1 (training and test): _ACCESS-CM2_r4i1p1f1 (historical and ssp370 scenarios)_ <br>
+Driving GCM model 2 (test transferability): _EC-Earth3_r1i1p1f1 (historical and ssp370 scenarios)_ <br>
 <div align="center">
 <img src="https://github.com/WCRP-CORDEX/ml-benchmark/blob/main/images/image_example_NZ.png" alt="NZ Domain" width="300"/>
 </div>
