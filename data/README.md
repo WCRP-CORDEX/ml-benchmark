@@ -7,7 +7,7 @@ The notebook `./data_download.ipynb` explains how to download the data for the d
 The dataset spans three geographic regions, each defined over domains of identical size (i.e., the same number of grid boxes in both predictor and predictand spaces, illustrated below by the wind and temperature fields, respectively). For each domain, the dataset comprises data derived from a single Regional Climate Model (RCM) driven by two different Global Climate Models (GCMs). The first GCM is used for both training and testing, while the other is used exclusively for testing transferability. 
 
 -  **New Zealand (NZ) – 0.11° resolution** <br>
-RCM model: _Conformal Cubic Atmosphere Model_ (from CORDEX-CMIP6) <br>
+RCM model: _CCAM_ (from CORDEX-CMIP6) <br>
 Driving GCM model 1 (training and test): _ACCESS-CM2 (historical and ssp370 scenarios)_ <br>
 Driving GCM model 2 (test transferability): _EC-Earth3 (historical and ssp370 scenarios)_ <br>
 <div align="center">
@@ -16,7 +16,7 @@ Driving GCM model 2 (test transferability): _EC-Earth3 (historical and ssp370 sc
 
 - **Europe (ALPS) – 0.11° resolution** <br>
 RCM model: _Aladin63_ (from CORDEX-CMIP5) <br>
-Driving GCM model 1 (training and test): _CNRM (historical and rcp85 scenarios)_ <br>
+Driving GCM model 1 (training and test): _CNRM-CM5 (historical and rcp85 scenarios)_ <br>
 Driving GCM model 2 (test transferability): _MPI-ESM-LR (historical and rcp85 scenarios)_ <br> <br>
 For this domain, the RCM simulations for the predictand are defined on a _Lambert Conformal Conic_ projection. When plotted on a regular lat–lon grid the domain appears curved (see the image below), but in their native projection the data lie on a square array. Therefore, the fields can be used directly for model training without reprojection (see [./data](/data) for more details). <br>
 <div align="center">
