@@ -2,7 +2,7 @@
 
 CORDEX ML-Bench is a benchmark designed to evaluate the performance of machine learning–based climate downscaling models across different regions covering both the standard (perfect prognosis ESD) and emulation climate downscaling approaches. It defines standardized training and test experiments assessing various downscaling challenges along with the corresponding datasets from Regional Climate Models (RCMs) driven by different Global Climate Models (GCMs). 
 
-This repository contains all the materials, instructions, and datasets required to run the different experiments, as well as notebooks facilitating the process. It also incldues instructions for registering and submitting contributions to participate in the online benchmaking, with results publicly reported in this page. 
+This repository contains all the materials, instructions, and datasets required to run the different experiments, as well as notebooks illustrating the process. It also includes instructions for registering and submitting contributions to participate in the online benchmarking, with results publicly reported in this page. 
 
 **Development Status Notice**  
 *This repository is currently under active development. As a result, the structure, documentation, datasets and experimental protocols may change in the near future. Users should be aware that updates may require adjustments to existing workflows. We recommend regularly checking for updates.*
@@ -17,11 +17,11 @@ The benchmark covers three geographic regions: New Zealand (NZ), Europe (ALPS) a
 
 ## Experiments
 
-The benchmark covers two experiments with different tests focusing on the standard (ESD) and emulation climate downscaling approaches. For each region, data is obtained from a single RCM driven by two different GCMs, one used both for training and testing (denoted below as `same GCM`) and the other only used to test transferability (denoted as `different GCM`). 
+The benchmark covers two experiments with different tests focusing on the standard (perfect prognosis ESD) and emulation climate downscaling approaches. For each region, data is obtained from a single RCM driven by two different GCMs, one used both for training and testing (denoted below as `same GCM`) and the other only used to test transferability (denoted as `different GCM`). 
 
-For both experiments, training is based on perfect (upscaled) predictors from the RCM while test experiments explore both perfect of imperfect (from the driving GCM) predictors. Predictands (target for training) correspond to the RCM highres 10km temperature and precipitation output.
+For both experiments, training is based on perfect (upscaled) predictors from the RCM while test experiments explore both perfect and imperfect (from the driving GCM) predictors. Predictands (target for training) correspond to the RCM highres 10km temperature and precipitation output.
 
-- **Experiment 1: ESD Pseudo-Reality**: A 20-year (1961–1980) training period in present climate conditions, designed to mimic the standard statistical climate downscaling approach and test extrapolation capabilities of the methods. 
+- **Experiment 1: _ESD Pseudo-Reality_**: A 20-year (1961–1980) training period in present climate conditions, designed to mimic the standard statistical climate downscaling approach and test extrapolation capabilities of the methods. 
 
 | Test   | Test Period | Predictor type | Eval | 
 |----------------|---------------|----------------|------|
@@ -32,7 +32,7 @@ For both experiments, training is based on perfect (upscaled) predictors from th
 | Test5: Perfect Extrapolation (GCM Transferability) | 2041–2060 + 2081–2100 | Perfect (from RCM), different GCM | change signal for mid/final term | 
 
 
-- **Experiment 2: Emulator Hist+Future**: A 40-year (1961–1980 + 2081–2100) training period combining present and future climates, focused on testing interpolation and transferability of emulators.
+- **Experiment 2: _Emulator Hist+Future_**: A 40-year (1961–1980 + 2081–2100) training period combining present and future climates, focused on testing interpolation and transferability of emulators.
 
 | Test   | Test Period | Predictor type | Eval | 
 |----------------|---------------|----------------|------|
@@ -46,7 +46,9 @@ For both experiments, training is based on perfect (upscaled) predictors from th
 
 ## Model Training and Evaluation
 
-For each experiment models must be trained for the two required target variables (temperature and precipition), jointly (multivariate models) or individually. OROGRAPHY. A comprehensive set of evaluation metrics and accompanying code for assessing ML-based downscaling methods within the CORDEX ML-Bench framework is provided in this repository. Additional information and illustrative notebooks demonstrating their use are available in [./evaluation](/evaluation)
+For each experiment, models must be trained for the two required target variables (temperature and precipition), jointly (multivariate) or individually. If possible, please train the models both with and without model orography as a covariate (this will correspond to two separate submissions; for more details, see “Contributing to the benchmark”). This will allow us to assess the importance of including such covariates in the models.
+
+A comprehensive set of evaluation metrics and accompanying code for assessing ML-based downscaling methods within the CORDEX ML-Bench framework is provided in this repository. Additional information and illustrative notebooks demonstrating their use are available in [./evaluation](/evaluation)
 
 ## Contributing to the benchmark [PROVISIONAL]
 
