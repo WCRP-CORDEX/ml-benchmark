@@ -17,7 +17,7 @@ The benchmark covers three geographic regions: New Zealand (NZ), Europe (ALPS) a
 
 ## Experiments
 
-The benchmark covers two experiments with different tests focusing on the standard (ESD) and emulation climate downscaling approaches. For each region data is obtained from a single RCM driven by two different GCMs, one used both for training and testing (denoted below as `same GCM`) and the other only used to test transferability (denoted as `different GCM`). 
+The benchmark covers two experiments with different tests focusing on the standard (ESD) and emulation climate downscaling approaches. For each region, data is obtained from a single RCM driven by two different GCMs, one used both for training and testing (denoted below as `same GCM`) and the other only used to test transferability (denoted as `different GCM`). 
 
 For both experiments, training is based on perfect (upscaled) predictors from the RCM while test experiments explore both perfect of imperfect (from the driving GCM) predictors. Predictands (target for training) correspond to the RCM highres 10km temperature and precipitation output.
 
@@ -46,7 +46,7 @@ For both experiments, training is based on perfect (upscaled) predictors from th
 
 ## Model Training and Evaluation
 
-A comprehensive set of evaluation metrics and accompanying code for assessing ML-based downscaling methods within the CORDEX ML-Bench framework is provided in this repository. Additional information and illustrative notebooks demonstrating their use are available in [./evaluation](/evaluation)
+For each experiment models must be trained for the two required target variables (temperature and precipition), jointly (multivariate models) or individually. OROGRAPHY. A comprehensive set of evaluation metrics and accompanying code for assessing ML-based downscaling methods within the CORDEX ML-Bench framework is provided in this repository. Additional information and illustrative notebooks demonstrating their use are available in [./evaluation](/evaluation)
 
 ## Contributing to the benchmark [PROVISIONAL]
 
