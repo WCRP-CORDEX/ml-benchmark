@@ -30,7 +30,7 @@ Driving GCM model 2 (test transferability): **** <br>
 <img src="https://github.com/WCRP-CORDEX/ml-benchmark/blob/main/images/image_example_SA.png" alt="SA Domain" width="300"/>
 </div>
 
-The `training` dataset includes common large-scale (~150km) `predictors` (Z, U, V, T, Q at 850, 700, 500, and 300 hPa) as well as highres model orogaphy (~10km) which can be used as co-variate in the models; `preditands` (target for training) correspond to the RCM highres ~10km temperature and precipitation output. This information is provided for the two benchmark training experiments focusing on the standard (ESD) and emulation downscaling approaches, denoted `ESD Pseudo-Reality` and `Emulator Hist+Future`. 
+The `training` dataset includes common large-scale (~150km) `predictors` (Z, U, V, T, Q at 850, 700, 500, and 300 hPa) as well as highres model orogaphy (~10km) which can be used as co-variate in the models; preditands (`target` for training) correspond to the RCM highres ~10km temperature and precipitation output. This information is provided for the two benchmark training experiments focusing on the standard (ESD) and emulation downscaling approaches, denoted `ESD Pseudo-Reality` and `Emulator Hist+Future`. 
 
 `Test` data includes both `perfect` (upscaled from the RCM) and `imperfect` (from the driving GCM) predictors both with ~150km resolution. 
 
