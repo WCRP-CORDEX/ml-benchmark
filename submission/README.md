@@ -62,7 +62,7 @@ After your zip file is ready, you must register your submission so we can docume
 
 ### Registration procedure
 
-1. Open an issue in the benchmark repository using the template _Submit ML-Benchmark Prediction_
+1. Open an issue in the benchmark repository using the template [_Submit ML-Benchmark Prediction_](https://github.com/WCRP-CORDEX/ml-benchmark/issues/new?template=ml_benchmark_submission.yaml)
 2. Complete the issue template carefully. This information is essential to properly identify, document, and validate your submission.
 3. We will review your submission description to verify that it meets the benchmark requirements.
 4. If accepted, we will send you a private form requesting the information needed to grant access to the evaluation cluster.
