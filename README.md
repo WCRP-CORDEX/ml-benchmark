@@ -52,11 +52,7 @@ A comprehensive set of evaluation diagnostics and accompanying code for assessin
 
 ## Contributing to the benchmark [PROVISIONAL]
 
-Please note that this directory is currently intended for internal use and may be subject to modification prior to public release.
-
-Benchmarking allows users to benchmark the performance of their own models against well-established reference approaches. Contributing to the online benchmarking (with automatic evaluation and  results publicly available in the benchmark table) requires model registration and uploading the test results for the different experiments. The registration and submission process is managed ****
-
-The [./format_predictions](./format_predictions) directory provides utilities and templates to help users structure their model outputs in the required NetCDF format for CORDEX ML-Bench evaluation. It includes ready-to-use NetCDF templates.
+Benchmarking allows users to benchmark the performance of their own models against well-established reference approaches. Contributing to the online benchmarking (with automatic evaluation and results publicly available in the benchmark table) requires model registration and uploading the test results for the different experiments. For more details on the registration and submission process see ([./submission](/submission)).
 
 The table below summarizes the contributing models and provides links to their respective implementation repositories when available (this table is automatically updated with new submissions).
 
