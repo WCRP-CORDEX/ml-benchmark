@@ -51,7 +51,7 @@ body:
     attributes:
       label: Emulator identifier (`emulator_id`)
       description: >
-        Identifier of the emulator model including the emulator name (e.g., DeepESD, XGBoost, ...) and the particular version, using the format \{emulator name\}-\{version\}. Note that any change or different versions need to be registered separately with the corresponding metadata. For versions of the model using orography as predictor, use the tag `-orog` at the end of the identifier (e.g. `DeepESD-asym1-orog`).
+        Identifier of the emulator model including the emulator name (e.g., DeepESD, XGBoost, ...) and the particular version, using the format \{emulator name\}-\{version\}. Note that any change or different versions need to be registered separately with the corresponding metadata. Each emulator model (submission) corresponds either to a single multivariate model or to two separate univariate models that provide predictions for maximum temperature and precipitation. In the case of univariate emulators, the models for each variable may differ (e.g., in their loss functions), so please specify this clearly in this field. For versions of the model using orography as predictor, use the tag `-orog` at the end of the identifier (e.g. `DeepESD-asym1-orog`).
       placeholder: "DeepESD-asym1"
     validations:
       required: true
@@ -65,7 +65,7 @@ body:
         features, such as loss function, optimizer and hyperparameters, predictors used and 
         standardization, etc. Enough detail to distinguish the emulator and version from 
         any other version should be provided.
-      placeholder: "Deep convolutional neural network including 3 convolution and one dense layer, with ReLU activation functions. Standardized input data at gridbox level using mean/std of reanalysis in training period. No bias adjustment performed. Training on historical and future experiments."
+      placeholder: "Deep convolutional neural network including 3 convolution and one dense layer, with ReLU activation functions. Standardized input data at gridbox level using mean/std of reanalysis in training period. No bias adjustment performed. Training on historical and future experiments. For maximum temperature the MSE has been used as loss function, for precipitation the ASYM."
     validations:
       required: true
 
@@ -79,7 +79,7 @@ body:
     attributes:
       label: Stochastic/Probabilistic Output
       description: >
-        Does your emulator generate stochastic realizations (e.g. for generative methods)? Note that for these methods a single stochastic realization must be provided.
+        Does your emulator generate stochastic realizations (e.g. for generative methods)? Note that for these methods a 10 realizations must be provided.
       options:
         - "no"
         - "yes"
@@ -131,4 +131,3 @@ body:
         ---
         **Next Steps:** 
         After submission, the maintainers will review the registration details and will reply to this issue with comments. When ready a link to a secure form will be provided with the details to upload your data to contribute to this benchmark.
-
