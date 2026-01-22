@@ -1,10 +1,14 @@
 ## Dataset Overview
 
-The CORDEX ML-Bench Dataset is publicly available at [Zenodo](https://zenodo.org/records/17957264) as a `zip` file containing all the NetCDF files for the different experiments. The data is around 5 GB per domain. 
+The CORDEX ML-Bench Dataset is publicly available at [Zenodo](https://zenodo.org/records/17957264) as a `zip` file per domain containing all the NetCDF files for the different experiments. The data is around 5 GB per domain. 
 
-The notebook `./data_download.ipynb` explains how to download the data for the different domains and notebook `./experiments.ipynb` provides a walkthrough of the dowloaded data, helping users understand data and how to configure train and test datasets for the different experiments forming the benchmark. We encourage users to carefully review this notebook to become familiar with the data.
+The notebook `./data_download.ipynb` explains how to download the data for the different domains and the notebook `./experiments.ipynb` provides a walkthrough of the dowloaded data, helping users understand data and how to configure train and test datasets for the different experiments forming the benchmark. We encourage users to carefully review this notebook to become familiar with the data.
 
-The dataset spans three geographic regions, each defined over domains of identical size (i.e., the same number of grid boxes in both predictor and predictand spaces, illustrated below by the wind and temperature fields, respectively). For each domain, the dataset comprises data derived from a single Regional Climate Model (RCM) driven by two different Global Climate Models (GCMs). The first GCM is used for both training and testing, while the other is used exclusively for testing transferability. 
+The dataset spans three geographic regions, each defined over domains of identical size (i.e., the same number of grid boxes). For each domain, the dataset comprises data derived from a single Regional Climate Model (RCM) driven by two different Global Climate Models (GCMs). The first GCM is used for both training and testing, while the other is used exclusively for testing transferability. 
+
+The `training` dataset provides the information from the RCM needed to train the models, both the predictors and the targets (predictands, temperature and precipitation in this benchmark). Predictors included coarse large-scale (~200km) information for a set of common atmospheric variables (Z, U, V, T, Q,  at different height levels 850, 700, and 500 hPa) characterizing the 3D atmospheric state and are provided over a large squared domain (16x16) represented in the figures below displaying the wind fields (U,V). Predictands correspond to the RCM highres ~10km temperature and precipitation output over an inner square domain (128x128, represented in the figures below with the temperature fields). Highres model orogaphy (~10km) is also provided in the dataset and can be used as co-variate in the models. This information is provided for the two benchmark training experiments focusing on the standard (ESD) and emulation downscaling approaches, denoted `ESD Pseudo-Reality` and `Emulator Hist+Future`. The same models should be trained separately on both experiments. 
+
+`Test` data includes both `perfect` (upscaled from the RCM, as in the training data) and `imperfect` (from the driving GCM) predictors over the same 16x16 domains. 
 
 -  **New Zealand (NZ) – 0.11° resolution** <br>
 RCM model: _CCAM-2203_ (from [CORDEX-CMIP6](https://wcrp-cordex.github.io/simulation-status/CORDEX_CMIP6_status.html#AUS-12)) <br>
@@ -35,28 +39,35 @@ Driving GCM model 2 (test transferability): _NorESM2-MM (historical and *** scen
 <br>
 <br>
 
-The `training` dataset includes common large-scale (~150km) `predictors` (Z, U, V, T, Q at 850, 700, 500, and 300 hPa) as well as highres model orogaphy (~10km) which can be used as co-variate in the models; preditands (`target` for training) correspond to the RCM highres ~10km temperature and precipitation output. This information is provided for the two benchmark training experiments focusing on the standard (ESD) and emulation downscaling approaches, denoted `ESD Pseudo-Reality` and `Emulator Hist+Future`. 
-
-`Test` data includes both `perfect` (upscaled from the RCM) and `imperfect` (from the driving GCM) predictors both with ~150km resolution. 
 
 ## Data Structure
 
-Each domain follows a consistent file structure, with the same subdirectories for training and testing data
+Each domain follows a consistent file structure, with the same subdirectories for training and testing dat. Predictors and predictands are labelled with the name of the driving GCMs (note that the RCM model is the same for each domain), as illustrated in the scheme below for the New Zealand (NZ) domain.
 
 ```
 Domain/
 ├── train/
 │   ├── ESD_pseudo-reality/
 │   │   ├── predictors/
+│   │   │   ├── ACCESS-CM2_1961-1980.nc
+│   │   │   └── static.nc
 │   │   └── target/
+│   │   │   └── pr_tasmax_ACCESS-CM2_1961-1980.nc
 │   ├── Emulator_hist_future/
 │   │   ├── predictors/
+│   │   │   ├── ACCESS-CM2_1961-1980_2080-2099.nc
+│   │   │   └── static.nc
 │   │   └── target/
+│   │   │   └── pr_tasmax_ACCESS-CM2_1961-1980_2080-2099.nc
 └── test/
     ├── historical/
     │   ├── predictors/
     │   │   ├── perfect/
+    │   │   │   ├── ACCESS-CM2_1981-2000.nc
+    │   │   │   └── EC-Earth3_1981-2000.nc
     │   │   └── imperfect/
+    │   │       ├── ACCESS-CM2_1981-2000.nc
+    │   │       └── EC-Earth3_1981-2000.nc
     ├── mid_century/
     │   ├── predictors/
     │   │   ├── perfect/
