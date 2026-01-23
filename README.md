@@ -27,12 +27,12 @@ For both experiments, training is based on perfect (upscaled) predictors from th
 |----------------|---------------|----------------|------|
 | Test1: Perfect Cross-Validation | Historical (1981–2000) | Perfect (from RCM), same GCM | Error, Clim | 
 | Test2: Imperfect Cross-Validation | Historical (1981–2000) | Imperfect (from GCM), same GCM | Error, Clim | 
-| Test3: Perfect Extrapolation | 2041–2060 + 2081–2100 | Perfect (from RCM), same GCM | change signal for mid/final term | 
-| Test4: Imperfect Extrapolation | 2041–2060 + 2081–2100 | Imperfect (from GCM), same GCM | change signal for mid/final term | 
-| Test5: Perfect Extrapolation (GCM Transferability) | 2041–2060 + 2081–2100 | Perfect (from RCM), different GCM | change signal for mid/final term | 
+| Test3: Perfect Extrapolation | 2041–2060 + 2080–2099 | Perfect (from RCM), same GCM | change signal for mid/final term | 
+| Test4: Imperfect Extrapolation | 2041–2060 + 2080–2099 | Imperfect (from GCM), same GCM | change signal for mid/final term | 
+| Test5: Perfect Extrapolation (GCM Transferability) | 2041–2060 + 2080–2099 | Perfect (from RCM), different GCM | change signal for mid/final term | 
 
 
-- **Experiment 2: _Emulator Hist+Future_**: A 40-year (1961–1980 + 2081–2100) training period combining present and future climates, focused on testing interpolation and transferability of emulators.
+- **Experiment 2: _Emulator Hist+Future_**: A 40-year (1961–1980 + 2080–2099) training period combining present and future climates, focused on testing interpolation and transferability of emulators.
 
 | Test   | Test Period | Predictor type | Eval | 
 |----------------|---------------|----------------|------|
