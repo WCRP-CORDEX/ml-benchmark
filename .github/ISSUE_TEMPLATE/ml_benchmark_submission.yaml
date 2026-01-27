@@ -69,6 +69,17 @@ body:
     validations:
       required: true
 
+  - type: textarea
+    id: hardware_training_details
+    attributes:
+      label: Hardware and Training Details
+      description: >
+        Include information about the hardware used to train the model (e.g., one node with two A100 GPUs), 
+        training time per epoch and total training time, and inference time per year of predictions.
+      placeholder: "Hardware: One node with two NVIDIA A100 GPUs (40GB). Training time: ~15 minutes per epoch, ~5 hours total (20 epochs). Inference time: ~2 minutes per year of predictions."
+    validations:
+      required: true
+
   # Output Characteristics
   - type: markdown
     attributes:
