@@ -90,7 +90,7 @@ body:
     attributes:
       label: Stochastic/Probabilistic Output
       description: >
-        Does your emulator generate stochastic realizations (e.g. for generative methods)? Note that for these methods a 10 realizations must be provided.
+        Does your emulator generate stochastic realizations (e.g. for generative methods)? Note that for these methods 5 realizations must be provided.
       options:
         - "no"
         - "yes"
