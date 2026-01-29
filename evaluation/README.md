@@ -22,7 +22,7 @@ Indices quantify particular characteristics or properties of a single simulation
 
 ## Diagnostics
 
-Diagnostics compare two simulations, `x0` and `x1`, which correspond to the ground-truth (reference) data and the model predictions, respectively. These diagnostics are designed to evaluate different aspects of model performance. For example, to assess how well a model captures warm extremes, one might use the bias of the TXx index. Some diagnostics rely on specific indices, while others, such as RMSE or PSD, do not depend on them.
+Diagnostics compare two simulations, `x0` and `x1`, which correspond to the ground-truth (reference) data and the model predictions, respectively. These diagnostics are designed to evaluate different aspects of model performance. For example, to assess how well a model captures warm extremes, one might use the bias of the TXx index. Some diagnostics rely on specific indices, while others, such as RMSE, PSD, or the Wasserstein distance, do not depend on them.
 
 To simplify comparisons between models in the benchmark, every diagnostic should be reducible to a single summary value. For example, the RMSE can be expressed as its mean across all relevant dimensions, and the bias of a specific index can be reported as the spatial mean of its absolute values.
 
@@ -30,6 +30,7 @@ To simplify comparisons between models in the benchmark, every diagnostic should
 |------------|-------------|----------------|
 | `rmse` | Root mean square error between x0 and x1. | `x0`, `x1`, `var`, `season`, `dim` |
 | `psd` | Power spectral density with radial averaging for 2D spatial fields. | `x0`, `x1`, `var`, `season` |
+| `wasserstein_distance` | Wasserstein distance between the distributions of x0 and x1. With `spatial=False`, returns a single scalar (all values flattened); with `spatial=True`, returns a field of distances at each grid point (computed over time). | `x0`, `x1`, `var`, `season`, `spatial` |
 | `bias_index` | Absolute or relative bias for any index function. | `x0`, `x1`, `index_fn`, `season`, index-specific kwargs |
 | `ratio_index` | Ratio (x1 / x0) for any index function. | `x0`, `x1`, `index_fn`, `season`, index-specific kwargs |
 | `bias_multivariable_correlation` | Bias in correlations between two variables. | `x0`, `x1`, `var_x`, `var_y`, `season` |
@@ -59,6 +60,12 @@ bias_summer_days = diagnostics.bias_index(x0, x1, index_fn=indices.su, var="tasm
 
 # Power Spectral Density
 psd_x0, psd_x1 = diagnostics.psd(x0, x1, var="tasmax")
+
+# Wasserstein distance (single scalar over all space-time)
+wd_scalar = diagnostics.wasserstein_distance(x0, x1, var="tasmax")
+
+# Wasserstein distance at each grid point (over time)
+wd_field = diagnostics.wasserstein_distance(x0, x1, var="tasmax", spatial=True)
 ```
 
 ### Precipitation diagnostics
@@ -84,6 +91,9 @@ bias_cwd = diagnostics.bias_index(x0, x1, index_fn=indices.cwd, var="pr")
 
 # Power Spectral Density
 psd_x0, psd_x1 = diagnostics.psd(x0, x1, var="pr")
+
+# Wasserstein distance between precipitation distributions
+wd_pr = diagnostics.wasserstein_distance(x0, x1, var="pr", season="summer")
 ```
 
 ### Multivariate correlation bias
