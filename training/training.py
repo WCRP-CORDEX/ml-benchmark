@@ -85,7 +85,7 @@ for var_target in var_target:
             gcm_name = 'CNRM-CM5' if domain == 'ALPS' else 'ACCESS-CM2'
 
             # Set the spatial dimensions
-            spatial_dims = ('x', 'y') if domain == 'ALPS' else ('lat', 'lon')
+            spatial_dims = ('y', 'x') if domain == 'ALPS' else ('lat', 'lon')
 
             # Load predictors
             predictor_filename = f'{DATA_PATH}/{domain}/{domain}_domain/train/{training_experiment}/predictors/{gcm_name}_{period_training}.nc'
