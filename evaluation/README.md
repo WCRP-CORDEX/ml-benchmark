@@ -30,6 +30,7 @@ To simplify comparisons between models in the benchmark, every diagnostic should
 |------------|-------------|----------------|
 | `rmse` | Root mean square error between x0 and x1. | `x0`, `x1`, `var`, `season`, `dim` |
 | `psd` | Power spectral density with radial averaging for 2D spatial fields. | `x0`, `x1`, `var`, `season` |
+| `ralsd` | Radially averaged log spectral distance between two RAPSD curves (Harris et al., 2022). | `psd_x0`, `psd_x1` |
 | `wasserstein_distance` | Wasserstein distance between the distributions of x0 and x1. With `spatial=False`, returns a single scalar (all values flattened); with `spatial=True`, returns a field of distances at each grid point (computed over time). | `x0`, `x1`, `var`, `season`, `spatial` |
 | `bias_index` | Absolute or relative bias for any index function. | `x0`, `x1`, `index_fn`, `season`, index-specific kwargs |
 | `ratio_index` | Ratio (x1 / x0) for any index function. | `x0`, `x1`, `index_fn`, `season`, index-specific kwargs |
@@ -61,6 +62,9 @@ bias_summer_days = diagnostics.bias_index(x0, x1, index_fn=indices.su, var="tasm
 # Power Spectral Density
 psd_x0, psd_x1 = diagnostics.psd(x0, x1, var="tasmax")
 
+# Radially Averaged Log Spectral Distance
+ralsd_value = diagnostics.ralsd(psd_x0, psd_x1)
+
 # Wasserstein distance (single scalar over all space-time)
 wd_scalar = diagnostics.wasserstein_distance(x0, x1, var="tasmax")
 
@@ -91,6 +95,9 @@ bias_cwd = diagnostics.bias_index(x0, x1, index_fn=indices.cwd, var="pr")
 
 # Power Spectral Density
 psd_x0, psd_x1 = diagnostics.psd(x0, x1, var="pr")
+
+# Radially Averaged Log Spectral Distance
+ralsd_value = diagnostics.ralsd(psd_x0, psd_x1)
 
 # Wasserstein distance between precipitation distributions
 wd_pr = diagnostics.wasserstein_distance(x0, x1, var="pr", season="summer")
