@@ -83,15 +83,9 @@ The table below summarizes the contributing models and provides links to their r
 | RCMGEM | NCSN++ diffusion (sub-VP SDE) | [Addison et al., 2026](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025MS005140) | [Zenodo](https://zenodo.org/records/18481925) |
 
 
-## Scoreboard [PROVISIONAL]
+## Scoreboard
 
-The following scoreboard presents basic evaluation results for all contributing models (see *** for contribution instructions).
-
-| Model              | RMSE (°C)  | MAE (°C)  | R²    | Training Time     | Inference Speed (samples/sec) |
-|--------------------|------------|-----------|-------|-------------------|-------------------------------|
-| DeepESD             | XXX        | XXX       | XXX   | XXX               | XXX                           |
-| Model2             | XXX        | XXX       | XXX   | XXX               | XXX                           |
-| Model3             | XXX        | XXX       | XXX   | XXX               | XXX                           |
+We are currently working on the evaluation of the models presented above. Summary tables, as well as the corresponding references containing more detailed results, are being prepared and will be made available here soon.
 
 ## Requirements
 
