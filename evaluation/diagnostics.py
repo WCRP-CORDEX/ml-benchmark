@@ -58,6 +58,29 @@ def _radial_average(array_2d: np.ndarray) -> np.ndarray:
     nr = np.bincount(r.ravel())
     return tbin / np.maximum(nr, 1)
 
+def _histogram_counts(
+    da: xr.DataArray,
+    bin_edges: np.ndarray,
+) -> np.ndarray:
+    """
+    Compute histogram counts for a DataArray over the supplied bin edges.
+
+    Parameters
+    ----------
+    da : xr.DataArray
+        Input data array (any shape).
+    bin_edges : np.ndarray
+        Monotonically increasing array of bin edges.
+
+    Returns
+    -------
+    np.ndarray
+        One-dimensional array of counts with length ``len(bin_edges) - 1``.
+    """
+    arr = np.asarray(da.values, dtype=np.float64).ravel()
+    arr = arr[np.isfinite(arr)]
+    return np.histogram(arr, bins=bin_edges)[0].astype(np.float64)
+
 def bias_index( 
     x0: xr.Dataset,
     x1: xr.Dataset,
@@ -376,3 +399,137 @@ def wasserstein_distance(
         wd_da[var].values = distance_field
 
         return wd_da
+
+def perkins_skill_score(
+    x0: xr.Dataset,
+    x1: xr.Dataset,
+    var: str,
+    season: str | None = None,
+    bins: int = 100,
+    value_range: tuple[float, float] | None = None,
+) -> float:
+    """
+    Compute the Perkins Skill Score between x0 and x1 datasets.
+
+    The Perkins Skill Score (Perkins et al., 2007) measures the overlap
+    between the probability distributions of two datasets. A score of 1
+    indicates identical distributions, while 0 indicates no overlap.
+
+    Parameters
+    ----------
+    x0 : xr.Dataset
+        Ground truth dataset.
+    x1 : xr.Dataset
+        Predicted dataset.
+    var : str
+        Variable name to analyse.
+    season : str | None, optional
+        Season to filter before computing the score.
+    bins : int, default 100
+        Number of histogram bins.
+    value_range : tuple[float, float] | None, optional
+        Explicit (min, max) range for the histogram. If None, the range
+        is derived from the combined finite values of x0 and x1.
+
+    Returns
+    -------
+    float
+        Perkins Skill Score in the interval [0, 1].
+    """
+    x0 = _filter_by_season(x0, season)
+    x1 = _filter_by_season(x1, season)
+
+    x0_da = x0[var]
+    x1_da = x1[var]
+
+    if value_range is None:
+        x0_vals = np.asarray(x0_da.values, dtype=np.float64).ravel()
+        x1_vals = np.asarray(x1_da.values, dtype=np.float64).ravel()
+        combined = np.concatenate([x0_vals[np.isfinite(x0_vals)],
+                                   x1_vals[np.isfinite(x1_vals)]])
+        lo, hi = float(combined.min()), float(combined.max())
+    else:
+        lo, hi = value_range
+
+    bin_edges = np.linspace(lo, hi, bins + 1)
+
+    x0_counts = _histogram_counts(x0_da, bin_edges)
+    x1_counts = _histogram_counts(x1_da, bin_edges)
+
+    x0_total = x0_counts.sum()
+    x1_total = x1_counts.sum()
+    x0_p = np.divide(x0_counts, x0_total,
+                     out=np.zeros_like(x0_counts), where=x0_total > 0)
+    x1_p = np.divide(x1_counts, x1_total,
+                     out=np.zeros_like(x1_counts), where=x1_total > 0)
+
+    return float(np.minimum(x0_p, x1_p).sum())
+
+def lhd(
+    x0: xr.Dataset,
+    x1: xr.Dataset,
+    var: str,
+    season: str | None = None,
+    bins: int = 100,
+    value_range: tuple[float, float] | None = None,
+    min_count: int = 10,
+) -> float:
+    """
+    Compute the Logarithmic Histogram Distance between x0 and x1 datasets.
+
+    LHD quantifies the distance between two histograms in log-count space,
+    considering only bins where both histograms have counts above
+    ``min_count``. Lower values indicate better agreement.
+
+    Parameters
+    ----------
+    x0 : xr.Dataset
+        Ground truth dataset.
+    x1 : xr.Dataset
+        Predicted dataset.
+    var : str
+        Variable name to analyse.
+    season : str | None, optional
+        Season to filter before computing the distance.
+    bins : int, default 100
+        Number of histogram bins.
+    value_range : tuple[float, float] | None, optional
+        Explicit (min, max) range for the histogram. If None, the range
+        is derived from the combined finite values of x0 and x1.
+    min_count : int, default 10
+        Minimum count required in both histograms for a bin to be
+        included in the computation.
+
+    Returns
+    -------
+    float
+        Scalar LHD value, or NaN if no bins satisfy the minimum count
+        requirement.
+    """
+    x0 = _filter_by_season(x0, season)
+    x1 = _filter_by_season(x1, season)
+
+    x0_da = x0[var]
+    x1_da = x1[var]
+
+    if value_range is None:
+        x0_vals = np.asarray(x0_da.values, dtype=np.float64).ravel()
+        x1_vals = np.asarray(x1_da.values, dtype=np.float64).ravel()
+        combined = np.concatenate([x0_vals[np.isfinite(x0_vals)],
+                                   x1_vals[np.isfinite(x1_vals)]])
+        lo, hi = float(combined.min()), float(combined.max())
+    else:
+        lo, hi = value_range
+
+    bin_edges = np.linspace(lo, hi, bins + 1)
+
+    x0_counts = _histogram_counts(x0_da, bin_edges)
+    x1_counts = _histogram_counts(x1_da, bin_edges)
+
+    valid = (x0_counts > min_count) & (x1_counts > min_count)
+    if not valid.any():
+        return float("nan")
+
+    return float(
+        np.sqrt(np.mean(10.0 * np.log10(x0_counts[valid] / x1_counts[valid]) ** 2))
+    )

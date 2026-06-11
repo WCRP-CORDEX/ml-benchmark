@@ -34,6 +34,8 @@ To simplify comparisons between models in the benchmark, every diagnostic should
 | `wasserstein_distance` | Wasserstein distance between the distributions of x0 and x1. With `spatial=False`, returns a single scalar (all values flattened); with `spatial=True`, returns a field of distances at each grid point (computed over time). | `x0`, `x1`, `var`, `season`, `spatial` |
 | `bias_index` | Absolute or relative bias for any index function. | `x0`, `x1`, `index_fn`, `season`, index-specific kwargs |
 | `ratio_index` | Ratio (x1 / x0) for any index function. | `x0`, `x1`, `index_fn`, `season`, index-specific kwargs |
+| `perkins_skill_score` | Overlap of x0 and x1 value distributions; 0 (no overlap) to 1 (identical) (Perkins et al., 2007). | `x0`, `x1`, `var`, `season`, `bins`, `value_range` |
+| `lhd` | Logarithmic histogram distance between x0 and x1 distributions over well-populated bins; lower is better. | `x0`, `x1`, `var`, `season`, `bins`, `value_range`, `min_count` |
 | `bias_multivariable_correlation` | Bias in correlations between two variables. | `x0`, `x1`, `var_x`, `var_y`, `season` |
 
 ## Examples
@@ -70,6 +72,9 @@ wd_scalar = diagnostics.wasserstein_distance(x0, x1, var="tasmax")
 
 # Wasserstein distance at each grid point (over time)
 wd_field = diagnostics.wasserstein_distance(x0, x1, var="tasmax", spatial=True)
+
+# Perkins Skill Score
+pss = diagnostics.perkins_skill_score(x0, x1, var="tasmax")
 ```
 
 ### Precipitation diagnostics
@@ -101,6 +106,9 @@ ralsd_value = diagnostics.ralsd(psd_x0, psd_x1)
 
 # Wasserstein distance between precipitation distributions
 wd_pr = diagnostics.wasserstein_distance(x0, x1, var="pr", season="summer")
+
+# Logarithmic Histogram Distance
+lhd_value = diagnostics.lhd(x0, x1, var="pr")
 ```
 
 ### Multivariate correlation bias
