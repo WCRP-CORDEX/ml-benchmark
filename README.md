@@ -50,19 +50,37 @@ For each experiment, models must be trained for the two required target variable
 
 A comprehensive set of evaluation diagnostics and accompanying code for assessing ML-based downscaling methods within the CORDEX ML-Bench framework is provided in this repository ([./evaluation](/evaluation)). Similar diagnostics will be used for online benchmarking, so users can use therse as guidelines for developing their models.
 
-## Contributing to the benchmark [PROVISIONAL]
+## Contributing to the benchmark
 
 Benchmarking allows users to benchmark the performance of their own models against well-established reference approaches. Contributing to the online benchmarking (with automatic evaluation and results publicly available in the benchmark table) requires model registration and uploading the test results for the different experiments. For more details on the registration and submission process see ([./submission](/submission)).
 
 The table below summarizes the contributing models and provides links to their respective implementation repositories when available (this table is automatically updated with new submissions).
 
-## Models contributing to the benchmark [PROVISIONAL]
+## Models contributing to the benchmark
 
-| Model       | Description | Reference | Implementation |
-|-------------|-------------|-----------|----------------|
-| DeepESD     | Convolutional neural network  | [Baño-Medina et al., 2024](https://gmd.copernicus.org/articles/15/6747/2022/) | [GitHub repository]() |
-| Model2        | | | |
-| Model3        | | | |
+| Model | Description | Reference | Implementation |
+|-------|-------------|-----------|----------------|
+| ViT-IFCAv1 | Vision Transformer (ViT) | [In preparation]() | [GitHub](https://github.com/jgonzalezab/ViT_CORDEX-ML-Bench) |
+| Rossby-UNet | U-Net + CBAM (5 enc/dec layers) | [In preparation]() | [In preparation]() |
+| DetUNet | U-Net + self-attention + FiLM (~3M params) | [Rampal et al., 2025](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2024MS004668) | [GitHub](https://github.com/nram812/Generative-CORDEX-ML-Bench/tree/main/models) |
+| CNRM-UNeT | Asymmetric U-Net + 1D bottleneck | [Doury et al., 2022](https://link.springer.com/article/10.1007/s00382-022-06343-9); [Doury et al., 2024](https://link.springer.com/article/10.1007/s00382-024-07350-8) | [GitHub](https://github.com/antoinedoury/RCM-Emulator) |
+| Prithvi-UNet | Foundation model (Prithvi-WxC) + UNet decoder | [Schmude et al., 2024](https://arxiv.org/abs/2409.13598) | [GitHub](https://github.com/midatm1234/granite-wxc/tree/CORDEX_ML) |
+| GNN4CD_Rall | Graph Neural Network (GATv2Conv, 10 layers) | [In Blasone et al., 2025](https://www.cambridge.org/core/journals/environmental-data-science/article/graph-neural-networks-for-hourly-precipitation-projections-at-the-convection-permitting-scale-with-a-novel-hybrid-imperfect-framework/97EEB267EA2AE5F9D87D50A9492264A7) | [GitHub](https://github.com/valebl/GNN4CD) |
+| ParamUNET | U-Net outputting distribution parameters | [In preparation]() | [In preparation]() |
+| DeepESD-IFCAv1 | Deep CNN (3 conv + 1 dense) | [González-Abad et al., 2025](https://journals.ametsoc.org/view/journals/aies/4/4/AIES-D-24-0121.1.xml) | [GitHub](https://github.com/jgonzalezab/deepESD_CORDEX-ML-Bench) |
+| DeepESD-IDL | Deep CNN (3 conv + 1 dense) | [Soares et al., 2024](https://gmd.copernicus.org/articles/17/229/2024/) | [GitHub](https://github.com/rtomeidl/CordexML_DeepESD) |
+| DeepSensor | Neural Process (parameterized GP) | [DeepSensor's Documentation](https://alan-turing-institute.github.io/deepsensor/) | [GitHub](https://github.com/alan-turing-institute/deepsensor) |
+| ANN | Multi-layer perceptron (2 layers) | [Olmo and Bettolli, 2021](https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.7303) | [GitLab](https://gitlab.earth.bsc.es/molmo/ann_cordex_ml) |
+| XGBoost | Gradient boosted decision trees | [Bushenkova et al., 2021](https://www.sciencedirect.com/science/article/pii/S2212095524001780) | [GitHub](https://github.com/rtomeidl/CordexML_XGBoost) |
+| FlowMatching-v1 | Flow matching + ADM U-Net | [Wetherell 2026](https://arxiv.org/abs/2606.00281) | [GitHub](https://github.com/mo-tomaswetherell/mo-flow-cordexbench) |
+| ResGAN | Residual WGAN (U-Net mean + GAN residual) | [Rampal et al., 2025](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2024MS004668) | [GitHub](https://github.com/nram812/Generative-CORDEX-ML-Bench/tree/main/models) |
+| SpaGAN | UNet2D GAN + convolutional discriminator | [Glawion et al., 2025](https://www.nature.com/articles/s41612-025-01103-y) | [GitHub](https://github.com/jpolz/ml-benchmark-spategan) |
+| EnScale | Multi-step sparse localised downscaling | [Schillinger et al., 2025](https://arxiv.org/abs/2509.26258v2) | [GitHub](https://github.com/m-schillinger/cordexbench) |
+| EnScale-linex | EnScale + linear residual model | [Schillinger et al., 2025](https://arxiv.org/abs/2509.26258v2) | [GitHub](https://github.com/m-schillinger/cordexbench) |
+| UiBCorrDiff | Corrective diffusion (regression U-Net + EDM diffusion) | [Marani et al., 2025](https://www.nature.com/articles/s43247-025-02042-5) | [GitHub](https://github.com/joshdorrington/UiBcorrdiff) |
+| CorrDiff-TW1 | Physics-inspired UNet regression + EDM diffusion | [Marani et al., 2025](https://www.nature.com/articles/s43247-025-02042-5) | [GitHub](https://github.com/NVIDIA/physicsnemo/tree/main/examples/weather/corrdiff) |
+| ParamDiffusion | Diffusion on ParamUNET background | [In preparation]() | [In preparation]() |
+| RCMGEM | NCSN++ diffusion (sub-VP SDE) | [Addison et al., 2026](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025MS005140) | [Zenodo](https://zenodo.org/records/18481925) |
 
 
 ## Scoreboard [PROVISIONAL]
