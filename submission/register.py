@@ -323,10 +323,10 @@ def comment_text(model: str, issue: int, blind: bool | None, repository: str) ->
    ```
 
 4. Open a pull request from `{branch}` of your fork into `main` of
-   `{repository}`, and write `Closes #{issue}` in its description.
+   `{repository}`, and mention #{issue} in its description.
 
 The pull request shows a preview of the models table and the scoreboards. Once it
-is merged, your model appears on the benchmark website.
+is merged, your model appears on the benchmark website and this issue is closed.
 """
 
 

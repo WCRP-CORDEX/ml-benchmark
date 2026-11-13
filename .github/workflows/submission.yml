@@ -82,16 +82,34 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Delete branches of merged submissions
+      - name: Close issues and delete branches of merged submissions
         run: |
           git ls-remote --heads origin 'refs/heads/submission/*' | while read -r _ ref; do
             branch="${ref#refs/heads/}"
             model="${branch#submission/}"
-            if [ -f "data/${model}/metadata.yaml" ]; then
-              echo "Deleting ${branch} (data/${model} is on main)"
-              git push origin --delete "${branch}"
+            metadata="data/${model}/metadata.yaml"
+            [ -f "${metadata}" ] || continue
+
+            issue="$(sed -n 's/^issue:[[:space:]]*\([0-9][0-9]*\).*/\1/p' "${metadata}")"
+            if [ -n "${issue}" ]; then
+              echo "Relabelling issue #${issue} of ${model}"
+              gh issue edit "${issue}" --repo "${GITHUB_REPOSITORY}" \
+                --add-label "Processed submission" --remove-label "Approved submission"
+              state="$(gh issue view "${issue}" --repo "${GITHUB_REPOSITORY}" --json state --jq .state)"
+              if [ "${state}" = "OPEN" ]; then
+                gh issue close "${issue}" --repo "${GITHUB_REPOSITORY}" --comment \
+                  "The model ${model} has been added to the benchmark. Thank you for your contribution!"
+              fi
+            else
+              echo "::warning::No issue number in ${metadata}"
             fi
+
+            echo "Deleting ${branch} (data/${model} is on main)"
+            git push origin --delete "${branch}"
           done
