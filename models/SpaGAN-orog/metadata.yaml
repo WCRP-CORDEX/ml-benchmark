@@ -1,6 +1,6 @@
 # Metadata of a model contributing to the benchmark.
 #
-# One file per model, stored as data/<MODEL>/metadata.yaml. It is normally written
+# One file per model, stored as models/<MODEL>/metadata.yaml. It is normally written
 # automatically from the submission issue (.github/ISSUE_TEMPLATE/
 # ml_benchmark_submission.yaml) by submission/register.py when a maintainer adds the
 # label `Approved submission` (.github/workflows/submission.yml), and it is the
@@ -14,7 +14,7 @@
 # `description`, which is the field `emulator`):
 # emulator_id                Model identifier, `{emulator name}-{version}`, with the
 #                            suffix `-orog` if orography is used as a predictor. It
-#                            must match the directory data/<MODEL>.
+#                            must match the directory models/<MODEL>.
 # institution_id             Short acronym of the institution.
 # institution                Full name of the institution.
 # short_description          One-line description shown in the models table (not

@@ -1,7 +1,7 @@
 # Configuration of a model evaluation.
 #
-# Copy this file to data/<MODEL>/config.yaml, edit it and run
-#     pixi run evaluate -c data/<MODEL>/config.yaml
+# Copy this file to models/<MODEL>/config.yaml, edit it and run
+#     pixi run evaluate -c models/<MODEL>/config.yaml
 #
 # Structure
 # ---------
@@ -17,7 +17,7 @@
 #
 # Fields
 # ------
-# model        Name of the model. It must match the directory data/<MODEL>, where
+# model        Name of the model. It must match the directory models/<MODEL>, where
 #              its predictions are read and its evaluation is written.
 # domains      Domains to evaluate: ALPS | NZ | SA, as defined in
 #              benchmark/datasets.yaml.
