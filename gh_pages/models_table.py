@@ -3,7 +3,7 @@
 Build the tables of contributing models of the docs site from the models'
 metadata.
 
-Reads `data/<MODEL>/metadata.yaml` (see `submission/metadata_template.yaml`) for
+Reads `models/<MODEL>/metadata.yaml` (see `submission/metadata_template.yaml`) for
 every model and writes one HTML table per model type (Model | Description |
 Submission | Reference | Implementation) between the markers `<!-- MODELS:START -->` and
 `<!-- MODELS:END -->` in `docs/results/models.md`.
@@ -17,21 +17,20 @@ is a section with its own heading and table, sorted alphabetically
 
 Usage
 -----
-    python submission/models_table.py            # update docs/results/models.md
-    python submission/models_table.py --print    # print the table to stdout instead
+    python gh_pages/models_table.py            # update docs/results/models.md
+    python gh_pages/models_table.py --print    # print the table to stdout instead
 """
 from __future__ import annotations
 
 import argparse
 import html
-import sys
 from pathlib import Path
 from urllib.parse import urlparse
 
 import yaml
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT_DIR / "data"
+MODELS_DIR = ROOT_DIR / "models"  # one directory per model
 OUTPUT_FILE = ROOT_DIR / "docs" / "results" / "models.md"
 METADATA_FILE = "metadata.yaml"
 START_MARKER = "<!-- MODELS:START -->"
@@ -66,8 +65,7 @@ REQUIRED_FIELDS = (
     "blind",
 )
 
-# sys.path is extended so the helper shared with the scoreboard can be reused
-sys.path.insert(0, str(ROOT_DIR / "evaluation"))
+# helpers shared with the scoreboard (same folder, so importable directly)
 from scoreboard import MODEL_TYPES, UNKNOWN_TYPE, update_block  # noqa: E402
 
 
@@ -91,13 +89,13 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def collect(data_dir: Path = DATA_DIR) -> list[dict]:
+def collect(models_dir: Path = MODELS_DIR) -> list[dict]:
     """
     Read the metadata of every model.
 
     Parameters
     ----------
-    data_dir : Path
+    models_dir : Path
         Directory with one subdirectory per model.
 
     Returns
@@ -111,7 +109,7 @@ def collect(data_dir: Path = DATA_DIR) -> list[dict]:
         If a metadata file lacks a required field.
     """
     models = []
-    for path in sorted(data_dir.glob(f"*/{METADATA_FILE}")):
+    for path in sorted(models_dir.glob(f"*/{METADATA_FILE}")):
         metadata = yaml.safe_load(path.read_text()) or {}
         missing = [field for field in REQUIRED_FIELDS if field not in metadata]
         if missing:

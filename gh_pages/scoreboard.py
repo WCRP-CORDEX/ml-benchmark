@@ -2,7 +2,7 @@
 """
 Build the scoreboard tables of the docs site from the models' metric summaries.
 
-Reads `data/<MODEL>/evaluation/<TRAIN_EXP>/<TEST_EXP>/metrics_summary.json` (written
+Reads `models/<MODEL>/evaluation/<TRAIN_EXP>/<TEST_EXP>/metrics_summary.json` (written
 by `evaluate.py`) for every model and writes one page per training experiment,
 `docs/results/scoreboard/<train_exp>.md` (lower case), with one HTML table per
 variable (rows = models, columns = model type and metrics; each cell shows the
@@ -13,8 +13,8 @@ header (docs/javascripts/scoreboard.js).
 
 Usage
 -----
-    ./scoreboard.py            # update the pages in docs/results/scoreboard/
-    ./scoreboard.py --print    # print the tables to stdout instead
+    python gh_pages/scoreboard.py          # update the pages in docs/results/scoreboard
+    python gh_pages/scoreboard.py --print  # print the tables to stdout instead
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ from pathlib import Path
 import yaml
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT_DIR / "data"
+MODELS_DIR = ROOT_DIR / "models"  # one directory per model
 BENCHMARK_DIR = ROOT_DIR / "benchmark"
 OUTPUT_DIR = ROOT_DIR / "docs" / "results" / "scoreboard"  # one page per training exp.
 SUMMARY_FILE = "metrics_summary.json"
@@ -74,7 +74,7 @@ METRICS = {
     },
 }
 
-# `stochastic_output` in data/<MODEL>/metadata.yaml -> model type; the scoreboard
+# `stochastic_output` in models/<MODEL>/metadata.yaml -> model type; the scoreboard
 # shows one group of rows per type, in this order (models without metadata last)
 MODEL_TYPES = {
     False: "Deterministic",
@@ -130,13 +130,13 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def collect(data_dir: Path = DATA_DIR) -> dict[str, dict[tuple[str, str], dict]]:
+def collect(models_dir: Path = MODELS_DIR) -> dict[str, dict[tuple[str, str], dict]]:
     """
     Read the metric summaries of all models.
 
     Parameters
     ----------
-    data_dir : Path
+    models_dir : Path
         Directory holding one sub-directory per model.
 
     Returns
@@ -146,7 +146,7 @@ def collect(data_dir: Path = DATA_DIR) -> dict[str, dict[tuple[str, str], dict]]
         alphabetically by name (case-insensitive).
     """
     results: dict[str, dict[tuple[str, str], dict]] = {}
-    for file in data_dir.glob(f"*/evaluation/*/*/{SUMMARY_FILE}"):
+    for file in models_dir.glob(f"*/evaluation/*/*/{SUMMARY_FILE}"):
         test_exp = file.parent.name
         train_exp = file.parent.parent.name
         model = file.parents[3].name
@@ -155,15 +155,15 @@ def collect(data_dir: Path = DATA_DIR) -> dict[str, dict[tuple[str, str], dict]]
     return dict(sorted(results.items(), key=lambda item: item[0].lower()))
 
 
-def model_type(model: str, data_dir: Path = DATA_DIR) -> str:
+def model_type(model: str, models_dir: Path = MODELS_DIR) -> str:
     """
     Type of a model (a value of `MODEL_TYPES`), from its metadata.
 
     Parameters
     ----------
     model : str
-        Model directory name under `data_dir`.
-    data_dir : Path
+        Model directory name under `models_dir`.
+    models_dir : Path
         Directory holding one sub-directory per model.
 
     Returns
@@ -172,7 +172,7 @@ def model_type(model: str, data_dir: Path = DATA_DIR) -> str:
         Value of `MODEL_TYPES` for its `stochastic_output`, or `UNKNOWN_TYPE` if the
         model has no metadata file or the field is missing/null.
     """
-    file = data_dir / model / METADATA_FILE
+    file = models_dir / model / METADATA_FILE
     if not file.exists():
         return UNKNOWN_TYPE
     metadata = yaml.safe_load(file.read_text()) or {}
