@@ -1,9 +1,9 @@
 # Pixi workspace for CORDEX ML-Bench.
 #
-#     pixi install                                   # create the environment
-#     pixi run evaluate -c data/<MODEL>/config.yaml  # run evaluation/evaluate.py
-#     pixi run lab                                   # start JupyterLab
-#     pixi run docs                                  # preview the docs site
+#     pixi install                                     # create the environment
+#     pixi run evaluate -c models/<MODEL>/config.yaml  # run evaluation/evaluate.py
+#     pixi run lab                                     # start JupyterLab
+#     pixi run docs                                    # preview the docs site
 
 [workspace]
 name = "ml-benchmark"
@@ -45,9 +45,7 @@ ml-evaluation = { path = "../ml-evaluation", editable = true }
 validate = "python submission/validate.py"
 evaluate = "python evaluation/evaluate.py"
 lab = "jupyter lab"
-# The images live in images/ (so that the READMEs show them on GitHub); the site
-# only publishes files inside docs/, so they are copied to docs/images/ (ignored
-# by git) before building
+# copy images/ to the GitHub Pages
 docs-images = "rm -rf docs/images && cp -r images docs/images"
 # preview the site locally
 docs = { cmd = "zensical serve", depends-on = ["docs-images"] }
