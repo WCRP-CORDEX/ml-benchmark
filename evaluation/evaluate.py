@@ -31,7 +31,8 @@ import yaml
 from config import DEFAULT_CONFIG_FILE, Config
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "data"  # benchmark data (Bench-data)
+MODELS_DIR = ROOT_DIR / "models"  # one directory per model
 BENCHMARK_DIR = ROOT_DIR / "benchmark"
 SUMMARY_FILE = "metrics_summary.json"
 
@@ -119,7 +120,7 @@ def load_yaml(path: Path) -> dict:
 
 def experiment_dir(config: Config, train_exp: str, test_exp: str) -> Path:
     """Output directory of one train/test experiment pair."""
-    return DATA_DIR / config.model / "evaluation" / train_exp / test_exp
+    return MODELS_DIR / config.model / "evaluation" / train_exp / test_exp
 
 
 def metrics_file(out_dir: Path, var: str, domain: str) -> Path:
@@ -224,7 +225,7 @@ def evaluate_experiment(
             continue
         # x1: prediction file(s)
         x1 = (
-            DATA_DIR / config.model / "predictions" / f"{domain}_Domain"
+            MODELS_DIR / config.model / "predictions" / f"{domain}_Domain"
             / train_exp / horizon / case / f"Predictions_pr_tasmax_{forcing}_{period}.nc"
         )
         if not input_exists(x1):

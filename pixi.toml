@@ -42,8 +42,9 @@ ml-evaluation = { path = "../ml-evaluation", editable = true }
 # ml-evaluation = { git = "https://github.com/c3s-cordex-ml/ml-evaluation.git", branch = "feature/ml-benchmark" }
 
 [tasks]
-validate = "python submission/validate.py"
+check-predictions = "python submission/validate.py"
 evaluate = "python evaluation/evaluate.py"
+check-evaluation = "python evaluation/validate.py"
 lab = "jupyter lab"
 # copy images/ to the GitHub Pages
 docs-images = "rm -rf docs/images && cp -r images docs/images"

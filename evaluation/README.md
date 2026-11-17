@@ -17,11 +17,11 @@ All commands below are run from the root of the repository.
 
 ## Steps
 
-**1. Add the predictions.** Copy or link them to `data/<MODEL>/predictions/`,
+**1. Add the predictions.** Copy or link them to `models/<MODEL>/predictions/`,
 following the structure described in [`submission/README.md`](../submission/README.md):
 
 ```
-data/<MODEL>/predictions/
+models/<MODEL>/predictions/
 ├── ALPS_Domain/
 ├── NZ_Domain/
 └── SA_Domain/
@@ -31,7 +31,7 @@ data/<MODEL>/predictions/
 **2. Copy the configuration template** into the model folder:
 
 ```bash
-cp ./evaluation/config_template.yaml ./data/<MODEL>/config.yaml
+cp ./evaluation/config_template.yaml ./models/<MODEL>/config.yaml
 ```
 
 **3. Edit the configuration.** By default only `model` needs to change; it must
@@ -44,11 +44,11 @@ models, the maximum number of members to score (`max_members`, 5 by default; see
 
 - Pixi:
   ```bash
-  pixi run evaluate --config-file ./data/<MODEL>/config.yaml
+  pixi run evaluate --config-file ./models/<MODEL>/config.yaml
   ```
 - Another environment (e.g. Conda): activate it, then
   ```bash
-  python ./evaluation/evaluate.py --config-file ./data/<MODEL>/config.yaml
+  python ./evaluation/evaluate.py --config-file ./models/<MODEL>/config.yaml
   ```
 
 Useful options:
@@ -59,13 +59,23 @@ Useful options:
 | `--keep-domain-files` | Keep the per-domain metric files (deleted by default once the summary is written). |
 | `--aggregate-only` | Do not run `ml-eval` on each domain; only rebuild the summaries from the kept domain files. |
 
+**5. Check the evaluation.** Make sure that every experiment in the configuration has a summary covering all its variables and domains:
+
+```bash
+python ./evaluation/validate.py ./models/<MODEL>      # or ./models/<MODEL>/config.yaml
+```
+
+Missing summaries, variables or domains are reported as errors (exit code 1); null
+metric values are reported as warnings. Domains are missing, for instance, when
+their prediction files were not found (`evaluate.py` skips them with a warning).
+
 ## Output
 
 For each training/test experiment in the configuration, the evaluation writes one
 summary file:
 
 ```
-data/<MODEL>/evaluation/<TRAINING_EXPERIMENT>/<TEST_EXPERIMENT>/metrics_summary.json
+models/<MODEL>/evaluation/<TRAINING_EXPERIMENT>/<TEST_EXPERIMENT>/metrics_summary.json
 ```
 
 It contains some metadata and, for each variable, every metric both aggregated
