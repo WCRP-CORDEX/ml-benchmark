@@ -8,9 +8,9 @@ Contributing a model to the benchmark involves five steps:
 4. **Evaluate** your predictions and send the results in a pull request.
 5. **Publication**: once the pull request is merged, your model appears in the models table and the scoreboards in the website.
 
-## 1. Preparing the Submission
+## 1. Preparation
 
-Your submission must contain predictions for all predictors included in the `test` folder of the benchmark dataset (see [Data Structure](../data/README.md#data-structure) for details). The predictions must follow exactly the same directory structure as the `test` data. Specifically, your output directory must be organized as follows, where `<emulator_id>` is the identifier of your model (see [step 2](#2-registering-the-submission)):
+Your submission must contain predictions for all predictors included in the `test` folder of the benchmark dataset (see [Data Structure](https://casadoj.github.io/ml-benchmark/contributing/data/#data-structure) for details). The predictions must follow exactly the same directory structure as the `test` data. Specifically, your output directory must be organized as follows, where `<emulator_id>` is the identifier of your model (see [step 2](#2-registering-the-submission)):
 
 ```
 <emulator_id>/
@@ -65,7 +65,7 @@ The tool also accepts a `.zip` file of the directory. It lists the 72 required f
 
 Your predictions are ready when the tool reports no errors. Run it with `--help` for further options, such as checking only some domains or experiments.
 
-## 2. Registering the Submission
+## 2. Registration
 
 Open an issue in the benchmark repository using the template [_Submit ML-Benchmark Prediction_](https://github.com/WCRP-CORDEX/ml-benchmark/issues/new?template=ml_benchmark_submission.yaml) and complete it carefully: this information identifies and documents your model. Among other details, the form asks for:
 
@@ -83,7 +83,7 @@ The administrators review the issue to verify that the submission meets the benc
 
 A comment in the issue confirms the approval and repeats the instructions of the next steps.
 
-## 4. Evaluating the Submission
+## 4. Evaluation
 
 **Pre-release submissions** are evaluated by the administrators, who will contact you in the issue to arrange the transfer of the predictions. You can skip the rest of this step.
 

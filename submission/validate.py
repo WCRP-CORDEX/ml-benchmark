@@ -17,11 +17,8 @@ and is checked against the templates in `format_predictions/templates/`:
 - it contains both `pr` and `tasmax`;
 - their dimensions are `time` plus the template's spatial dimensions, and
   optionally `member` (ensemble of generative models, at least `--min-members`);
-- `time` and the spatial dimensions are in the template's order (e.g.
-  `(time, y, x)`, not `(time, x, y)`): a different order makes the evaluation
-  transpose the data, which can read whole files into memory;
-- the spatial grid (size and dimension coordinates) equals the template's, and
-  each spatial dimension has a 1-D (index) coordinate, not e.g. a 2-D `y(y, x)`;
+- `time` and the spatial dimensions are in the template's order
+- the spatial grid (size and dimension coordinates) equals the template's;
 - the time axis contains every year of `<period>` (missing years are errors,
   years outside the period warnings).
 
@@ -350,8 +347,6 @@ def check_variable(
                 path,
             )
         elif dim not in ds.indexes:
-            # e.g. `y`/`x` stored as 2-D copies of lat/lon: xarray cannot
-            # combine such files along time with `open_mfdataset`
             report.add(
                 "ERROR", "NON_INDEX_COORDINATE",
                 f"'{var}': coordinate '{dim}' has dims {ds[dim].dims}; expected a"
