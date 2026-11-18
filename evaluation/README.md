@@ -8,17 +8,16 @@ summarises the results in one JSON file per experiment.
 ## Before you start
 
 - **Reference data**: the benchmark data must be in `data/Bench-data/` (see
-  [`data/data_download.ipynb`](../data/data_download.ipynb)). The targets are read from
-  `data/Bench-data/<DOMAIN>_domain/test/<horizon>/target/`.
+  [`data_download.ipynb`](https://github.com/WCRP-CORDEX/ml-benchmark/blob/feature/ml-evaluation/data/data_download.ipynb)).
 - **Environment**: a Pixi or Conda environment with `ml-evaluation` installed;
-  see [Requirements](../README.md#requirements) in the main README.
+  see [Requirements](https://wcrp-cordex.github.io/ml-benchmark/introduction/#requirements).
 
 All commands below are run from the root of the repository.
 
 ## Steps
 
 **1. Add the predictions.** Copy or link them to `models/<emulator_id>/predictions/`,
-following the structure described in [`submission/README.md`](../submission/README.md):
+following the structure described in [`Submit your model`](../submission/README.md):
 
 ```
 models/<emulator_id>/predictions/
@@ -28,8 +27,8 @@ models/<emulator_id>/predictions/
     └── <TRAINING_EXPERIMENT>/<horizon>/<case>/Predictions_pr_tasmax_<GCM>_<period>.nc
 ```
 
-**2. Revise the configuration file**. If you followed the steps in [Submit your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/evaluation/),
-the branch `submission/<emulator_id>` already contains the configuration file `models/<emulator_id>/config.yaml`.
+**2. Revise the configuration file**. If you followed the steps in [Submit your model](https://wcrp-cordex.github.io/ml-benchmark/contributing/submission/),
+the branch `submission/<emulator_id>` already contains the configuration file (`models/<emulator_id>/config.yaml`).
 Otherwise, copy the template into the model folder:
 
 ```bash
@@ -39,19 +38,13 @@ cp ./evaluation/config_template.yaml ./models/<emulator_id>/config.yaml
 Either case, check that the configuration file is correct. By default only `model` needs 
 to change; it must match the folder name `<emulator_id>`. The other fields select the domains, the
 training/test experiments and the variables to evaluate, and, for ensemble
-models, the maximum number of members to score (`max_members`, 5 by default; see
-[Ensemble models](#ensemble-models)).
+models, the maximum number of members to score (`max_members`, 5 by default).
 
-**4. Run the evaluation**, with either option:
+**4. Run the evaluation**:
 
-- Pixi:
-  ```bash
-  pixi run evaluate --config-file ./models/<emulator_id>/config.yaml
-  ```
-- Another environment (e.g. Conda): activate it, then
-  ```bash
-  python ./evaluation/evaluate.py --config-file ./models/<emulator_id>/config.yaml
-  ```
+```bash
+python ./evaluation/evaluate.py --config-file ./models/<emulator_id>/config.yaml
+```
 
 Useful options:
 
@@ -62,7 +55,7 @@ Useful options:
 | `--aggregate-only` | Do not run `ml-eval` on each domain; only rebuild the summaries from the kept domain files. |
 | `--use-dask` | Run `ml-eval benchmark` with Dask, which reads the data in chunks; use it if an evaluation runs out of memory (off by default). |
 
-**5. Check the evaluation.** Make sure that every experiment in the configuration has a summary covering all its variables and domains:
+**5. Check the evaluation.** Make sure that every experiment in the configuration has a summary JSON covering all its variables and domains:
 
 ```bash
 python ./evaluation/validate.py ./models/<emulator_id>/config.yaml
@@ -73,7 +66,7 @@ metric values are reported as warnings.
 
 ## Output
 
-For each training/test experiment in the configuration, the evaluation writes one
+For each combination of training and test experiment in the configuration, the evaluation writes one
 summary file:
 
 ```
@@ -104,12 +97,9 @@ across domains and domain by domain:
 ```
 
 - **`ensemble`**: number of members in the predictions (`n_members`), and the
-  positions of the members used to compute the metrics (`members`). For a
-  deterministic model, `n_members` is 1 and `members` is `null`. Both are `null`
-  if the domains disagree (e.g. a different number of members per domain).
-- **`aggregate`**: combination of the domain values, with the rule given in
-  `aggregation`. A missing value (`null`) in any domain makes the aggregate `null`; 
-  it is never dropped.
+  positions of the members used to compute the metrics (`members`).
+- **`aggregate`**: combination of the domain values using the aggregation function in 
+  `aggregation`.
 
 ### Metrics
 
@@ -133,16 +123,16 @@ are spatial means of the absolute bias.
 ### Ensemble models
 
 If the predictions have a member dimension, `ml-eval benchmark` randomly selects 
-a subset of up to `max_members` members (5 by default, set in the configuration 
-file). The selection uses a fixed seed, so repeated runs score the same members. 
-All the metrics use this same subset, aggregated as follows:
+a subset of up to `max_members` as set in the configuration file (5 by default). The selection 
+uses a fixed seed, so repeated runs score the same members.  All the metrics use this same subset, 
+aggregated as follows:
 
 | Metrics | Member aggregation |
 |---|---|
 | `rmse`, `clim_mean` | Metric computed over the ensemble mean |
 | `rx1day`, `txx`, `sdii` | Index per member; bias averaged over members, then absolute value and spatial mean |
-| `lhd`, `pss` | Score per member, averaged over members |
+| `lhd`, `pss` | Metric computed per member, and averaged over members |
 | `ralsd`, `iav` | One random member of the subset |
 
 With `max_members: 1`, the model is scored on a single random member. The
-setting is ignored for deterministic models.
+setting is ignored in deterministic models.

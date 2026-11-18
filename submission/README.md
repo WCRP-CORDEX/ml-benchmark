@@ -10,7 +10,7 @@ Contributing a model to the benchmark involves five steps:
 
 ## 1. Preparation
 
-Your submission must contain predictions for all predictors included in the `test` folder of the benchmark dataset (see [Data Structure](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/data/#data-structure) for details). The predictions must follow exactly the same directory structure as the `test` data. Specifically, your output directory must be organized as follows, where `<emulator_id>` is the identifier of your model (see [step 2](#2-registering-the-submission)):
+Your submission must contain predictions for all predictors included in the `test` folder of the benchmark dataset (see [Data Structure](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/data/#data-structure) for details). The predictions must follow exactly the same directory structure as the `test` data. Specifically, your output directory must be organized as follows, where `<emulator_id>` is the identifier of your model:
 
 ```
 <emulator_id>/
@@ -91,23 +91,23 @@ A comment in the issue confirms the approval and repeats the instructions of the
 
 1. [Fork the repository](https://github.com/WCRP-CORDEX/ml-benchmark/fork) and get the branch of your submission:
 
-   ```bash
-   git clone https://github.com/<your-user>/ml-benchmark.git
-   cd ml-benchmark
-   git remote add upstream https://github.com/WCRP-CORDEX/ml-benchmark.git
-   git fetch upstream submission/<emulator_id>
-   git switch -c submission/<emulator_id> upstream/submission/<emulator_id>
-   ```
+    ```bash
+    git clone https://github.com/<your-user>/ml-benchmark.git
+    cd ml-benchmark
+    git remote add upstream https://github.com/WCRP-CORDEX/ml-benchmark.git
+    git fetch upstream submission/<emulator_id>
+    git switch -c submission/<emulator_id> upstream/submission/<emulator_id>
+    ```
 
 2. Evaluate the model using the steps in [Evaluate your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/evaluation/). The evaluation writes one `metrics_summary.json` file per training and test experiment in `models/<emulator_id>/evaluation/`.
 
 3. Commit the evaluation and push it to your fork:
 
-   ```bash
-   git add models/<emulator_id>/evaluation/*/*/metrics_summary.json
-   git commit -m "Add evaluation of <emulator_id>"
-   git push origin submission/<emulator_id>
-   ```
+    ```bash
+    git add models/<emulator_id>/evaluation/*/*/metrics_summary.json
+    git commit -m "Add evaluation of <emulator_id>"
+    git push origin submission/<emulator_id>
+    ```
 
 4. Open a pull request from the branch `submission/<emulator_id>` of your fork into the `main` branch of `WCRP-CORDEX/ml-benchmark`, and mention the issue (`#<issue number>`) in its description, so that both are linked.
 
