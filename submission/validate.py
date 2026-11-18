@@ -17,7 +17,11 @@ and is checked against the templates in `format_predictions/templates/`:
 - it contains both `pr` and `tasmax`;
 - their dimensions are `time` plus the template's spatial dimensions, and
   optionally `member` (ensemble of generative models, at least `--min-members`);
-- the spatial grid (size and dimension coordinates) equals the template's;
+- `time` and the spatial dimensions are in the template's order (e.g.
+  `(time, y, x)`, not `(time, x, y)`): a different order makes the evaluation
+  transpose the data, which can read whole files into memory;
+- the spatial grid (size and dimension coordinates) equals the template's, and
+  each spatial dimension has a 1-D (index) coordinate, not e.g. a 2-D `y(y, x)`;
 - the time axis contains every year of `<period>` (missing years are errors,
   years outside the period warnings).
 
@@ -31,11 +35,11 @@ Usage
 -----
 From the root of the repository (`pixi run validate ...` is equivalent):
 
-    python submission/validate.py data/<MODEL>/predictions
+    python submission/validate.py models/<MODEL>/predictions
     python submission/validate.py <MODEL>.zip
-    python submission/validate.py data/<MODEL>/predictions --domains ALPS NZ
-    python submission/validate.py data/<MODEL>/predictions --experiments ESD_pseudo_reality
-    python submission/validate.py data/<MODEL>/predictions --no-content  # structure only
+    python submission/validate.py models/<MODEL>/predictions --domains ALPS NZ
+    python submission/validate.py models/<MODEL>/predictions --experiments ESD_pseudo_reality
+    python submission/validate.py models/<MODEL>/predictions --no-content  # structure only
 
 The exit code is 1 if any error is found, 0 otherwise.
 """
@@ -249,7 +253,7 @@ def find_root(path: Path) -> Path:
     Return the folder that contains the `<DOMAIN>_Domain` directories.
 
     If `path` does not contain them but holds a single sub-directory (e.g.
-    `<submission_name>/`), that sub-directory is used instead.
+    `<emulator_id>/`), that sub-directory is used instead.
     """
     if any(path.glob("*_Domain")):
         return path
@@ -306,6 +310,18 @@ def check_variable(
             f" (+ optional '{MEMBER_DIM}').",
             path,
         )
+    else:
+        # order of time + spatial dims, as in the template (member may be anywhere)
+        order = tuple(d for d in da.dims if d != MEMBER_DIM)
+        expected_order = (TIME_DIM, *spatial_dims)
+        if order != expected_order:
+            report.add(
+                "ERROR", "WRONG_DIMENSION_ORDER",
+                f"'{var}' has dims in the order {order}; expected {expected_order}"
+                f" as in the template (e.g. `ds.transpose(..., "
+                f"{', '.join(repr(d) for d in expected_order)})`).",
+                path,
+            )
     if TIME_DIM in da.dims and da.sizes[TIME_DIM] == 0:
         report.add("ERROR", "EMPTY_TIME", f"'{var}' has an empty time axis.", path)
     if MEMBER_DIM in da.dims and da.sizes[MEMBER_DIM] < min_members:
@@ -331,6 +347,15 @@ def check_variable(
             report.add(
                 "ERROR", "MISSING_COORDINATE",
                 f"'{var}': no coordinate values for dimension '{dim}'.",
+                path,
+            )
+        elif dim not in ds.indexes:
+            # e.g. `y`/`x` stored as 2-D copies of lat/lon: xarray cannot
+            # combine such files along time with `open_mfdataset`
+            report.add(
+                "ERROR", "NON_INDEX_COORDINATE",
+                f"'{var}': coordinate '{dim}' has dims {ds[dim].dims}; expected a"
+                f" 1-D coordinate ('{dim}',) as in the template.",
                 path,
             )
         elif not np.allclose(ds[dim].values, template[dim].values):
@@ -514,7 +539,7 @@ def parse_args(experiments: dict, datasets: dict) -> argparse.Namespace:
     )
     parser.add_argument(
         "submission", type=Path,
-        help="Submission directory or .zip file (e.g. data/<MODEL>/predictions).",
+        help="Submission directory or .zip file (e.g. models/<MODEL>/predictions).",
     )
     parser.add_argument(
         "--domains", nargs="+", choices=list(datasets), default=list(datasets),

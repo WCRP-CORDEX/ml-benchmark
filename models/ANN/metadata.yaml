@@ -1,0 +1,72 @@
+# Metadata of a model contributing to the benchmark.
+#
+# One file per model, stored as models/<MODEL>/metadata.yaml. It is normally written
+# automatically from the submission issue (.github/ISSUE_TEMPLATE/
+# ml_benchmark_submission.yaml) by submission/register.py when a maintainer adds the
+# label `Approved submission` (.github/workflows/submission.yml), and it is the
+# source of the table of contributing models (docs/results/models.md). Edit it by
+# hand only to fix mistakes or fill the fields the form does not ask for; never edit
+# the models table directly.
+#
+# Fields
+# ------
+# Fields from the submission issue (keys match the `id` of each form field, except
+# `description`, which is the field `emulator`):
+# emulator_id                Model identifier, `{emulator name}-{version}`, with the
+#                            suffix `-orog` if orography is used as a predictor. It
+#                            must match the directory models/<MODEL>.
+# institution_id             Short acronym of the institution.
+# institution                Full name of the institution.
+# short_description          One-line description shown in the models table (not
+#                            in the form: filled by a maintainer).
+# description                Detailed description of the method (architecture, loss,
+#                            optimizer, predictors, standardization, ...).
+# hardware_training_details  Hardware, training time and inference time.
+# stochastic_output          true if the emulator generates stochastic realizations
+#                            (generative/probabilistic models), false otherwise.
+# reference_label            Citation text shown in the models table, e.g.
+#                            "Author et al., 2025" (not in the form: filled by a
+#                            maintainer). null -> "In preparation".
+# reference_url              URL of the reference (DOI, publication, docs).
+#                            null -> no link.
+#                            Several references: give reference_label and
+#                            reference_url as lists of the same length.
+# reproducibility_url        URL of the code/data for reproducibility (GitHub,
+#                            Zenodo, ...). null -> "In preparation".
+# additional_notes           Any other relevant information (optional).
+#
+# Fields added by the registration workflow:
+# issue                      Number of the submission issue in the repository.
+# submitted                  Date the issue was opened (YYYY-MM-DD, UTC).
+# approved                   Date the `Approved submission` label was added
+#                            (YYYY-MM-DD, UTC).
+# blind                      From the form field "Dataset release": true if the
+#                            predictions were produced before the public release of
+#                            the test dataset (pre-release), false if after
+#                            (post-release), null if unknown.
+#
+# Optional fields (from the form or unknown for older models) are `null`; they are
+# never filled with guessed values.
+
+# --- Submission issue ---------------------------------------------------------
+emulator_id: ANN
+institution_id: BSC
+institution: Barcelona Supercomputing Center
+short_description: Multi-layer perceptron (2 layers)
+description: |-
+  The machine-learning method employed here consists of an artificial neural network (ANN) model adapted from Olmo and Bettolli (2021)(https://doi.org/10.1002/joc.7303) and Balmaceda et al. (2022) (https://doi.org/10.1002/joc.7733) for precipitation and maximum temperature, respectively: the ANN architecture is based on two layers with 25 and 15 neurons, respectively, a batch size of 100, Bernoulli-Gamma and MSE as loss functions for each case, and ReLu as activation function. The learning rate is set to 0.01. Early stopping is employed to find the optimal number of epochs for model training. The simulations are deterministic in nature. This model variant does not include orography as a covariate.
+hardware_training_details: |-
+  1 Intel Xeon Platinum CPU node. Main memory per node: 256 GB. Usable Memory per core: 2 GB. Cores per node: 112
+  CPUs per task: 32. Not exclusive node allocation. Memory use: 64 GB. HPC resources on the general partition of the MareNostrum5 supercomputer. More details can be found in: https://www.bsc.es/supportkc/docs/MareNostrum5/overview
+  Training time of each simulation: ~20 min. Inference time: ~2 min.
+stochastic_output: false
+reference_label: Olmo and Bettolli, 2021
+reference_url: https://doi.org/10.1002/joc.7303
+reproducibility_url: https://gitlab.earth.bsc.es/molmo/ann_cordex_ml
+additional_notes: null
+
+# --- Registration workflow ----------------------------------------------------
+issue: 15
+submitted: 2026-01-27
+approved: 2026-02-24
+blind: true

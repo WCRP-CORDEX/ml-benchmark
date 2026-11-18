@@ -1,7 +1,7 @@
 # Register approved submissions and clean up their branches.
 #
 # - Job `register`: when a maintainer adds the label "Approved submission" to a
-#   submission issue, write data/<MODEL>/metadata.yaml and data/<MODEL>/config.yaml
+#   submission issue, write models/<MODEL>/metadata.yaml and models/<MODEL>/config.yaml
 #   from the issue (submission/register.py), commit them to a new branch
 #   `submission/<MODEL>` and comment on the issue with the next steps. If the
 #   registration fails (invalid issue, existing model or branch), the comment links
@@ -17,7 +17,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "data/*/metadata.yaml"
+      - "models/*/metadata.yaml"
 
 jobs:
   register:
@@ -62,7 +62,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "${branch}"
-          git add "data/${MODEL}/metadata.yaml" "data/${MODEL}/config.yaml"
+          git add "models/${MODEL}/metadata.yaml" "models/${MODEL}/config.yaml"
           git commit -m "Register ${MODEL} (#${ISSUE_NUMBER})"
           git push origin "${branch}"
 
@@ -82,16 +82,34 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Delete branches of merged submissions
+      - name: Close issues and delete branches of merged submissions
         run: |
           git ls-remote --heads origin 'refs/heads/submission/*' | while read -r _ ref; do
             branch="${ref#refs/heads/}"
             model="${branch#submission/}"
-            if [ -f "data/${model}/metadata.yaml" ]; then
-              echo "Deleting ${branch} (data/${model} is on main)"
-              git push origin --delete "${branch}"
+            metadata="models/${model}/metadata.yaml"
+            [ -f "${metadata}" ] || continue
+
+            issue="$(sed -n 's/^issue:[[:space:]]*\([0-9][0-9]*\).*/\1/p' "${metadata}")"
+            if [ -n "${issue}" ]; then
+              echo "Relabelling issue #${issue} of ${model}"
+              gh issue edit "${issue}" --repo "${GITHUB_REPOSITORY}" \
+                --add-label "Processed submission" --remove-label "Approved submission"
+              state="$(gh issue view "${issue}" --repo "${GITHUB_REPOSITORY}" --json state --jq .state)"
+              if [ "${state}" = "OPEN" ]; then
+                gh issue close "${issue}" --repo "${GITHUB_REPOSITORY}" --comment \
+                  "The model ${model} has been added to the benchmark. Thank you for your contribution!"
+              fi
+            else
+              echo "::warning::No issue number in ${metadata}"
             fi
+
+            echo "Deleting ${branch} (models/${model} is on main)"
+            git push origin --delete "${branch}"
           done

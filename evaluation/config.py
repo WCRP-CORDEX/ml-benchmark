@@ -18,7 +18,7 @@ class Config:
     Parameters
     ----------
     model : str
-        Name of the model. It must match the directory `data/<model>`.
+        Name of the model. It must match the directory `models/<model>`.
     domains : list[str]
         Domains to evaluate.
     experiments : dict[str, list[str] | None]

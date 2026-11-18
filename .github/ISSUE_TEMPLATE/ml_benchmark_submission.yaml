@@ -1,7 +1,7 @@
 name: Submit ML-Benchmark Prediction
 description: Submit metadata and details for an ML-Benchmark prediction submission
 title: "ML-Benchmark prediction submission: [Your Model Name]"
-labels: ["submission"]
+labels: ["Submission"]
 body:
 
   - type: markdown
@@ -124,7 +124,7 @@ body:
         Reference information about the model (e.g., DOI, publication URL, technical documentation)
       placeholder: "https://doi.org/10.5194/gmd-15-6747-2022"
     validations:
-      required: true
+      required: false
 
   - type: input
     id: reproducibility_url
@@ -134,7 +134,7 @@ body:
         URL with reproducibility information about the model (e.g., GitHub repository, Zenodo record)
       placeholder: "https://zenodo.org/records/6828304"
     validations:
-      required: true
+      required: false
 
   # Additional Information
   - type: markdown

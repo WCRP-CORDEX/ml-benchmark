@@ -1,0 +1,75 @@
+# Metadata of a model contributing to the benchmark.
+#
+# One file per model, stored as models/<MODEL>/metadata.yaml. It is normally written
+# automatically from the submission issue (.github/ISSUE_TEMPLATE/
+# ml_benchmark_submission.yaml) by submission/register.py when a maintainer adds the
+# label `Approved submission` (.github/workflows/submission.yml), and it is the
+# source of the table of contributing models (docs/results/models.md). Edit it by
+# hand only to fix mistakes or fill the fields the form does not ask for; never edit
+# the models table directly.
+#
+# Fields
+# ------
+# Fields from the submission issue (keys match the `id` of each form field, except
+# `description`, which is the field `emulator`):
+# emulator_id                Model identifier, `{emulator name}-{version}`, with the
+#                            suffix `-orog` if orography is used as a predictor. It
+#                            must match the directory models/<MODEL>.
+# institution_id             Short acronym of the institution.
+# institution                Full name of the institution.
+# short_description          One-line description shown in the models table (not
+#                            in the form: filled by a maintainer).
+# description                Detailed description of the method (architecture, loss,
+#                            optimizer, predictors, standardization, ...).
+# hardware_training_details  Hardware, training time and inference time.
+# stochastic_output          true if the emulator generates stochastic realizations
+#                            (generative/probabilistic models), false otherwise.
+# reference_label            Citation text shown in the models table, e.g.
+#                            "Author et al., 2025" (not in the form: filled by a
+#                            maintainer). null -> "In preparation".
+# reference_url              URL of the reference (DOI, publication, docs).
+#                            null -> no link.
+#                            Several references: give reference_label and
+#                            reference_url as lists of the same length.
+# reproducibility_url        URL of the code/data for reproducibility (GitHub,
+#                            Zenodo, ...). null -> "In preparation".
+# additional_notes           Any other relevant information (optional).
+#
+# Fields added by the registration workflow:
+# issue                      Number of the submission issue in the repository.
+# submitted                  Date the issue was opened (YYYY-MM-DD, UTC).
+# approved                   Date the `Approved submission` label was added
+#                            (YYYY-MM-DD, UTC).
+# blind                      From the form field "Dataset release": true if the
+#                            predictions were produced before the public release of
+#                            the test dataset (pre-release), false if after
+#                            (post-release), null if unknown.
+#
+# Optional fields (from the form or unknown for older models) are `null`; they are
+# never filled with guessed values.
+
+# --- Submission issue ---------------------------------------------------------
+emulator_id: XGBoost_IDL  # in the issue: XGBoost_IDL_v1
+institution_id: IDL
+institution: Instituto Dom Luiz, Faculdade de Ciências da Universidade de Lisboa
+short_description: Gradient boosted decision trees
+description: |-
+  XGboost provides a distributed, open-source machine learning library that uses gradient boosted decision trees.
+  Input data is standardized at gridbox level using mean/std in the training period.
+  For both precipitation and maximum temperature rmse is used as a loss function.
+  Most relevant model parameters, max_depth = 6, gamma = 0, eta = 0.05 and early stopping at 20 rounds.
+hardware_training_details: |-
+  One node with one NVIDIA A100 GPU (40GB)
+  Training time from 6 to 48 hours depending on variable/emulation method (maximum of 1000 rounds).
+  Inference time roughly 2 hour per set.
+stochastic_output: false
+reference_label: Bushenkova et al., 2021
+reference_url: https://doi.org/10.1016/j.uclim.2024.101982
+reproducibility_url: https://github.com/rtomeidl/CordexML_XGBoost
+additional_notes: null
+
+# --- Registration workflow ----------------------------------------------------
+issue: 18
+submitted: 2026-01-30
+approved: 2026-03-18
+blind: true

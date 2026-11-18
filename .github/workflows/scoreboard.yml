@@ -11,16 +11,16 @@ on:
   push:
     branches: [main]
     paths:
-      - "data/*/evaluation/**/metrics_summary.json"
-      - "data/*/metadata.yaml"
-      - "evaluation/scoreboard.py"
+      - "models/*/evaluation/**/metrics_summary.json"
+      - "models/*/metadata.yaml"
+      - "gh_pages/scoreboard.py"
       - "benchmark/*.yaml"
       - ".github/workflows/scoreboard.yml"
   pull_request:
     paths:
-      - "data/*/evaluation/**/metrics_summary.json"
-      - "data/*/metadata.yaml"
-      - "evaluation/scoreboard.py"
+      - "models/*/evaluation/**/metrics_summary.json"
+      - "models/*/metadata.yaml"
+      - "gh_pages/scoreboard.py"
       - "benchmark/*.yaml"
       - ".github/workflows/scoreboard.yml"
   workflow_dispatch:
@@ -49,11 +49,11 @@ jobs:
 
       - name: Preview scoreboard
         if: github.event_name == 'pull_request'
-        run: python evaluation/scoreboard.py --print >> "$GITHUB_STEP_SUMMARY"
+        run: python gh_pages/scoreboard.py --print >> "$GITHUB_STEP_SUMMARY"
 
       - name: Update scoreboard
         if: github.event_name != 'pull_request'
-        run: python evaluation/scoreboard.py
+        run: python gh_pages/scoreboard.py
 
       - name: Commit scoreboard
         if: github.event_name != 'pull_request'

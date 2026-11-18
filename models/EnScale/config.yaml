@@ -1,0 +1,51 @@
+# Configuration of a model evaluation.
+#
+# Copy this file to models/<MODEL>/config.yaml, edit it and run
+#     pixi run evaluate -c models/<MODEL>/config.yaml
+#
+# Structure
+# ---------
+# model: <MODEL>                  # compulsory
+# domains:                        # list of domains
+#   - <DOMAIN>
+# experiments:                    # training experiment -> list of tests
+#   <TRAINING_EXPERIMENT>:
+#     - <TEST_EXPERIMENT>
+# variables:                      # list of variables
+#   - <VARIABLE>
+# max_members: <N>                # positive integer
+#
+# Fields
+# ------
+# model        Name of the model. It must match the directory models/<MODEL>, where
+#              its predictions are read and its evaluation is written.
+# domains      Domains to evaluate: ALPS | NZ | SA, as defined in
+#              benchmark/datasets.yaml.
+# experiments  Train/test experiment pairs to evaluate, as defined in
+#              benchmark/experiments.yaml. Pairs not defined there are skipped
+#              with a warning. An empty test list (`<TRAINING_EXPERIMENT>:`)
+#              selects all the tests of that training experiment.
+# variables    Variables to evaluate: tasmax | pr.
+# max_members  Ensemble models only: maximum number of members, randomly selected
+#              with a fixed seed, used to compute the metrics. 1 scores a single
+#              random member. Ignored for deterministic models.
+#
+# All fields except `model` are optional; if missing, they default to all
+# domains, the experiments below, both variables and 5 members.
+
+model: EnScale
+domains:
+  - ALPS
+  - NZ
+  - SA
+experiments:
+  ESD_pseudo_reality:
+    - Perfect_cross_validation
+    - Perfect_extrapolation
+  Emulator_hist_future:
+    - Perfect_cross_validation
+    - Perfect_interpolation
+variables:
+  - tasmax
+  - pr
+max_members: 5

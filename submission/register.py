@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
-Register an approved submission: write `data/<MODEL>/metadata.yaml` and
-`data/<MODEL>/config.yaml` from the body of its submission issue.
+Register an approved submission: write `models/<MODEL>/metadata.yaml` and
+`models/<MODEL>/config.yaml` from the body of its submission issue.
 
 Run by the workflow `.github/workflows/submission.yml` when a maintainer adds the
 label `Approved submission` to a submission issue. The issue body is the markdown
@@ -29,10 +29,10 @@ Usage
     ISSUE_BODY="$(cat body.md)" ISSUE_NUMBER=42 ISSUE_CREATED_AT=2026-11-13T10:00:00Z \\
         python submission/register.py --comment-file comment.md
     python submission/register.py --body-file body.md --issue 42 \\
-        --created-at 2026-11-13 --data-dir /tmp/data      # local test
+        --created-at 2026-11-13 --models-dir /tmp/models  # local test
 
 The exit code is 1 (with a message) if the issue is invalid: a required field is
-empty, `emulator_id` is not a valid directory name, or `data/<MODEL>/` exists.
+empty, `emulator_id` is not a valid directory name, or `models/<MODEL>/` exists.
 """
 from __future__ import annotations
 
@@ -49,6 +49,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 FORM_FILE = ROOT_DIR / ".github" / "ISSUE_TEMPLATE" / "ml_benchmark_submission.yaml"
 METADATA_TEMPLATE = ROOT_DIR / "submission" / "metadata_template.yaml"
 CONFIG_TEMPLATE = ROOT_DIR / "evaluation" / "config_template.yaml"
+MODELS_DIR = ROOT_DIR / "models"
 DEFAULT_REPOSITORY = "WCRP-CORDEX/ml-benchmark"
 
 NO_RESPONSE = "_No response_"
@@ -270,7 +271,7 @@ def comment_text(model: str, issue: int, blind: bool | None, repository: str) ->
     Parameters
     ----------
     model : str
-        Emulator id (name of `data/<model>/` and of the branch `submission/<model>`).
+        Emulator id (name of `models/<model>/` and of the branch `submission/<model>`).
     issue : int
         Number of the submission issue.
     blind : bool or None
@@ -281,8 +282,8 @@ def comment_text(model: str, issue: int, blind: bool | None, repository: str) ->
     branch = f"submission/{model}"
     intro = (
         f"Your submission has been approved and registered. The branch `{branch}`"
-        f" now holds `data/{model}/metadata.yaml` (from this issue) and"
-        f" `data/{model}/config.yaml` (evaluation settings). Please check the"
+        f" now holds `models/{model}/metadata.yaml` (from this issue) and"
+        f" `models/{model}/config.yaml` (evaluation settings). Please check the"
         " metadata; corrections can be made in the pull request.\n\n"
     )
     if blind:
@@ -306,27 +307,28 @@ def comment_text(model: str, issue: int, blind: bool | None, repository: str) ->
    git switch -c {branch} upstream/{branch}
    ```
 
-2. Copy your predictions to `data/{model}/predictions/` (they are not versioned),
+2. Copy your predictions to `models/{model}/predictions/` (they are not versioned),
    then check and evaluate them:
 
    ```bash
-   pixi run validate data/{model}/predictions
-   pixi run evaluate -c data/{model}/config.yaml
+   pixi run check-predictions models/{model}/predictions
+   pixi run evaluate -c models/{model}/config.yaml
+   pixi run check-evauation models/{model}/config.yaml
    ```
 
 3. Commit the evaluation (`metrics_summary.json` files) and push it to your fork:
 
    ```bash
-   git add data/{model}/evaluation/*/*/metrics_summary.json
+   git add models/{model}/evaluation/*/*/metrics_summary.json
    git commit -m "Add evaluation of {model}"
    git push origin {branch}
    ```
 
 4. Open a pull request from `{branch}` of your fork into `main` of
-   `{repository}`, and write `Closes #{issue}` in its description.
+   `{repository}`, and mention #{issue} in its description.
 
 The pull request shows a preview of the models table and the scoreboards. Once it
-is merged, your model appears on the benchmark website.
+is merged, your model appears on the benchmark website and this issue is closed.
 """
 
 
@@ -351,8 +353,8 @@ def parse_args() -> argparse.Namespace:
         help="Date the issue was opened, ISO 8601 (default: ISSUE_CREATED_AT).",
     )
     parser.add_argument(
-        "--data-dir", type=Path, default=ROOT_DIR / "data",
-        help="Directory where data/<MODEL>/ is created (default: data/).",
+        "--models-dir", type=Path, default=MODELS_DIR,
+        help="Directory where <MODEL>/ is created (default: models/).",
     )
     parser.add_argument(
         "--comment-file", type=Path,
@@ -387,7 +389,7 @@ def main() -> None:
             approved=dt.datetime.now(dt.timezone.utc).date(),
         )
         model = metadata["emulator_id"]
-        model_dir = args.data_dir / model
+        model_dir = args.models_dir / model
         if model_dir.exists():
             raise RegistrationError(f"{model_dir} already exists.")
         config = config_text(model)
