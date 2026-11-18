@@ -5,15 +5,18 @@
  * `<div class="scoreboard">`. Sortable header cells carry `data-col` (index of
  * their column in the body) and, for metrics, `data-best` ("asc" or "desc": the
  * direction that puts the best values first). Body cells carry the exact,
- * unrounded values: `data-sort` (Type column) or `data-values` (one value per
- * test, separated by ";", empty if missing). The table's `data-tests` lists the
- * test names, in the order of the values.
+ * unrounded values: `data-sort` (Type and Date columns: type rank, date as
+ * YYYYMMDD; empty if missing) or `data-values` (one value per test, separated
+ * by ";", empty if missing). The table's `data-tests` lists the test names, in
+ * the order of the values. Headers without `data-best` (Type, Date) carry
+ * `data-titles`: the tooltips of their ascending and descending sort, ";"-separated,
+ * and `data-first="desc"` if their first click sorts descending (Date).
  *
  * Clicking a metric cycles through the tests, always with the best values
  * first: test 1, test 2, ... Clicking Type toggles between the
  * generated order (grouped by type, alphabetical within a type) and the types
- * in reverse order. Missing values always go last, and ties keep the
- * generated order.
+ * in reverse order; clicking Date toggles between newest and oldest first.
+ * Missing values always go last, and ties keep the generated order.
  */
 
 function setupScoreboard(table) {
@@ -68,11 +71,14 @@ function setupScoreboard(table) {
       active = header;
       const col = Number(header.dataset.col);
 
-      if (!header.dataset.best) {  // Type column: generated order or reversed
-        const reversed = step % 2 === 1;
+      // Type or Date: toggle the direction; the first click sorts ascending,
+      // or descending if the header has data-first="desc"
+      if (!header.dataset.best) {
+        const firstDesc = header.dataset.first === "desc";
+        const reversed = (step % 2 === 1) !== firstDesc;
+        const titles = (header.dataset.titles || "Ascending;Descending").split(";");
         sort(col, null, reversed);
-        mark(header, reversed ? "▼" : "▲",
-          reversed ? "Types in reverse order" : "Grouped by type");
+        mark(header, reversed ? "▼" : "▲", titles[reversed ? 1 : 0]);
         return;
       }
 

@@ -31,11 +31,13 @@ Lower is better for all metrics except PSS. Each cell shows  the two tests of th
 training experiment, separated by a slash in the order given in  the column header; 
 the best value of each test is in bold, and – marks results not  available. 
 Models using orography as a predictor are in italics. Type: 
-Det. = deterministic, Gen. = generative.
+Det. = deterministic, Gen. = generative. Date: month and year the submission was
+approved (hover over it for the full date).
 
 Click a metric to sort the models, best first: the first click sorts by the first test,
-the next one by the second test; missing values always go last. Click "Type" to reset
-the original sorting.
+the next one by the second test; missing values always go last. Click "Date" to sort
+the models from newest to oldest submission (click again to reverse it). Click "Type"
+to reset the original sorting.
 
 ### Maximum temperature
 
@@ -44,22 +46,24 @@ the original sorting.
   <thead>
     <tr>
       <th rowspan="2"></th>
-      <th rowspan="2" class="sortable" data-col="1">Type</th>
+      <th rowspan="2" class="sortable" data-col="1" data-titles="Grouped by type;Types in reverse order">Type</th>
+      <th rowspan="2" class="sortable" data-col="2" data-first="desc" data-titles="Oldest first;Newest first">Date</th>
       <th colspan="6">Perfect cross-validation / Perfect interpolation</th>
     </tr>
     <tr>
-      <th class="sortable" data-col="2" data-best="asc">RMSE</th>
-      <th class="sortable" data-col="3" data-best="asc">Clim. Mean</th>
-      <th class="sortable" data-col="4" data-best="asc">TXx</th>
-      <th class="sortable" data-col="5" data-best="asc">RALSD</th>
-      <th class="sortable" data-col="6" data-best="desc">PSS</th>
-      <th class="sortable" data-col="7" data-best="asc">IAV</th>
+      <th class="sortable" data-col="3" data-best="asc">RMSE</th>
+      <th class="sortable" data-col="4" data-best="asc">Clim. Mean</th>
+      <th class="sortable" data-col="5" data-best="asc">TXx</th>
+      <th class="sortable" data-col="6" data-best="asc">RALSD</th>
+      <th class="sortable" data-col="7" data-best="desc">PSS</th>
+      <th class="sortable" data-col="8" data-best="asc">IAV</th>
     </tr>
   </thead>
   <tbody>
     <tr class="model-type--deterministic">
       <td>ANN</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="1.6830586592356365;1.7321206331253052">1.68 / 1.73</td>
       <td align="right" data-values="0.17464033017555872;0.24793538451194763">0.17 / 0.25</td>
       <td align="right" data-values="1.0973743001619976;1.0744243264198303">1.10 / 1.07</td>
@@ -70,6 +74,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>ANN-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="1.492307424545288;1.5457018613815308">1.49 / 1.55</td>
       <td align="right" data-values="0.18929233153661093;0.22611087560653687">0.19 / 0.23</td>
       <td align="right" data-values="0.9595262209574381;0.9536252419153849">0.96 / 0.95</td>
@@ -80,6 +85,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>CNRM-UNeT</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260316" title="2026-03-16">Mar '26</td>
       <td align="right" data-values="1.231588363647461;1.2767112453778584">1.23 / 1.28</td>
       <td align="right" data-values="0.17152079939842224;0.18880551060040793">0.17 / 0.19</td>
       <td align="right" data-values="0.4774804313977559;0.4608455499013265">0.48 / 0.46</td>
@@ -90,6 +96,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>DeepESD-IFCAv1</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="1.3863863945007324;1.4195372660954793">1.39 / 1.42</td>
       <td align="right" data-values="0.17646176119645438;0.20807525515556335">0.18 / 0.21</td>
       <td align="right" data-values="0.5792138973871866;0.6062005360921224">0.58 / 0.61</td>
@@ -100,6 +107,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>DeepESD-IFCAv1-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="1.3515670696894329;1.3738036553064983">1.35 / 1.37</td>
       <td align="right" data-values="0.21157047152519226;0.19579372306664786">0.21 / 0.20</td>
       <td align="right" data-values="0.6096333662668864;0.5812541643778483">0.61 / 0.58</td>
@@ -110,6 +118,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>DeepESD_IDL</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="6.860821858931764;7.412595337978604">6.86 / 7.41</td>
       <td align="right" data-values="1.2219776906323998;1.512992108629838">1.22 / 1.51</td>
       <td align="right" data-values="4.795302204756687;4.46792785031721">4.80 / 4.47</td>
@@ -120,6 +129,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>DeepSensor</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260316" title="2026-03-16">Mar '26</td>
       <td align="right" data-values="2.0602516418499452;2.1182561856824247">2.06 / 2.12</td>
       <td align="right" data-values="0.5800630698601404;0.6196070810159048">0.58 / 0.62</td>
       <td align="right" data-values="1.4275661706924438;1.5452395677566528">1.43 / 1.55</td>
@@ -130,6 +140,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>DeepSensor-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260314" title="2026-03-14">Mar '26</td>
       <td align="right" data-values="1.49082616964976;1.6688205798467">1.49 / 1.67</td>
       <td align="right" data-values="0.3503517707188924;0.36324986318747204">0.35 / 0.36</td>
       <td align="right" data-values="0.7119500239690145;0.7876164714495341">0.71 / 0.79</td>
@@ -140,6 +151,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>DetUNet</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="1.5616759173252837;1.325341589122431">1.56 / 1.33</td>
       <td align="right" data-values="0.8326499362786611;0.43705377479394275">0.83 / 0.44</td>
       <td align="right" data-values="0.8809303840001425;0.5396677851676941">0.88 / 0.54</td>
@@ -150,6 +162,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>DetUNet-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="1.6058613459269206;1.312424858411153">1.61 / 1.31</td>
       <td align="right" data-values="0.906455839673678;0.4868486473957698">0.91 / 0.49</td>
       <td align="right" data-values="0.8741408487161001;0.4802906314531962">0.87 / 0.48</td>
@@ -160,6 +173,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>DetUNet-v2</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="">–</td>
       <td align="right" data-values="1.3766377369562786;1.34231170018514">1.38 / 1.34</td>
       <td align="right" data-values="0.2965490718682607;0.22343100607395172">0.30 / 0.22</td>
       <td align="right" data-values="0.5216377377510071;0.5084997415542603">0.52 / 0.51</td>
@@ -170,6 +184,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>DetUNet-v2-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="">–</td>
       <td align="right" data-values="1.3571778535842896;1.3179703553517659">1.36 / 1.32</td>
       <td align="right" data-values="0.3328949958086014;0.24375895659128824">0.33 / 0.24</td>
       <td align="right" data-values="0.4988929828008016;0.5011893212795258">0.50 / 0.50</td>
@@ -180,6 +195,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>GNN4CD-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260421" title="2026-04-21">Apr '26</td>
       <td align="right" data-values="1.422563192841941;1.4674826261856235">1.42 / 1.47</td>
       <td align="right" data-values="0.28668789262353456;0.26103214941388964">0.29 / 0.26</td>
       <td align="right" data-values="0.6951207528511683;0.7262289848178626">0.70 / 0.73</td>
@@ -190,6 +206,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>ParamUNET</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="1.2333485343162478;1.2786582070961092">1.23 / 1.28</td>
       <td align="right" data-values="0.21040791273117065;0.21496490637461343">0.21 / 0.21</td>
       <td align="right" data-values="0.6425496439139048;0.7621541023254395">0.64 / 0.76</td>
@@ -200,6 +217,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>Prithvi-UNet</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260227" title="2026-02-27">Feb '26</td>
       <td align="right" data-values="1.4996894200642903;1.5197522640228271">1.50 / 1.52</td>
       <td align="right" data-values="0.30861084163188934;0.24384232858816782">0.31 / 0.24</td>
       <td align="right" data-values="0.7023860613505045;0.6777105728785197">0.70 / 0.68</td>
@@ -210,6 +228,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>Prithvi-UNet-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260304" title="2026-03-04">Mar '26</td>
       <td align="right" data-values="1.4327450912928898;1.450133720638507">1.43 / 1.45</td>
       <td align="right" data-values="0.5547696550687155;0.5350980659325918">0.55 / 0.54</td>
       <td align="right" data-values="0.708060065905253;0.7445298234621683">0.71 / 0.74</td>
@@ -220,6 +239,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>Rossby-UNet</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260316" title="2026-03-16">Mar '26</td>
       <td align="right" data-values="1.2730202873547871;1.3408726056416829">1.27 / 1.34</td>
       <td align="right" data-values="0.12235299746195476;0.10005602116386096">0.12 / 0.10</td>
       <td align="right" data-values="0.5414129992326101;0.4976498285929362">0.54 / 0.50</td>
@@ -230,6 +250,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>Rossby-UNet-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260316" title="2026-03-16">Mar '26</td>
       <td align="right" data-values="1.2088335553805034;1.2792427937189739">1.21 / 1.28</td>
       <td align="right" data-values="0.11477057635784149;0.11457355568806331">0.11 / 0.11</td>
       <td align="right" data-values="0.5218859910964966;0.5035544534524282">0.52 / 0.50</td>
@@ -240,6 +261,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>XGBoost_IDL</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="1.2505725131286558;1.2847632024900102">1.25 / 1.28</td>
       <td align="right" data-values="0.08415545049119211;0.11063485571893449">0.08 / 0.11</td>
       <td align="right" data-values="0.5503275320554774;0.5595173701333503">0.55 / 0.56</td>
@@ -250,6 +272,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>CorrDiff-TW1_NTNU-CWA</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260227" title="2026-02-27">Feb '26</td>
       <td align="right" data-values="1.1997745037078857;1.2434095342954">1.20 / 1.24</td>
       <td align="right" data-values="0.21248848736286163;0.23389535148938498">0.21 / 0.23</td>
       <td align="right" data-values="0.3409950832525889;0.40213977297147113">0.34 / 0.40</td>
@@ -260,6 +283,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>CorrDiff-TW1_NTNU-CWA-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260227" title="2026-02-27">Feb '26</td>
       <td align="right" data-values="1.2315934499104817;1.2768677473068237">1.23 / 1.28</td>
       <td align="right" data-values="0.22873130440711975;0.2443388799826304">0.23 / 0.24</td>
       <td align="right" data-values="0.3474116623401642;0.4018803536891937">0.35 / 0.40</td>
@@ -270,6 +294,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>DeepESDcrps_IFCAv2</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="">–</td>
       <td align="right" data-values="1.7563752730687459;1.7906169493993123">1.76 / 1.79</td>
       <td align="right" data-values="0.27506672342618305;0.2928739736477534">0.28 / 0.29</td>
       <td align="right" data-values="1.6517477830251057;1.880486289660136">1.65 / 1.88</td>
@@ -280,6 +305,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>DeepESDcrps_IFCAv2-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="">–</td>
       <td align="right" data-values="1.5972216129302979;1.616662820180257">1.60 / 1.62</td>
       <td align="right" data-values="0.2784108718236287;0.2288049558798472">0.28 / 0.23</td>
       <td align="right" data-values="1.1990195512771606;1.219784140586853">1.20 / 1.22</td>
@@ -290,6 +316,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>EnScale</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260314" title="2026-03-14">Mar '26</td>
       <td align="right" data-values="1.363424559434255;1.409231185913086">1.36 / 1.41</td>
       <td align="right" data-values="0.13304286201794943;0.13129607339700064">0.13 / 0.13</td>
       <td align="right" data-values="0.7426002025604248;0.8150296211242676">0.74 / 0.82</td>
@@ -300,6 +327,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>EnScale-linex</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260313" title="2026-03-13">Mar '26</td>
       <td align="right" data-values="1.3162242968877156;1.3553714950879414">1.32 / 1.36</td>
       <td align="right" data-values="0.10522252817948659;0.11166958883404732">0.11 / 0.11</td>
       <td align="right" data-values="0.7298771341641744;0.7768604159355164">0.73 / 0.78</td>
@@ -310,6 +338,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>EnScale-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260313" title="2026-03-13">Mar '26</td>
       <td align="right" data-values="1.3686038255691528;1.4134421745936077">1.37 / 1.41</td>
       <td align="right" data-values="0.13413029164075851;0.1330035999417305">0.13 / 0.13</td>
       <td align="right" data-values="0.7396165529886881;0.7891072432200114">0.74 / 0.79</td>
@@ -320,6 +349,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>FlowMatching-v1</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="1.2211867372194927;1.264423171679179">1.22 / 1.26</td>
       <td align="right" data-values="0.2522862007220586;0.28852514425913495">0.25 / 0.29</td>
       <td align="right" data-values="0.5305103460947672;0.5525201956431071">0.53 / 0.55</td>
@@ -330,6 +360,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>FlowMatching-v1-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="1.238049606482188;1.260107199350993">1.24 / 1.26</td>
       <td align="right" data-values="0.2799422045548757;0.26711084445317584">0.28 / 0.27</td>
       <td align="right" data-values="0.5010092953840891;0.5422133604685465">0.50 / 0.54</td>
@@ -340,6 +371,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>ParamDiffusion-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260416" title="2026-04-16">Apr '26</td>
       <td align="right" data-values="1.1726073026657104;1.212101896603902">1.17 / 1.21</td>
       <td align="right" data-values="0.07686500996351242;0.08022217576702435">0.08 / <b>0.08</b></td>
       <td align="right" data-values="0.2705682615439097;0.31830844283103943"><b>0.27</b> / <b>0.32</b></td>
@@ -350,6 +382,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>RCMFlow-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260415" title="2026-04-15">Apr '26</td>
       <td align="right" data-values="1.6679304440816243;1.3873124519983928">1.67 / 1.39</td>
       <td align="right" data-values="1.0221900641918182;0.6480198502540588">1.02 / 0.65</td>
       <td align="right" data-values="1.5829765399297078;1.170960267384847">1.58 / 1.17</td>
@@ -360,6 +393,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>RCMGEM-mv-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="1.0822254418200978;1.0987375053875532"><b>1.08</b> / <b>1.10</b></td>
       <td align="right" data-values="0.07448490005465443;0.09714682449669314"><b>0.07</b> / 0.10</td>
       <td align="right" data-values="0.5479071648048544;0.5778231350423458">0.55 / 0.58</td>
@@ -370,6 +404,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>ResGAN</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260310" title="2026-03-10">Mar '26</td>
       <td align="right" data-values="1.6283046404520671;1.3977953990300496">1.63 / 1.40</td>
       <td align="right" data-values="0.8458971679210663;0.44999687870343524">0.85 / 0.45</td>
       <td align="right" data-values="1.187570850054423;0.752411017815272">1.19 / 0.75</td>
@@ -380,6 +415,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>ResGAN-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260310" title="2026-03-10">Mar '26</td>
       <td align="right" data-values="1.656510353088379;1.3833726247151692">1.66 / 1.38</td>
       <td align="right" data-values="0.8903725842634836;0.46587860584259033">0.89 / 0.47</td>
       <td align="right" data-values="1.1481877863407135;0.69749187429746">1.15 / 0.70</td>
@@ -390,6 +426,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>SpaGAN</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="3.1625224351882935;3.1333936850229898">3.16 / 3.13</td>
       <td align="right" data-values="1.8083827594916027;1.7284465432167053">1.81 / 1.73</td>
       <td align="right" data-values="1.900909314552943;2.0104011992613473">1.90 / 2.01</td>
@@ -400,6 +437,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>SpaGAN-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260313" title="2026-03-13">Mar '26</td>
       <td align="right" data-values="3.017232875029246;3.0334695974985757">3.02 / 3.03</td>
       <td align="right" data-values="1.6938813428084056;1.5961385816335678">1.69 / 1.60</td>
       <td align="right" data-values="1.683348000049591;1.9527645309766133">1.68 / 1.95</td>
@@ -410,6 +448,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>UiBCorrDiff-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="1.1945298314094543;1.2214231292406719">1.19 / 1.22</td>
       <td align="right" data-values="0.311800017952919;0.3168712556362152">0.31 / 0.32</td>
       <td align="right" data-values="0.5195852716763815;0.5614286462465922">0.52 / 0.56</td>
@@ -420,6 +459,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>ViT-IFCAv1<sup>†</sup></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260330" title="2026-03-30">Mar '26</td>
       <td align="right" data-values="1.1628387570381165;1.234756201505661">1.16 / 1.23</td>
       <td align="right" data-values="0.22138038277626038;0.273046039044857">0.22 / 0.27</td>
       <td align="right" data-values="0.6609870195388794;0.812747597694397">0.66 / 0.81</td>
@@ -430,6 +470,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>ViT-IFCAv1-orog</i><sup>†</sup></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260330" title="2026-03-30">Mar '26</td>
       <td align="right" data-values="1.1559906005859375;1.22063547372818">1.16 / 1.22</td>
       <td align="right" data-values="0.16909269243478775;0.19204996526241302">0.17 / 0.19</td>
       <td align="right" data-values="0.6279580295085907;0.7270094752311707">0.63 / 0.73</td>
@@ -450,22 +491,24 @@ the original sorting.
   <thead>
     <tr>
       <th rowspan="2"></th>
-      <th rowspan="2" class="sortable" data-col="1">Type</th>
+      <th rowspan="2" class="sortable" data-col="1" data-titles="Grouped by type;Types in reverse order">Type</th>
+      <th rowspan="2" class="sortable" data-col="2" data-first="desc" data-titles="Oldest first;Newest first">Date</th>
       <th colspan="6">Perfect cross-validation / Perfect interpolation</th>
     </tr>
     <tr>
-      <th class="sortable" data-col="2" data-best="asc">RMSE</th>
-      <th class="sortable" data-col="3" data-best="asc">Clim. Mean</th>
-      <th class="sortable" data-col="4" data-best="asc">SDII</th>
-      <th class="sortable" data-col="5" data-best="asc">Rx1day</th>
-      <th class="sortable" data-col="6" data-best="asc">RALSD</th>
-      <th class="sortable" data-col="7" data-best="asc">LHD</th>
+      <th class="sortable" data-col="3" data-best="asc">RMSE</th>
+      <th class="sortable" data-col="4" data-best="asc">Clim. Mean</th>
+      <th class="sortable" data-col="5" data-best="asc">SDII</th>
+      <th class="sortable" data-col="6" data-best="asc">Rx1day</th>
+      <th class="sortable" data-col="7" data-best="asc">RALSD</th>
+      <th class="sortable" data-col="8" data-best="asc">LHD</th>
     </tr>
   </thead>
   <tbody>
     <tr class="model-type--deterministic">
       <td>ANN</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="6.554669163025067;7.376252906113758">6.55 / 7.38</td>
       <td align="right" data-values="0.1805083345169345;0.22956344968635858">0.18 / 0.23</td>
       <td align="right" data-values="2.530112124126209;2.9304282511969677">2.53 / 2.93</td>
@@ -476,6 +519,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>ANN-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="6.565881371368415;7.394348857280593">6.57 / 7.39</td>
       <td align="right" data-values="0.22306923453355906;0.2882679261972279">0.22 / 0.29</td>
       <td align="right" data-values="2.6253566300394;3.031466750253174">2.63 / 3.03</td>
@@ -486,6 +530,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>CNRM-UNeT</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260316" title="2026-03-16">Mar '26</td>
       <td align="right" data-values="6.404775540417681;7.150773084811495">6.40 / 7.15</td>
       <td align="right" data-values="0.4850290093621888;0.5477565923364445">0.49 / 0.55</td>
       <td align="right" data-values="1.0034702203266663;1.3189974726865925">1.00 / 1.32</td>
@@ -496,6 +541,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>DeepESD-IFCAv1</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="5.913387842013495;6.676235630864">5.91 / 6.68</td>
       <td align="right" data-values="0.3084148215828337;0.33016814265194366">0.31 / 0.33</td>
       <td align="right" data-values="1.298906389382824;1.5166160331197354">1.30 / 1.52</td>
@@ -506,6 +552,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>DeepESD-IFCAv1-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="5.915761984151175;6.671965298834664">5.92 / 6.67</td>
       <td align="right" data-values="0.30729946140625625;0.35023654414706273">0.31 / 0.35</td>
       <td align="right" data-values="1.2938990628473115;1.5236744650476266">1.29 / 1.52</td>
@@ -516,6 +563,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>DeepESD_IDL</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="8.817043459304285;9.830586204695472">8.82 / 9.83</td>
       <td align="right" data-values="0.15235408032407508;0.15196683546248946">0.15 / 0.15</td>
       <td align="right" data-values="0.49600664785140114;0.63271493775685">0.50 / 0.63</td>
@@ -526,6 +574,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>DeepSensor</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260316" title="2026-03-16">Mar '26</td>
       <td align="right" data-values="7.260489514852134;8.028021984358666">7.26 / 8.03</td>
       <td align="right" data-values="0.7148787557185182;0.775327458569965">0.71 / 0.78</td>
       <td align="right" data-values="2.2995264710388557;2.436166161323273">2.30 / 2.44</td>
@@ -536,6 +585,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>DeepSensor-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260314" title="2026-03-14">Mar '26</td>
       <td align="right" data-values="6.6366677907180005;7.483209810593614">6.64 / 7.48</td>
       <td align="right" data-values="0.6098151499668035;0.6663679306615066">0.61 / 0.67</td>
       <td align="right" data-values="3.0883362189443453;3.4603330866243276">3.09 / 3.46</td>
@@ -546,6 +596,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>DetUNet</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="7.100514647155865;7.883544334171898">7.10 / 7.88</td>
       <td align="right" data-values="0.3986354848527764;0.5046510326043682">0.40 / 0.50</td>
       <td align="right" data-values="1.3768707073275595;1.7370136254688024">1.38 / 1.74</td>
@@ -556,6 +607,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>DetUNet-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="6.889938524428037;7.588258361595578">6.89 / 7.59</td>
       <td align="right" data-values="0.29036115759003983;0.379368944315015">0.29 / 0.38</td>
       <td align="right" data-values="1.1477219807597903;1.5074284795629944">1.15 / 1.51</td>
@@ -566,6 +618,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>DetUNet-v2</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="">–</td>
       <td align="right" data-values="6.8844065283934555;7.644334111733642">6.88 / 7.64</td>
       <td align="right" data-values="0.5762883396604305;0.649303909624286">0.58 / 0.65</td>
       <td align="right" data-values="1.713869215012332;2.017573188664634">1.71 / 2.02</td>
@@ -576,6 +629,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>DetUNet-v2-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="">–</td>
       <td align="right" data-values="6.738148213681268;7.583020474344175">6.74 / 7.58</td>
       <td align="right" data-values="0.5011457785697305;0.5705947088222498">0.50 / 0.57</td>
       <td align="right" data-values="1.5541386371164005;1.8329305238686209">1.55 / 1.83</td>
@@ -586,6 +640,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>GNN4CD-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260421" title="2026-04-21">Apr '26</td>
       <td align="right" data-values="6.560533946086672;7.424700588243902">6.56 / 7.42</td>
       <td align="right" data-values="0.43829896739515295;0.42518597024848687">0.44 / 0.43</td>
       <td align="right" data-values="2.473749176605766;2.555112180618518">2.47 / 2.56</td>
@@ -596,6 +651,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>ParamUNET</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="6.218488585743698;7.07031227167183">6.22 / 7.07</td>
       <td align="right" data-values="0.37770125269802773;0.3968103210958483">0.38 / 0.40</td>
       <td align="right" data-values="1.6536141433115485;1.8708248749078502">1.65 / 1.87</td>
@@ -606,6 +662,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>Prithvi-UNet</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260227" title="2026-02-27">Feb '26</td>
       <td align="right" data-values="6.6412393946512545;7.459298685309882">6.64 / 7.46</td>
       <td align="right" data-values="0.7230457590649894;0.8169195243995637">0.72 / 0.82</td>
       <td align="right" data-values="3.029751191883262;3.503585731054992">3.03 / 3.50</td>
@@ -616,6 +673,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>Prithvi-UNet-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260304" title="2026-03-04">Mar '26</td>
       <td align="right" data-values="6.602663223408808;7.514007425763486">6.60 / 7.51</td>
       <td align="right" data-values="0.6185093248555765;0.708772099026434">0.62 / 0.71</td>
       <td align="right" data-values="3.1969213521480273;3.717358205208759">3.20 / 3.72</td>
@@ -626,6 +684,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>Rossby-UNet</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260316" title="2026-03-16">Mar '26</td>
       <td align="right" data-values="6.289636084188829;7.041874504680917">6.29 / 7.04</td>
       <td align="right" data-values="0.1780132939852198;0.1572705703619618">0.18 / 0.16</td>
       <td align="right" data-values="2.5451908294591106;2.831793178740877">2.55 / 2.83</td>
@@ -636,6 +695,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td><i>Rossby-UNet-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260316" title="2026-03-16">Mar '26</td>
       <td align="right" data-values="6.1567210122101805;6.942320878222858">6.16 / 6.94</td>
       <td align="right" data-values="0.16022792886639445;0.14188833025075956">0.16 / 0.14</td>
       <td align="right" data-values="2.542157959264431;2.8268129998399396">2.54 / 2.83</td>
@@ -646,6 +706,7 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>XGBoost_IDL</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="6.456791355624236;7.299730562787491">6.46 / 7.30</td>
       <td align="right" data-values="0.1339547310774647;0.1093196381690645">0.13 / <b>0.11</b></td>
       <td align="right" data-values="2.967674617260604;3.382158847760008">2.97 / 3.38</td>
@@ -656,6 +717,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>CorrDiff-TW1_NTNU-CWA</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260227" title="2026-02-27">Feb '26</td>
       <td align="right" data-values="5.7439460035105965;6.540599158048859"><b>5.74</b> / <b>6.54</b></td>
       <td align="right" data-values="0.6270071233567318;0.7278951680897601">0.63 / 0.73</td>
       <td align="right" data-values="1.8217012051154864;2.176029897184303">1.82 / 2.18</td>
@@ -666,6 +728,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>CorrDiff-TW1_NTNU-CWA-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260227" title="2026-02-27">Feb '26</td>
       <td align="right" data-values="5.7734355270964715;6.569635965154101">5.77 / 6.57</td>
       <td align="right" data-values="0.6288189029976041;0.7355390303905042">0.63 / 0.74</td>
       <td align="right" data-values="1.81847972403819;2.1683479611342795">1.82 / 2.17</td>
@@ -676,6 +739,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>DeepESDcrps_IFCAv2</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="">–</td>
       <td align="right" data-values="6.401203705933533;7.171578263546848">6.40 / 7.17</td>
       <td align="right" data-values="0.1507807734610739;0.17023699975201456">0.15 / 0.17</td>
       <td align="right" data-values="0.6988362426009379;0.7407095774673733">0.70 / 0.74</td>
@@ -686,6 +750,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>DeepESDcrps_IFCAv2-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="">–</td>
       <td align="right" data-values="6.593841729744551;7.362558998239735">6.59 / 7.36</td>
       <td align="right" data-values="0.5740512136125714;0.5818609134864278">0.57 / 0.58</td>
       <td align="right" data-values="1.1500064998189423;1.0271111166052893">1.15 / 1.03</td>
@@ -696,6 +761,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>EnScale</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260314" title="2026-03-14">Mar '26</td>
       <td align="right" data-values="6.998337478509459;7.715976391604229">7.00 / 7.72</td>
       <td align="right" data-values="0.24148236085086713;0.21872468807646142">0.24 / 0.22</td>
       <td align="right" data-values="0.6784733222480304;0.7886967042156559">0.68 / 0.79</td>
@@ -706,6 +772,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>EnScale-linex</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260313" title="2026-03-13">Mar '26</td>
       <td align="right" data-values="6.760057512305764;7.522115442255784">6.76 / 7.52</td>
       <td align="right" data-values="0.1992595440479229;0.21977033343878763">0.20 / 0.22</td>
       <td align="right" data-values="2.048060127601619;2.5509452192661626">2.05 / 2.55</td>
@@ -716,6 +783,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>EnScale-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260313" title="2026-03-13">Mar '26</td>
       <td align="right" data-values="6.756066586049729;7.505514228497738">6.76 / 7.51</td>
       <td align="right" data-values="0.21478273732099798;0.22055131928799154">0.21 / 0.22</td>
       <td align="right" data-values="0.6567526126568527;0.8890469817677294">0.66 / 0.89</td>
@@ -726,6 +794,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>FlowMatching-v1</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="6.508852301737985;7.324393329434845">6.51 / 7.32</td>
       <td align="right" data-values="0.5224638865723542;0.5258662344313999">0.52 / 0.53</td>
       <td align="right" data-values="0.9865105117265015;1.088365451883093">0.99 / 1.09</td>
@@ -736,6 +805,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>FlowMatching-v1-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="6.347851420894318;7.1990153963856685">6.35 / 7.20</td>
       <td align="right" data-values="0.41412498186483027;0.46434444725384">0.41 / 0.46</td>
       <td align="right" data-values="0.9098539872862256;1.0965235449472372">0.91 / 1.10</td>
@@ -746,6 +816,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>ParamDiffusion-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260416" title="2026-04-16">Apr '26</td>
       <td align="right" data-values="6.166394011245081;6.984861592796584">6.17 / 6.98</td>
       <td align="right" data-values="0.10673069707502314;0.11404133874943108"><b>0.11</b> / 0.11</td>
       <td align="right" data-values="0.2988011154961335;0.3635838540652379">0.30 / <b>0.36</b></td>
@@ -756,6 +827,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>RCMFlow-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260415" title="2026-04-15">Apr '26</td>
       <td align="right" data-values="6.241564947550984;7.003300894531814">6.24 / 7.00</td>
       <td align="right" data-values="0.19529020270465378;0.15085978439660033">0.20 / 0.15</td>
       <td align="right" data-values="0.3596231613213048;0.4454544510826344">0.36 / 0.45</td>
@@ -766,6 +838,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>RCMGEM-mv-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="5.798465051862277;6.598251531665024">5.80 / 6.60</td>
       <td align="right" data-values="0.13188853769639727;0.12601367276577127">0.13 / 0.13</td>
       <td align="right" data-values="0.29274518951804873;0.370587275312205"><b>0.29</b> / 0.37</td>
@@ -776,6 +849,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>ResGAN</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260310" title="2026-03-10">Mar '26</td>
       <td align="right" data-values="7.295408624066597;8.009175763002625">7.30 / 8.01</td>
       <td align="right" data-values="0.24755539839781085;0.22337762963562743">0.25 / 0.22</td>
       <td align="right" data-values="0.5034363336683868;0.6462807755311857">0.50 / 0.65</td>
@@ -786,6 +860,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>ResGAN-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260310" title="2026-03-10">Mar '26</td>
       <td align="right" data-values="7.375040872639971;8.061634705892974">7.38 / 8.06</td>
       <td align="right" data-values="0.23592161088924313;0.16432896174854775">0.24 / 0.16</td>
       <td align="right" data-values="0.4663036243101964;0.553354251013006">0.47 / 0.55</td>
@@ -796,6 +871,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>SpaGAN</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260318" title="2026-03-18">Mar '26</td>
       <td align="right" data-values="7.11367173586424;7.861937911059332">7.11 / 7.86</td>
       <td align="right" data-values="0.7812091758024474;0.7817120857659203">0.78 / 0.78</td>
       <td align="right" data-values="1.8451150233353182;1.9755783910226634">1.85 / 1.98</td>
@@ -806,6 +882,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>SpaGAN-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260313" title="2026-03-13">Mar '26</td>
       <td align="right" data-values="6.947573161089244;7.7330831024925795">6.95 / 7.73</td>
       <td align="right" data-values="0.6259723882705498;0.6494694084327823">0.63 / 0.65</td>
       <td align="right" data-values="1.5287997578513057;1.7660289908322362">1.53 / 1.77</td>
@@ -816,6 +893,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>UiBCorrDiff-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260224" title="2026-02-24">Feb '26</td>
       <td align="right" data-values="6.134123760437485;6.936053122279335">6.13 / 6.94</td>
       <td align="right" data-values="1.0528302535128458;1.1234864573036842">1.05 / 1.12</td>
       <td align="right" data-values="1.9202403520975235;2.203824106679735">1.92 / 2.20</td>
@@ -826,6 +904,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>ViT-IFCAv1<sup>†</sup></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260330" title="2026-03-30">Mar '26</td>
       <td align="right" data-values="7.469111544656842;8.61285145182324">7.47 / 8.61</td>
       <td align="right" data-values="0.22493179789555415;0.2668755932581395">0.22 / 0.27</td>
       <td align="right" data-values="1.0635347315169452;1.3875082572065502">1.06 / 1.39</td>
@@ -836,6 +915,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td><i>ViT-IFCAv1-orog</i><sup>†</sup></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
+      <td align="center" data-sort="20260330" title="2026-03-30">Mar '26</td>
       <td align="right" data-values="7.453541168856844;8.56491964321403">7.45 / 8.56</td>
       <td align="right" data-values="0.23031306718135336;0.23848285752060505">0.23 / 0.24</td>
       <td align="right" data-values="0.8249793800548189;0.965814348291318">0.82 / 0.97</td>
