@@ -15,6 +15,7 @@ Usage
     ./evaluate.py -c config.yaml --overwrite
     ./evaluate.py -c config.yaml --aggregate-only
     ./evaluate.py -c config.yaml --keep-domain-files
+    ./evaluate.py -c config.yaml --use-dask
 """
 from __future__ import annotations
 
@@ -79,7 +80,7 @@ def parse_args() -> argparse.Namespace:
     -------
     argparse.Namespace
         Arguments, with the attributes `config_file`, `overwrite`,
-        `aggregate_only` and `keep_domain_files`.
+        `aggregate_only`, `keep_domain_files` and `use_dask`.
     """
     parser = argparse.ArgumentParser(
         description="Compute the benchmark metrics of a model."
@@ -108,6 +109,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="keep the per-domain metric files after writing the summary "
         "(by default they are deleted)",
+    )
+    parser.add_argument(
+        "--use-dask",
+        action="store_true",
+        help="run `ml-eval benchmark` with Dask (`--use-dask true`): data are read "
+        "in chunks, which lowers memory use for large ensembles (default: off)",
     )
     return parser.parse_args()
 
@@ -174,6 +181,7 @@ def evaluate_experiment(
     attrs: dict,
     dataset_mapping: dict,
     overwrite: bool = False,
+    use_dask: bool = False,
 ) -> int:
     """
     Run `ml-eval benchmark` for every domain and variable of one experiment pair.
@@ -198,6 +206,10 @@ def evaluate_experiment(
     overwrite : bool, default False
         Recompute per-domain metric files that already exist. If False, they are
         reused.
+    use_dask : bool, default False
+        Pass `--use-dask true` to `ml-eval benchmark`, which then opens the files
+        in Dask chunks and computes on a local Dask cluster instead of reading
+        whole arrays into memory.
 
     Returns
     -------
@@ -247,6 +259,8 @@ def evaluate_experiment(
                 "--output", str(out_file),
                 "--max-members", str(config.max_members),
             ]
+            if use_dask:
+                cmd += ["--use-dask", "true"]
             result = subprocess.run(cmd)
             if result.returncode != 0:
                 print(f"[evaluate] WARNING | Failed ({result.returncode}): {' '.join(cmd)}")
@@ -387,6 +401,7 @@ def main() -> None:
                     attrs,
                     dataset_mapping,
                     overwrite=args.overwrite,
+                    use_dask=args.use_dask,
                 )
 
             aggregate_experiment(

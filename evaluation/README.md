@@ -58,6 +58,7 @@ Useful options:
 | `-o`, `--overwrite` | Recompute experiments that already have a summary (skipped by default). |
 | `--keep-domain-files` | Keep the per-domain metric files (deleted by default once the summary is written). |
 | `--aggregate-only` | Do not run `ml-eval` on each domain; only rebuild the summaries from the kept domain files. |
+| `--use-dask` | Run `ml-eval benchmark` with Dask, which reads the data in chunks; use it if an evaluation runs out of memory (off by default). |
 
 **5. Check the evaluation.** Make sure that every experiment in the configuration has a summary covering all its variables and domains:
 
