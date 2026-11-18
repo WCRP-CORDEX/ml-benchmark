@@ -5,11 +5,11 @@ Build the scoreboard tables of the docs site from the models' metric summaries.
 Reads `models/<MODEL>/evaluation/<TRAIN_EXP>/<TEST_EXP>/metrics_summary.json` (written
 by `evaluate.py`) for every model and writes one page per training experiment,
 `docs/results/scoreboard/<train_exp>.md` (lower case), with one HTML table per
-variable (rows = models, columns = model type and metrics; each cell shows the
-values of the experiment's tests, separated by a slash). The tables go between the
-markers `<!-- SCOREBOARD:START -->` and `<!-- SCOREBOARD:END -->`, which each page
-must already contain. On the docs site, the tables are sortable by clicking a
-header (docs/javascripts/scoreboard.js).
+variable (rows = models, columns = model type, approval date and metrics; each
+metric cell shows the values of the experiment's tests, separated by a slash). The
+tables go between the markers `<!-- SCOREBOARD:START -->` and
+`<!-- SCOREBOARD:END -->`, which each page must already contain. On the docs site,
+the tables are sortable by clicking a header (docs/javascripts/scoreboard.js).
 
 Usage
 -----
@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from datetime import date
 from pathlib import Path
 
 import yaml
@@ -90,6 +91,13 @@ TYPE_BADGES = {
     UNKNOWN_TYPE: ("?", "unknown"),
 }
 
+# month abbreviations of the Date column ("Feb '26"); written out instead of
+# strftime's %b, whose names depend on the computer's language settings
+MONTHS = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+]
+
 VARIABLE_LABELS = {
     "tasmax": "Maximum temperature",
     "pr": "Total precipitation",
@@ -102,11 +110,13 @@ Lower is better for all metrics except PSS. Each cell shows  the two tests of th
 training experiment, separated by a slash in the order given in  the column header; 
 the best value of each test is in bold, and – marks results not  available. 
 Models using orography as a predictor are in italics. Type: 
-Det. = deterministic, Gen. = generative.
+Det. = deterministic, Gen. = generative. Date: month and year the submission was
+approved (hover over it for the full date).
 
 Click a metric to sort the models, best first: the first click sorts by the first test,
-the next one by the second test; missing values always go last. Click "Type" to reset
-the original sorting.
+the next one by the second test; missing values always go last. Click "Date" to sort
+the models from newest to oldest submission (click again to reverse it). Click "Type"
+to reset the original sorting.
 """
 
 
@@ -155,6 +165,14 @@ def collect(models_dir: Path = MODELS_DIR) -> dict[str, dict[tuple[str, str], di
     return dict(sorted(results.items(), key=lambda item: item[0].lower()))
 
 
+def _metadata(model: str, models_dir: Path = MODELS_DIR) -> dict:
+    """Contents of a model's metadata file; empty if the file does not exist."""
+    file = models_dir / model / METADATA_FILE
+    if not file.exists():
+        return {}
+    return yaml.safe_load(file.read_text()) or {}
+
+
 def model_type(model: str, models_dir: Path = MODELS_DIR) -> str:
     """
     Type of a model (a value of `MODEL_TYPES`), from its metadata.
@@ -172,11 +190,32 @@ def model_type(model: str, models_dir: Path = MODELS_DIR) -> str:
         Value of `MODEL_TYPES` for its `stochastic_output`, or `UNKNOWN_TYPE` if the
         model has no metadata file or the field is missing/null.
     """
-    file = models_dir / model / METADATA_FILE
-    if not file.exists():
-        return UNKNOWN_TYPE
-    metadata = yaml.safe_load(file.read_text()) or {}
+    metadata = _metadata(model, models_dir)
     return MODEL_TYPES.get(metadata.get("stochastic_output"), UNKNOWN_TYPE)
+
+
+def model_date(model: str, models_dir: Path = MODELS_DIR) -> date | None:
+    """
+    Date a model's submission was approved, from its metadata.
+
+    Parameters
+    ----------
+    model : str
+        Model directory name under `models_dir`.
+    models_dir : Path
+        Directory holding one sub-directory per model.
+
+    Returns
+    -------
+    datetime.date or None
+        Value of `approved` (written as YYYY-MM-DD), or None if the model has no
+        metadata file or the field is missing/null.
+    """
+    value = _metadata(model, models_dir).get("approved")
+    if value is None:
+        return None
+    # YAML reads an unquoted YYYY-MM-DD as a date; accept a quoted string too
+    return value if isinstance(value, date) else date.fromisoformat(str(value))
 
 
 def _format(value: float | None) -> str:
@@ -192,11 +231,23 @@ def _domains(summary: dict, var: str) -> set[str]:
     return {domain for metric in metrics.values() for domain in metric["domains"]}
 
 
+def _date_cell(approved: date | None) -> str:
+    """Date cell: "Feb '26" shown, full date as tooltip, YYYYMMDD to sort."""
+    if approved is None:
+        return '      <td align="center" data-sort="">–</td>'
+    label = f"{MONTHS[approved.month - 1]} '{approved:%y}"  # e.g. Feb '26
+    return (
+        f'      <td align="center" data-sort="{approved:%Y%m%d}" '
+        f'title="{approved.isoformat()}">{label}</td>'
+    )
+
+
 def build_table(
     results: dict[str, dict[tuple[str, str], dict]],
     var: str,
     all_domains: list[str],
     types: dict[str, str],
+    dates: dict[str, date | None],
     train_exp: str,
 ) -> str:
     """
@@ -204,9 +255,10 @@ def build_table(
 
     Rows are grouped by model type (deterministic, generative, then models without
     metadata), shown by a badge in a Type column, and sorted alphabetically within
-    a type; the best values are marked over all models. Models using orography
-    (`-orog` suffix) are in italics. Missing experiments, metrics or null
-    aggregates are shown as an en dash; they are never filled. Models whose
+    a type; the best values are marked over all models. A Date column shows the
+    month and year each submission was approved (en dash if unknown). Models
+    using orography (`-orog` suffix) are in italics. Missing experiments, metrics
+    or null aggregates are shown as an en dash; they are never filled. Models whose
     aggregates do not cover all the benchmark domains in some experiment are
     marked with a dagger and listed, with the experiment and the domains used, in
     a footnote.
@@ -221,6 +273,8 @@ def build_table(
         All benchmark domains, from `benchmark/datasets.yaml`.
     types : dict[str, str]
         Type of each model in `results` (see `model_type`).
+    dates : dict[str, datetime.date or None]
+        Approval date of each model in `results` (see `model_date`).
     train_exp : str
         Training experiment, a key of `TRAINING_GROUPS`. Only its tests are shown,
         and only models with results in at least one of them get a row.
@@ -272,9 +326,13 @@ def build_table(
     # The wrapper's class lets docs/stylesheets/extra.css style these tables only,
     # and docs/javascripts/scoreboard.js make them sortable. Sortable headers carry
     # `data-col` (column index in the body) and, for metrics, `data-best` (sort
-    # direction that puts the best values first); body cells carry the exact
-    # values as `data-sort` (type) or `data-values` (one per test, ";"-separated,
-    # empty if missing). GitHub ignores the classes and data attributes.
+    # direction that puts the best values first) or `data-titles` (tooltips of
+    # the ascending and descending sort, for Type and Date) and, if the first
+    # click sorts descending (Date: newest first), `data-first="desc"`; body
+    # cells carry the
+    # exact values as `data-sort` (type rank, or date as YYYYMMDD; empty if
+    # missing) or `data-values` (one per test, ";"-separated, empty if missing).
+    # GitHub ignores the classes and data attributes.
     lines = [
         '<div class="scoreboard">',
         f'<table data-tests="{";".join(tests.values())}">',
@@ -282,14 +340,17 @@ def build_table(
         "    <tr>",
         # empty corner cell over the model names
         '      <th rowspan="2"></th>',
-        '      <th rowspan="2" class="sortable" data-col="1">Type</th>',
+        '      <th rowspan="2" class="sortable" data-col="1"'
+        ' data-titles="Grouped by type;Types in reverse order">Type</th>',
+        '      <th rowspan="2" class="sortable" data-col="2"'
+        ' data-first="desc" data-titles="Oldest first;Newest first">Date</th>',
     ]
     # the order in which each cell shows the tests; the training experiment is
     # the page itself
     order = " / ".join(tests.values())
     lines.append(f'      <th colspan="{len(metrics)}">{order}</th>')
     lines += ["    </tr>", "    <tr>"]
-    for col, (label, higher_is_better) in enumerate(metrics.values(), start=2):
+    for col, (label, higher_is_better) in enumerate(metrics.values(), start=3):
         direction = "desc" if higher_is_better else "asc"
         lines.append(
             f'      <th class="sortable" data-col="{col}" data-best="{direction}">'
@@ -310,6 +371,7 @@ def build_table(
                 f"      <td>{name}</td>",
                 f'      <td data-sort="{rank}" title="{group}">'
                 f'<span class="model-type">{badge}</span></td>',
+                _date_cell(dates[model]),
             ]
             for metric in metrics:
                 cell, exact = [], []
@@ -359,11 +421,13 @@ def render(results: dict[str, dict[tuple[str, str], dict]], train_exp: str) -> s
         all_domains = list(yaml.safe_load(f))
 
     types = {model: model_type(model) for model in results}
+    dates = {model: model_date(model) for model in results}
     parts = [LEGEND]
     for var in METRICS:
         parts.append(f"### {VARIABLE_LABELS[var]}\n")
         # blank lines around the HTML so GitHub renders the Markdown that follows
-        parts.append(build_table(results, var, all_domains, types, train_exp) + "\n")
+        table = build_table(results, var, all_domains, types, dates, train_exp)
+        parts.append(table + "\n")
     return "\n".join(parts)
 
 
