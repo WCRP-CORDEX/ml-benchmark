@@ -313,7 +313,7 @@ def comment_text(model: str, issue: int, blind: bool | None, repository: str) ->
    ```bash
    pixi run check-predictions models/{model}/predictions
    pixi run evaluate -c models/{model}/config.yaml
-   pixi run check-evauation models/{model}/config.yaml
+   pixi run check-evaluation models/{model}/config.yaml
    ```
 
 3. Commit the evaluation (`metrics_summary.json` files) and push it to your fork:
