@@ -9,7 +9,7 @@ hide:
 
 This page compares the models in the ESD pseudo-reality experiment, in which models are trained only on the historical period 1961-1980.
 
-> **Note**. The definitions of the performance diagnostics can be found in the [Evaluate your model](https://casadoj.github.io/ml-benchmark/contributing/evaluation/#metrics) page.
+> **Note**. The definitions of the performance diagnostics can be found in the [Evaluate your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/evaluation/#metrics) page.
 
 ## Perfect model
 

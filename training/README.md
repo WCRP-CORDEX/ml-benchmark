@@ -21,4 +21,4 @@ This repository  contains an example of how to train a model on the CORDEX ML-Be
      cd training && pixi run python training.py
      ```
 
-Once your model is trained, see [Submit your model](https://casadoj.github.io/ml-benchmark/contributing/submission/) for the format of the predictions.
+Once your model is trained, see [Submit your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/submission/) for the format of the predictions.

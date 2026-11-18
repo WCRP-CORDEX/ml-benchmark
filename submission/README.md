@@ -10,7 +10,7 @@ Contributing a model to the benchmark involves five steps:
 
 ## 1. Preparation
 
-Your submission must contain predictions for all predictors included in the `test` folder of the benchmark dataset (see [Data Structure](https://casadoj.github.io/ml-benchmark/contributing/data/#data-structure) for details). The predictions must follow exactly the same directory structure as the `test` data. Specifically, your output directory must be organized as follows, where `<emulator_id>` is the identifier of your model (see [step 2](#2-registering-the-submission)):
+Your submission must contain predictions for all predictors included in the `test` folder of the benchmark dataset (see [Data Structure](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/data/#data-structure) for details). The predictions must follow exactly the same directory structure as the `test` data. Specifically, your output directory must be organized as follows, where `<emulator_id>` is the identifier of your model (see [step 2](#2-registering-the-submission)):
 
 ```
 <emulator_id>/
@@ -99,7 +99,7 @@ A comment in the issue confirms the approval and repeats the instructions of the
    git switch -c submission/<emulator_id> upstream/submission/<emulator_id>
    ```
 
-2. Evaluate the model using the steps in [Evaluate your model](https://casadoj.github.io/ml-benchmark/contributing/evaluation/). The evaluation writes one `metrics_summary.json` file per training and test experiment in `models/<emulator_id>/evaluation/`.
+2. Evaluate the model using the steps in [Evaluate your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/evaluation/). The evaluation writes one `metrics_summary.json` file per training and test experiment in `models/<emulator_id>/evaluation/`.
 
 3. Commit the evaluation and push it to your fork:
 

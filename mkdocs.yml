@@ -4,8 +4,8 @@
 site_name: CORDEX-ML-Bench
 site_description: >-
   A benchmark for Machine Learning-Based Regional Climate Downscaling
-site_url: https://casadoj.github.io/ml-benchmark/
-repo_url: https://github.com/casadoj/ml-benchmark
+site_url: https://WCRP-CORDEX.github.io/ml-benchmark/
+repo_url: https://github.com/WCRP-CORDEX/ml-benchmark
 repo_name: ml-benchmark
 edit_uri: edit/main/
 

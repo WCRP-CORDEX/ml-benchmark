@@ -15,7 +15,7 @@ This repository contains all the materials, instructions, and datasets required 
 
 ## Dataset Overview
 
-The benchmark covers three geographic regions: New Zealand (NZ), Europe (ALPS) and South Africa (SA) with ~10km target resolution. Training and test datasets (NetCDF files, approximately 5 GB per domain) are provided for each region, including common predictors ($Z$, $U$, $V$, $T$, $Q$ at 850, 700, 500, and 300 $hPa$, as well as model orography) and predictands (daily maximum temperature and total precipitation). More information in this [page](https://casadoj.github.io/ml-benchmark/contributing/data/).
+The benchmark covers three geographic regions: New Zealand (NZ), Europe (ALPS) and South Africa (SA) with ~10km target resolution. Training and test datasets (NetCDF files, approximately 5 GB per domain) are provided for each region, including common predictors ($Z$, $U$, $V$, $T$, $Q$ at 850, 700, 500, and 300 $hPa$, as well as model orography) and predictands (daily maximum temperature and total precipitation). More information in this [page](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/data/).
 
 <div align="center">
 <img src="images/CORDEX_ML-bench_domains.png" alt="CORDEX ML-Bench domains" width="500"/>
@@ -55,9 +55,9 @@ A 40-year (1961–1980 + 2080–2099) training period combining present and futu
 
 ## Model Training and Evaluation
 
-For each experiment, models must be trained for the two required target variables (maximum temperature and precipitation), jointly (multivariate) or individually. If possible, please train the models both with and without model orography as a covariate (this will correspond to two separate submissions; for more details, see [Submit your model](https://casadoj.github.io/ml-benchmark/contributing/submission/)). This will allow us to assess the importance of including such covariates in the models. Some examples of model training can be found in [Train your model](https://casadoj.github.io/ml-benchmark/contributing/training/).
+For each experiment, models must be trained for the two required target variables (maximum temperature and precipitation), jointly (multivariate) or individually. If possible, please train the models both with and without model orography as a covariate (this will correspond to two separate submissions; for more details, see [Submit your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/submission/)). This will allow us to assess the importance of including such covariates in the models. Some examples of model training can be found in [Train your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/training/).
 
-To evaluate models, we use the [ml-evaluation](https://github.com/c3s-cordex-ml/ml-evaluation) library , which includes a comprehensive set of evaluation diagnostics for assessing ML-based downscaling methods. `ml-evaluation` incorporates a specific `benchmark` track that computes the six diagnostic metrics that are used for benchmarking. Guidelines for evaluating your model are in [Evaluate your model](https://casadoj.github.io/ml-benchmark/contributing/evaluation/).
+To evaluate models, we use the [ml-evaluation](https://github.com/c3s-cordex-ml/ml-evaluation) library , which includes a comprehensive set of evaluation diagnostics for assessing ML-based downscaling methods. `ml-evaluation` incorporates a specific `benchmark` track that computes the six diagnostic metrics that are used for benchmarking. Guidelines for evaluating your model are in [Evaluate your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/evaluation/).
 
 ## Requirements
 
@@ -102,10 +102,10 @@ zipfile
 
 Benchmarking allows users to compare the performance of their own models against well-established reference approaches. Contributing to the online benchmarking requires model registration and uploading the evaluation results for the different experiments. The following pages guide you through the whole process, from fetching the benchmark dataset to submitting your evaluation results:
 
-* [Dataset overview](https://casadoj.github.io/ml-benchmark/contributing/data/) introduces the dataset: the three domains, the variables used as predictors or predictands, and the file structure.
-* [Train your model](https://casadoj.github.io/ml-benchmark/contributing/training/) gives you a possible training workflow.
-* [Submit your model](https://casadoj.github.io/ml-benchmark/contributing/submission/) explains how your model output must be organized and how to register your model via [GitHub Issues](https://github.com/WCRP-CORDEX/ml-benchmark/issues/new?template=ml_benchmark_submission.yaml).
-* [Evaluate your model](https://casadoj.github.io/ml-benchmark/contributing/evaluation/) teaches how to run the `evaluate` tool within this repository to produce the necessary benchmark metrics.
+* [Dataset overview](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/data/) introduces the dataset: the three domains, the variables used as predictors or predictands, and the file structure.
+* [Train your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/training/) gives you a possible training workflow.
+* [Submit your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/submission/) explains how your model output must be organized and how to register your model via [GitHub Issues](https://github.com/WCRP-CORDEX/ml-benchmark/issues/new?template=ml_benchmark_submission.yaml).
+* [Evaluate your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/evaluation/) teaches how to run the `evaluate` tool within this repository to produce the necessary benchmark metrics.
 
 <!-- --8<-- [end:contributing] -->
 
@@ -115,8 +115,8 @@ Benchmarking allows users to compare the performance of their own models against
 
 The models currently included in the benchmark and their performance can be explored in the following pages:
 
-- [Contributing models](https://casadoj.github.io/ml-benchmark/results/models/) lists the models and provides, when available, links to their respective reference and implementation repositories.
-- The [Scoreboards](https://casadoj.github.io/ml-benchmark/results/scoreboard/) section compares model performances, with a specific page for each training experiment.
+- [Contributing models](https://WCRP-CORDEX.github.io/ml-benchmark/results/models/) lists the models and provides, when available, links to their respective reference and implementation repositories.
+- The [Scoreboards](https://WCRP-CORDEX.github.io/ml-benchmark/results/scoreboard/) section compares model performances, with a specific page for each training experiment.
 
 <!-- --8<-- [end:results] -->
 

@@ -28,7 +28,7 @@ models/<emulator_id>/predictions/
     └── <TRAINING_EXPERIMENT>/<horizon>/<case>/Predictions_pr_tasmax_<GCM>_<period>.nc
 ```
 
-**2. Revise the configuration file**. If you followed the steps in [Submit your model](https://casadoj.github.io/ml-benchmark/contributing/evaluation/),
+**2. Revise the configuration file**. If you followed the steps in [Submit your model](https://WCRP-CORDEX.github.io/ml-benchmark/contributing/evaluation/),
 the branch `submission/<emulator_id>` already contains the configuration file `models/<emulator_id>/config.yaml`.
 Otherwise, copy the template into the model folder:
 
