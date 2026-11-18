@@ -190,32 +190,32 @@ the original sorting.
     <tr class="model-type--deterministic">
       <td>ParamUNET</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
-      <td align="right" data-values="1.3113138278325398;1.7123645941416423">1.31 / 1.71</td>
-      <td align="right" data-values="0.2648908495903015;0.5444564819335938">0.26 / 0.54</td>
+      <td align="right" data-values="1.3113138278325398;1.7123645544052124">1.31 / 1.71</td>
+      <td align="right" data-values="0.2648908495903015;0.5444564421971639">0.26 / 0.54</td>
       <td align="right" data-values="0.709071417649587;1.7495376666386921">0.71 / 1.75</td>
       <td align="right" data-values="14.626191398206025;13.055064428580744">14.63 / 13.06</td>
       <td align="right" data-values="0.9853215342223898;0.9611706837898221">0.99 / 0.96</td>
-      <td align="right" data-values="0.11925944437583287;0.16096855451663336">0.12 / 0.16</td>
+      <td align="right" data-values="0.11925944437583287;0.1609685719013214">0.12 / 0.16</td>
     </tr>
     <tr class="model-type--deterministic">
-      <td>Prithvi-UNet<sup>†</sup></td>
+      <td>Prithvi-UNet</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
-      <td align="right" data-values="1.5799371401468914;1.832651436328888">1.58 / 1.83</td>
-      <td align="right" data-values="0.4018479684988658;0.6458202600479126">0.40 / 0.65</td>
-      <td align="right" data-values="0.7014980316162109;2.0283640027046204">0.70 / 2.03</td>
-      <td align="right" data-values="5.087449993334263;0.42222316950457134">5.09 / 0.42</td>
-      <td align="right" data-values="0.966504431423822;0.951239546896609">0.97 / 0.95</td>
-      <td align="right" data-values="0.12486601620912552;0.2899339497089386">0.12 / 0.29</td>
+      <td align="right" data-values="1.5799371401468914;1.908672531445821">1.58 / 1.91</td>
+      <td align="right" data-values="0.4018479684988658;0.5195867220560709">0.40 / 0.52</td>
+      <td align="right" data-values="0.7014980316162109;2.172000527381897">0.70 / 2.17</td>
+      <td align="right" data-values="5.087449993334263;3.2198297495258843">5.09 / 3.22</td>
+      <td align="right" data-values="0.966504431423822;0.9537199652763596">0.97 / 0.95</td>
+      <td align="right" data-values="0.12486601620912552;0.24154777824878693">0.12 / 0.24</td>
     </tr>
     <tr class="model-type--deterministic">
-      <td><i>Prithvi-UNet-orog</i><sup>†</sup></td>
+      <td><i>Prithvi-UNet-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
-      <td align="right" data-values="1.5942889250449341;1.9047446050749375">1.59 / 1.90</td>
-      <td align="right" data-values="0.6919850508371989;0.8477533459663391">0.69 / 0.85</td>
-      <td align="right" data-values="0.8085544308026632;1.2269756495952606">0.81 / 1.23</td>
-      <td align="right" data-values="6.649896325849159;8.389592903039011">6.65 / 8.39</td>
-      <td align="right" data-values="0.9646603780676287;0.9603209584238862">0.96 / 0.96</td>
-      <td align="right" data-values="0.11081874867280324;0.08903376013040543">0.11 / 0.09</td>
+      <td align="right" data-values="1.5942889250449341;1.8685156106948853">1.59 / 1.87</td>
+      <td align="right" data-values="0.6919850508371989;0.7973718245824178">0.69 / 0.80</td>
+      <td align="right" data-values="0.8085544308026632;1.8028323252995808">0.81 / 1.80</td>
+      <td align="right" data-values="6.649896325849159;5.951417214873046">6.65 / 5.95</td>
+      <td align="right" data-values="0.9646603780676287;0.9513567092502989">0.96 / 0.95</td>
+      <td align="right" data-values="0.11081874867280324;0.20089874664942423">0.11 / 0.20</td>
     </tr>
     <tr class="model-type--deterministic">
       <td>Rossby-UNet</td>
@@ -361,11 +361,11 @@ the original sorting.
       <td><i>RCMGEM-mv-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
       <td align="right" data-values="1.1329688644309543;1.4000597579178766"><b>1.13</b> / <b>1.40</b></td>
-      <td align="right" data-values="0.10000190899684973;0.3336796139665625"><b>0.10</b> / <b>0.33</b></td>
+      <td align="right" data-values="0.10000190899684973;0.33367961334568075"><b>0.10</b> / <b>0.33</b></td>
       <td align="right" data-values="0.26451596514927217;0.6950563954557015"><b>0.26</b> / <b>0.70</b></td>
       <td align="right" data-values="0.04817874427651702;0.19238993434866536"><b>0.05</b> / <b>0.19</b></td>
       <td align="right" data-values="0.9900441344359893;0.9650553753091972"><b>0.99</b> / 0.97</td>
-      <td align="right" data-values="0.1265037849682981;0.12395649908614474">0.13 / 0.12</td>
+      <td align="right" data-values="0.1265037849682981;0.1239565079725143">0.13 / 0.12</td>
     </tr>
     <tr class="model-type--generative">
       <td>ResGAN</td>
@@ -441,7 +441,7 @@ the original sorting.
 </table>
 </div>
 
-† Aggregated over a subset of domains only (Prithvi-UNet, Perfect extrapolation: SA, NZ; Prithvi-UNet-orog, Perfect extrapolation: ALPS, SA; ViT-IFCAv1, Perfect cross-validation: SA, NZ; ViT-IFCAv1, Perfect extrapolation: SA, NZ; ViT-IFCAv1-orog, Perfect cross-validation: SA, NZ; ViT-IFCAv1-orog, Perfect extrapolation: SA, NZ).
+† Aggregated over a subset of domains only (ViT-IFCAv1, Perfect cross-validation: SA, NZ; ViT-IFCAv1, Perfect extrapolation: SA, NZ; ViT-IFCAv1-orog, Perfect cross-validation: SA, NZ; ViT-IFCAv1-orog, Perfect extrapolation: SA, NZ).
 
 ### Total precipitation
 
@@ -594,34 +594,34 @@ the original sorting.
       <td align="right" data-values="4.671040873302542;5.3612107241416">4.67 / 5.36</td>
     </tr>
     <tr class="model-type--deterministic">
-      <td>ParamUNET<sup>†</sup></td>
+      <td>ParamUNET</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
-      <td align="right" data-values="6.338764108268674;6.095910520281933">6.34 / <b>6.10</b></td>
-      <td align="right" data-values="0.4528676460712158;0.5178257527101002">0.45 / 0.52</td>
-      <td align="right" data-values="1.3604886954658018;1.3745272598349962">1.36 / 1.37</td>
-      <td align="right" data-values="26.379902506280757;21.220373455405056">26.38 / 21.22</td>
-      <td align="right" data-values="334.8242045847714;221.60824468204652">334.82 / 221.61</td>
-      <td align="right" data-values="5.7546257853805285;4.9078067081981755">5.75 / 4.91</td>
+      <td align="right" data-values="6.338764108268674;7.526937147595182">6.34 / 7.53</td>
+      <td align="right" data-values="0.4528676460712158;0.5391997696391716">0.45 / 0.54</td>
+      <td align="right" data-values="1.3604886954658018;1.6008514061029695">1.36 / 1.60</td>
+      <td align="right" data-values="26.379902506280757;35.70395299045233">26.38 / 35.70</td>
+      <td align="right" data-values="334.8242045847714;369.1752287394704">334.82 / 369.18</td>
+      <td align="right" data-values="5.7546257853805285;6.098380790912084">5.75 / 6.10</td>
     </tr>
     <tr class="model-type--deterministic">
-      <td>Prithvi-UNet<sup>†</sup></td>
+      <td>Prithvi-UNet</td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
-      <td align="right" data-values="6.890037034288476;9.494109801419524">6.89 / 9.49</td>
-      <td align="right" data-values="0.8391911900061816;1.26606009883628">0.84 / 1.27</td>
-      <td align="right" data-values="3.409085658206443;4.717685010687274">3.41 / 4.72</td>
-      <td align="right" data-values="42.167796537294045;73.47919889851437">42.17 / 73.48</td>
-      <td align="right" data-values="324.90069812834747;471.0625996033418">324.90 / 471.06</td>
-      <td align="right" data-values="12.145599434277274;13.270338293969655">12.15 / 13.27</td>
+      <td align="right" data-values="6.890037034288476;8.191100634214282">6.89 / 8.19</td>
+      <td align="right" data-values="0.8391911900061816;1.1198602858845044">0.84 / 1.12</td>
+      <td align="right" data-values="3.409085658206443;4.370583562965313">3.41 / 4.37</td>
+      <td align="right" data-values="42.167796537294045;57.67775674536133">42.17 / 57.68</td>
+      <td align="right" data-values="324.90069812834747;394.90493441738244">324.90 / 394.90</td>
+      <td align="right" data-values="12.145599434277274;13.64730540009098">12.15 / 13.65</td>
     </tr>
     <tr class="model-type--deterministic">
-      <td><i>Prithvi-UNet-orog</i><sup>†</sup></td>
+      <td><i>Prithvi-UNet-orog</i></td>
       <td data-sort="0" title="Deterministic"><span class="model-type">Det.</span></td>
-      <td align="right" data-values="6.809658769988123;8.066138451289719">6.81 / 8.07</td>
-      <td align="right" data-values="0.7738994996133316;0.9244823455810547">0.77 / 0.92</td>
-      <td align="right" data-values="3.6442987841273875;4.563788890838623">3.64 / 4.56</td>
-      <td align="right" data-values="43.77095340935772;58.26739311218262">43.77 / 58.27</td>
-      <td align="right" data-values="283.5419727340704;414.60258827549234">283.54 / 414.60</td>
-      <td align="right" data-values="12.9818986079573;13.239227343786146">12.98 / 13.24</td>
+      <td align="right" data-values="6.809658769988123;7.858581992378871">6.81 / 7.86</td>
+      <td align="right" data-values="0.7738994996133316;1.0015575177674005">0.77 / 1.00</td>
+      <td align="right" data-values="3.6442987841273875;4.446867111499551">3.64 / 4.45</td>
+      <td align="right" data-values="43.77095340935772;58.80132764022261">43.77 / 58.80</td>
+      <td align="right" data-values="283.5419727340704;348.4309346471728">283.54 / 348.43</td>
+      <td align="right" data-values="12.9818986079573;13.794548250971395">12.98 / 13.79</td>
     </tr>
     <tr class="model-type--deterministic">
       <td>Rossby-UNet</td>
@@ -656,7 +656,7 @@ the original sorting.
     <tr class="model-type--generative">
       <td>CorrDiff-TW1_NTNU-CWA</td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
-      <td align="right" data-values="5.959451272558629;7.064208280799458"><b>5.96</b> / 7.06</td>
+      <td align="right" data-values="5.959451272558629;7.064208280799458"><b>5.96</b> / <b>7.06</b></td>
       <td align="right" data-values="0.830531479699375;0.9392168566526727">0.83 / 0.94</td>
       <td align="right" data-values="2.4510316315698084;3.1426870584048103">2.45 / 3.14</td>
       <td align="right" data-values="34.47015842200674;45.915894808504646">34.47 / 45.92</td>
@@ -740,7 +740,7 @@ the original sorting.
       <td align="right" data-values="0.437801364597411;0.5943952452857806">0.44 / 0.59</td>
       <td align="right" data-values="0.8213051259525721;1.1531435087584445">0.82 / 1.15</td>
       <td align="right" data-values="10.513895289004154;16.498136041838617">10.51 / <b>16.50</b></td>
-      <td align="right" data-values="0.8334644813628937;2.646832878771565"><b>0.83</b> / <b>2.65</b></td>
+      <td align="right" data-values="0.8334644813628937;2.646832878771565"><b>0.83</b> / 2.65</td>
       <td align="right" data-values="2.7409231686310904;3.9678478310231013">2.74 / 3.97</td>
     </tr>
     <tr class="model-type--generative">
@@ -764,14 +764,14 @@ the original sorting.
       <td align="right" data-values="1.5436178181053524;3.132780363021728"><b>1.54</b> / 3.13</td>
     </tr>
     <tr class="model-type--generative">
-      <td><i>RCMGEM-mv-orog</i><sup>†</sup></td>
+      <td><i>RCMGEM-mv-orog</i></td>
       <td data-sort="1" title="Generative"><span class="model-type">Gen.</span></td>
-      <td align="right" data-values="5.984721624835004;7.282625868690037">5.98 / 7.28</td>
-      <td align="right" data-values="0.18978627324944605;0.3051843059817839">0.19 / 0.31</td>
-      <td align="right" data-values="0.7890627563325001;1.7691920654518276">0.79 / 1.77</td>
-      <td align="right" data-values="12.359365325405458;24.341071073622963">12.36 / 24.34</td>
-      <td align="right" data-values="1.4455856522380979;2.723278765994678">1.45 / 2.72</td>
-      <td align="right" data-values="2.762919456569597;5.774978693273925">2.76 / 5.77</td>
+      <td align="right" data-values="5.984721624835004;7.154956284493049">5.98 / 7.15</td>
+      <td align="right" data-values="0.18978627324944605;0.28372419691727263">0.19 / 0.28</td>
+      <td align="right" data-values="0.7890627563325001;1.3431688748876176">0.79 / 1.34</td>
+      <td align="right" data-values="12.359365325405458;19.776877385203317">12.36 / 19.78</td>
+      <td align="right" data-values="1.4455856522380979;2.5620255757946757">1.45 / <b>2.56</b></td>
+      <td align="right" data-values="2.762919456569597;4.816694259024697">2.76 / 4.82</td>
     </tr>
     <tr class="model-type--generative">
       <td>ResGAN</td>
@@ -847,7 +847,7 @@ the original sorting.
 </table>
 </div>
 
-† Aggregated over a subset of domains only (ParamUNET, Perfect extrapolation: ALPS, NZ; Prithvi-UNet, Perfect extrapolation: SA, NZ; Prithvi-UNet-orog, Perfect extrapolation: ALPS, SA; RCMGEM-mv-orog, Perfect extrapolation: ALPS, SA; ViT-IFCAv1, Perfect cross-validation: SA, NZ; ViT-IFCAv1, Perfect extrapolation: SA, NZ; ViT-IFCAv1-orog, Perfect cross-validation: SA, NZ; ViT-IFCAv1-orog, Perfect extrapolation: SA, NZ).
+† Aggregated over a subset of domains only (ViT-IFCAv1, Perfect cross-validation: SA, NZ; ViT-IFCAv1, Perfect extrapolation: SA, NZ; ViT-IFCAv1-orog, Perfect cross-validation: SA, NZ; ViT-IFCAv1-orog, Perfect extrapolation: SA, NZ).
 
 <!-- SCOREBOARD:END -->
 
