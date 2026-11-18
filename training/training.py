@@ -8,7 +8,6 @@ It is not intended to produce robust results.
 
 import os
 import xarray as xr
-import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
 import torch.nn as nn
@@ -88,13 +87,13 @@ for var_target in var_target:
             spatial_dims = ('y', 'x') if domain == 'ALPS' else ('lat', 'lon')
 
             # Load predictors
-            predictor_filename = f'{DATA_PATH}/{domain}/{domain}_domain/train/{training_experiment}/predictors/{gcm_name}_{period_training}.nc'
+            predictor_filename = f'{DATA_PATH}/{domain}_domain/train/{training_experiment}/predictors/{gcm_name}_{period_training}.nc'
             predictor = xr.open_dataset(predictor_filename)
             if domain == 'SA':
                 predictor = predictor.drop_vars('time_bnds', errors='ignore')
 
             # Load predictand
-            predictand_filename = f'{DATA_PATH}/{domain}/{domain}_domain/train/{training_experiment}/target/pr_tasmax_{gcm_name}_{period_training}.nc'
+            predictand_filename = f'{DATA_PATH}/{domain}_domain/train/{training_experiment}/target/pr_tasmax_{gcm_name}_{period_training}.nc'
             predictand = xr.open_dataset(predictand_filename)[[var_target]]
 
             # Standardize predictors

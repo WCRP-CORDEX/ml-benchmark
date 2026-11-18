@@ -1,4 +1,4 @@
-name: rcm-emulation
+name: ml-benchmark
 channels:
   - conda-forge
 dependencies:
@@ -288,4 +288,5 @@ dependencies:
       - sympy==1.13.3
       - torch==2.8.0+cpu
       - torchvision==0.23.0+cpu
-prefix: /opt/conda/envs/rcm-emulation
+      - ml-evaluation @ git+https://github.com/c3s-cordex-ml/ml-evaluation.git
+prefix: /opt/conda/envs/ml-benchmark

@@ -1,7 +1,7 @@
 name: Submit ML-Benchmark Prediction
 description: Submit metadata and details for an ML-Benchmark prediction submission
 title: "ML-Benchmark prediction submission: [Your Model Name]"
-labels: ["submission"]
+labels: ["Submission"]
 body:
 
   - type: markdown
@@ -97,6 +97,20 @@ body:
     validations:
       required: true
 
+  - type: dropdown
+    id: blind
+    attributes:
+      label: Dataset release
+      description: >
+        Were the predictions produced before or after the public release of the test dataset (targets)?
+        Pre-release submissions are evaluated by the benchmark administrators; post-release submissions
+        are evaluated by the contributors themselves.
+      options:
+        - "Pre-release"
+        - "Post-release"
+    validations:
+      required: true
+
   # References and Reproducibility
   - type: markdown
     attributes:
@@ -110,7 +124,7 @@ body:
         Reference information about the model (e.g., DOI, publication URL, technical documentation)
       placeholder: "https://doi.org/10.5194/gmd-15-6747-2022"
     validations:
-      required: true
+      required: false
 
   - type: input
     id: reproducibility_url
@@ -120,7 +134,7 @@ body:
         URL with reproducibility information about the model (e.g., GitHub repository, Zenodo record)
       placeholder: "https://zenodo.org/records/6828304"
     validations:
-      required: true
+      required: false
 
   # Additional Information
   - type: markdown
@@ -141,4 +155,4 @@ body:
       value: |
         ---
         **Next Steps:** 
-        After submission, the maintainers will review the registration details and will reply to this issue with comments. When ready a link to a secure form will be provided with the details to upload your data to contribute to this benchmark.
+        After submission, the maintainers will review the registration details and may ask for clarifications in this issue. Once the submission is approved, a branch `submission/<emulator_id>` with your model's metadata is created automatically, and a comment in this issue explains how to evaluate your predictions and open the pull request that adds your model to the benchmark. See the [submission guide](https://github.com/WCRP-CORDEX/ml-benchmark/blob/main/submission/README.md) for details.

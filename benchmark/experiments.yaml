@@ -1,0 +1,72 @@
+# Benchmark experiments: training experiments and their test experiments.
+#
+# Structure
+# ---------
+# <TRAINING_EXPERIMENT>:          # e.g. ESD_pseudo_reality, Emulator_hist_future
+#   train_period: <START-END>     # e.g. 1961-1980
+#   tests:
+#     <TEST_EXPERIMENT>:          # e.g. Perfect_cross_validation
+#       horizon: <HORIZON>        # historical | mid_century | mid_end_century | end_century
+#       case: <CASE>              # perfect | imperfect
+#       transfer: <BOOL>          # true | false
+#
+# Fields
+# ------
+# train_period  Training period. Either a single period or a list.
+# horizon       Test horizon. Corresponding periods defined in ./periods.yaml
+# case          Predictors used in the test: `perfect` = upscaled from the RCM,
+#               `imperfect` = raw from the driving GCM.
+# transfer      GCM transferability test: `false` = same GCM as in training
+#               (`train_gcm` in datasets.yaml), `true` = different GCM
+#               (`test_gcm` in datasets.yaml).
+
+ESD_pseudo_reality:
+  train_period: 1961-1980
+  tests:
+    Perfect_cross_validation:
+      horizon: historical
+      case: perfect
+      transfer: false
+    Imperfect_cross_validation:
+      horizon: historical
+      case: imperfect
+      transfer: false
+    Perfect_extrapolation:
+      horizon: mid_end_century
+      case: perfect
+      transfer: false
+    Imperfect_extrapolation:
+      horizon: mid_end_century
+      case: imperfect
+      transfer: false
+    Perfect_extrapolation_GCM_transferability:
+      horizon: mid_end_century
+      case: perfect
+      transfer: true
+Emulator_hist_future:
+  train_period: [1961-1980, 2080-2099]
+  tests:
+    Perfect_cross_validation:
+      horizon: historical
+      case: perfect
+      transfer: false
+    Imperfect_cross_validation:
+      horizon: historical
+      case: imperfect
+      transfer: false
+    Perfect_interpolation:
+      horizon: mid_century
+      case: perfect
+      transfer: false
+    Imperfect_interpolation:
+      horizon: mid_century
+      case: imperfect
+      transfer: false
+    Perfect_interpolation_GCM_transferability:
+      horizon: mid_century
+      case: perfect
+      transfer: true
+    Imperfect_interpolation_GCM_transferability:
+      horizon: mid_century
+      case: imperfect
+      transfer: true

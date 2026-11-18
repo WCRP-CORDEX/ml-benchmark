@@ -1,0 +1,87 @@
+# Metadata of a model contributing to the benchmark.
+#
+# One file per model, stored as models/<MODEL>/metadata.yaml. It is normally written
+# automatically from the submission issue (.github/ISSUE_TEMPLATE/
+# ml_benchmark_submission.yaml) by submission/register.py when a maintainer adds the
+# label `Approved submission` (.github/workflows/submission.yml), and it is the
+# source of the table of contributing models (docs/results/models.md). Edit it by
+# hand only to fix mistakes or fill the fields the form does not ask for; never edit
+# the models table directly.
+#
+# Fields
+# ------
+# Fields from the submission issue (keys match the `id` of each form field, except
+# `description`, which is the field `emulator`):
+# emulator_id                Model identifier, `{emulator name}-{version}`, with the
+#                            suffix `-orog` if orography is used as a predictor. It
+#                            must match the directory models/<MODEL>.
+# institution_id             Short acronym of the institution.
+# institution                Full name of the institution.
+# short_description          One-line description shown in the models table (not
+#                            in the form: filled by a maintainer).
+# description                Detailed description of the method (architecture, loss,
+#                            optimizer, predictors, standardization, ...).
+# hardware_training_details  Hardware, training time and inference time.
+# stochastic_output          true if the emulator generates stochastic realizations
+#                            (generative/probabilistic models), false otherwise.
+# reference_label            Citation text shown in the models table, e.g.
+#                            "Author et al., 2025" (not in the form: filled by a
+#                            maintainer). null -> "In preparation".
+# reference_url              URL of the reference (DOI, publication, docs).
+#                            null -> no link.
+#                            Several references: give reference_label and
+#                            reference_url as lists of the same length.
+# reproducibility_url        URL of the code/data for reproducibility (GitHub,
+#                            Zenodo, ...). null -> "In preparation".
+# additional_notes           Any other relevant information (optional).
+#
+# Fields added by the registration workflow:
+# issue                      Number of the submission issue in the repository.
+# submitted                  Date the issue was opened (YYYY-MM-DD, UTC).
+# approved                   Date the `Approved submission` label was added
+#                            (YYYY-MM-DD, UTC).
+# blind                      From the form field "Dataset release": true if the
+#                            predictions were produced before the public release of
+#                            the test dataset (pre-release), false if after
+#                            (post-release), null if unknown.
+#
+# Optional fields (from the form or unknown for older models) are `null`; they are
+# never filled with guessed values.
+
+# --- Submission issue ---------------------------------------------------------
+emulator_id: RCMFlow-orog  # in the issue: RCMFlow_orog
+institution_id: ESNZ
+institution: Earth Sciences New Zealand
+short_description: null
+description: |-
+  The emulator uses a conditional flow matching framework (Lipman et al., 2022; Liu et al., 2022) to independently downscale daily precipitation and maximum temperature. A single model is trained per variable, predicting the full high-resolution field directly rather than as a residual correction.
+  Architecture. The network is a velocity-predicting UNet with approximately 4.5 million parameters, sharing the same encoder–decoder structure as ResGAN_orog. It comprises a high-resolution branch (three down-blocks with channel, CBAM, and no attention respectively), a low-resolution branch (four residual blocks processing the large-scale predictor fields), a bottleneck that merges both branches via self-attention, and a symmetric decoder with skip connections. A flow time embedding — generated via sinusoidal encoding and projected to 256 dimensions — is injected throughout the network at each scale using FiLM residual blocks (FiLMResidual), allowing the network to condition on the current position along the flow trajectory. Seasonal conditioning is applied to both the low-resolution predictors and the noisy high-resolution field via a separate FiLM layer (TimeFilmLayer) using sinusoidal day-of-year encoding. Orography is provided as an additional high-resolution static input channel.
+  **Flow matching formulation.** Training follows a rectified flow (linear interpolant) schedule: the interpolated state at time *t* is xt=(1−t)x0+tx1​, and the velocity target is v=x1−x0​. The noise prior
+  x0​ is Gaussian with standard deviation σz\sigma_z
+  σz​, which is updated online via exponential moving average of the target field's standard deviation (EMA decay 0.01, clipped to [0.3, 2.0]). An EMA copy of the network weights (decay 0.999) is maintained and used for validation and inference.
+
+  Loss function. The training loss is MSE between predicted and target velocity, plus a normalisation regularisation term λ⋅E[(x1/σz)2] with λ=0.1,
+
+  Optimizer and learning rate. Adam optimizer with an initial learning rate of 3×10^-5
+  3×10−5 and exponential decay (rate 0.996). Models are trained for 500 epochs with a batch size of 16 on a single NVIDIA A100 GPU.
+
+  Input standardization. Precipitation is log-transformed as ln⁡(pr+1). Temperature is standardized per-pixel using the climatological mean and standard deviation. Large-scale predictor fields are conditioned via FiLM layers without explicit z-score normalization.
+
+  Inference. Samples are generated by integrating the learned velocity field from t=0
+  t=0 to t=1 using a 3rd-order Adams–Bashforth (AB3) solver with 30 function evaluations, with Euler and AB2 warm-up steps for the first two iterations and light damping (β=0.1) applied from step 3 onward.
+hardware_training_details: |-
+  Training took 20s per epoch (ESD) and 40s per epoch (Emul_hist_future), with models trained for 495 epochs using final-epoch weights and exponential learning rate decay. All training and inference was performed on a single A100 GPU.
+  Inference generated 20 years of precipitation data per ensemble member in approximately 4m 42s (ESD) and 5m 42s (Emul_hist_future), equivalent to roughly 15s per year — around 15× slower than ResGAN.
+stochastic_output: true
+reference_label: null
+# reference_url in the issue: approach based on : https://arxiv.org/abs/2512.13987
+reference_url: https://arxiv.org/abs/2512.13987
+reproducibility_url: |-
+  https://github.com/nram812/Generative-CORDEX-ML-Bench/tree/non_linear_activation_dev_branch/models
+additional_notes: null
+
+# --- Registration workflow ----------------------------------------------------
+issue: 50
+submitted: 2026-04-12
+approved: 2026-04-15
+blind: true

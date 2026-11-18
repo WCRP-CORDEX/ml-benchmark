@@ -1,0 +1,54 @@
+# Pixi workspace for CORDEX ML-Bench.
+#
+#     pixi install                                     # create the environment
+#     pixi run evaluate -c models/<MODEL>/config.yaml  # run evaluation/evaluate.py
+#     pixi run lab                                     # start JupyterLab
+#     pixi run docs                                    # preview the docs site
+
+[workspace]
+name = "ml-benchmark"
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = "3.13.*"
+numpy = ">=2.3.3"
+pandas = ">=2.3.2"
+xarray = ">=2025.9.0"
+netcdf4 = ">=1.7.2"
+cftime = ">=1.6.4"
+zarr = ">=3.1"
+dask = ">=2025.9"
+scipy = ">=1.10"
+pyyaml = ">=6.0.2"
+requests = ">=2.32.5"
+tqdm = ">=4.0"
+matplotlib = ">=3.10.6"
+cartopy = ">=0.25.0"
+pyproj = ">=3.7.2"
+shapely = ">=2.1.1"
+pytorch = { version = ">=2.8.0", build = "cpu*" }
+jupyterlab = ">=4.4.7"
+notebook = ">=7.4.5"
+ipykernel = ">=6.30.1"
+ipywidgets = ">=8.1.7"
+zensical = ">=0.0.73,<0.0.74"
+
+[pypi-dependencies]
+# Branch `feature/ml-benchmark` on GitHub; the exact commit is recorded in
+# pixi.lock (`pixi update ml-evaluation` pulls the latest commit). To develop
+# against a local clone instead: 
+ml-evaluation = { path = "../ml-evaluation", editable = true }
+# ml-evaluation = { git = "https://github.com/c3s-cordex-ml/ml-evaluation.git", branch = "feature/ml-benchmark" }
+
+[tasks]
+check-predictions = "python submission/validate.py"
+evaluate = "python evaluation/evaluate.py"
+check-evaluation = "python evaluation/validate.py"
+lab = "jupyter lab"
+# copy images/ to the GitHub Pages
+docs-images = "rm -rf docs/images && cp -r images docs/images"
+# preview the site locally
+docs = { cmd = "zensical serve", depends-on = ["docs-images"] }
+# build the site into site/
+docs-build = { cmd = "zensical build --clean", depends-on = ["docs-images"] }

@@ -1,0 +1,123 @@
+{
+  "model": "DeepSensor",
+  "train_experiment": "Emulator_hist_future",
+  "test_experiment": "Perfect_cross_validation",
+  "ensemble": {
+    "n_members": 1,
+    "member": null
+  },
+  "variables": {
+    "tasmax": {
+      "bias_annstd": {
+        "aggregation": "mean",
+        "aggregate": 0.1206941803296407,
+        "domains": {
+          "ALPS": 0.10334616899490356,
+          "NZ": 0.1129215657711029,
+          "SA": 0.14581480622291565
+        }
+      },
+      "bias_max1day": {
+        "aggregation": "mean",
+        "aggregate": 1.4275661706924438,
+        "domains": {
+          "ALPS": 2.9980361461639404,
+          "NZ": 0.5480170249938965,
+          "SA": 0.7366453409194946
+        }
+      },
+      "bias_mean": {
+        "aggregation": "mean",
+        "aggregate": 0.5800630698601404,
+        "domains": {
+          "ALPS": 1.030871868133545,
+          "NZ": 0.14004983007907867,
+          "SA": 0.5692675113677979
+        }
+      },
+      "pss": {
+        "aggregation": "mean",
+        "aggregate": 0.9583244410397184,
+        "domains": {
+          "ALPS": 0.9352295875365688,
+          "NZ": 0.9739364063176684,
+          "SA": 0.9658073292649177
+        }
+      },
+      "ralsd": {
+        "aggregation": "mean",
+        "aggregate": 145.64239245127283,
+        "domains": {
+          "ALPS": 174.9325696960521,
+          "NZ": 106.867429578669,
+          "SA": 155.12717807909738
+        }
+      },
+      "rmse": {
+        "aggregation": "quadratic_mean",
+        "aggregate": 2.0602516418499452,
+        "domains": {
+          "ALPS": 2.9294745922088623,
+          "NZ": 1.0604398250579834,
+          "SA": 1.7399874925613403
+        }
+      }
+    },
+    "pr": {
+      "bias_max1day": {
+        "aggregation": "mean",
+        "aggregate": 48.09930640604916,
+        "domains": {
+          "ALPS": 28.379417419433594,
+          "NZ": 40.07610220154592,
+          "SA": 75.84239959716797
+        }
+      },
+      "bias_mean": {
+        "aggregation": "mean",
+        "aggregate": 0.7148787557185182,
+        "domains": {
+          "ALPS": 0.915563702583313,
+          "NZ": 0.6654313144387276,
+          "SA": 0.5636412501335144
+        }
+      },
+      "bias_sdii": {
+        "aggregation": "mean",
+        "aggregate": 2.2995264710388557,
+        "domains": {
+          "ALPS": 2.0886456966400146,
+          "NZ": 2.402036482513539,
+          "SA": 2.4078972339630127
+        }
+      },
+      "lhd": {
+        "aggregation": "quadratic_mean",
+        "aggregate": 17.894739699345415,
+        "domains": {
+          "ALPS": 18.991717058596063,
+          "NZ": 15.250597454581312,
+          "SA": 19.16765732077177
+        }
+      },
+      "ralsd": {
+        "aggregation": "mean",
+        "aggregate": 295.0927822698898,
+        "domains": {
+          "ALPS": 96.4469194893639,
+          "NZ": 200.7093186684234,
+          "SA": 588.1221086518822
+        }
+      },
+      "rmse": {
+        "aggregation": "quadratic_mean",
+        "aggregate": 7.260489514852134,
+        "domains": {
+          "ALPS": 5.807628631591797,
+          "NZ": 6.8393896023644585,
+          "SA": 8.811261177062988
+        }
+      }
+    }
+  }
+}

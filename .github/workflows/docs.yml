@@ -1,0 +1,65 @@
+# Build the documentation site with Zensical (configuration in mkdocs.yml, pages
+# in docs/) and publish it on GitHub Pages.
+#
+# - Push to main, or manual run: build and deploy.
+# - After the "Scoreboard" or "Models table" workflow finishes on main: rebuild,
+#   so that the tables they commit appear on the site. (Commits made by a
+#   workflow with the default token do not trigger other workflows, so a push
+#   trigger alone would miss them.)
+#
+# Requires Settings > Pages > Build and deployment > Source: "GitHub Actions".
+name: Documentation
+
+on:
+  push:
+    branches: [main, feature/ml-evaluation]
+  workflow_run:
+    workflows: ["Scoreboard", "Models table"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# one deployment at a time; a newer run waits instead of cancelling the current one
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # same version as in pixi.toml, so the site looks as in local previews
+      - name: Install Zensical
+        run: pip install "zensical==0.0.73"
+
+      # the images live in images/ (so that the READMEs show them on GitHub), but
+      # the site only publishes files inside docs/ (same as `pixi run docs-images`)
+      - name: Copy images
+        run: cp -r images docs/images
+
+      - name: Build site
+        run: zensical build --clean
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

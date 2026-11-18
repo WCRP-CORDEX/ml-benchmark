@@ -1,0 +1,30 @@
+# Benchmark datasets: regional climate model (RCM) and driving global climate
+# models (GCMs) of each domain.
+#
+# Structure
+# ---------
+# <DOMAIN>:                 # ALPS | NZ | SA
+#   rcm: <RCM>              # RCM providing the high-resolution target
+#   train_gcm: <GCM>        # GCM driving the RCM in training and same-GCM tests
+#   test_gcm: <GCM>         # GCM used only to test GCM transferability
+#
+# Fields
+# ------
+# rcm        RCM whose `pr` and `tasmax` are the predictands (target).
+# train_gcm  GCM used for training and for the tests with `transfer: false` in
+#            experiments.yaml.
+# test_gcm   Second GCM, never seen in training, used for the tests with
+#            `transfer: true` in experiments.yaml.
+
+ALPS:
+  rcm: CNRM-ALADIN63
+  train_gcm: CNRM-CM5
+  test_gcm: MPI-ESM-LR
+SA:
+  rcm: CCAM
+  train_gcm: ACCESS-CM2
+  test_gcm: NorESM2-MM
+NZ:
+  rcm: CCAM
+  train_gcm: ACCESS-CM2
+  test_gcm: EC-Earth3

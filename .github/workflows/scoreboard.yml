@@ -1,0 +1,70 @@
+# Rebuild the scoreboard pages of docs/results/scoreboard/ (one per training
+# experiment) from the models' metric summaries.
+#
+# - Pull requests: preview the tables in the job summary (nothing is committed;
+#   pull requests from forks only get a read-only token).
+# - Push to main (e.g. after merging a model's evaluation) or manual run:
+#   regenerate the tables and commit the pages that changed.
+name: Scoreboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "models/*/evaluation/**/metrics_summary.json"
+      - "models/*/metadata.yaml"
+      - "gh_pages/scoreboard.py"
+      - "benchmark/*.yaml"
+      - ".github/workflows/scoreboard.yml"
+  pull_request:
+    paths:
+      - "models/*/evaluation/**/metrics_summary.json"
+      - "models/*/metadata.yaml"
+      - "gh_pages/scoreboard.py"
+      - "benchmark/*.yaml"
+      - ".github/workflows/scoreboard.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# the models-table workflow also commits to the repository: share its group so
+# that the two never push at the same time
+concurrency:
+  group: readme-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  scoreboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Preview scoreboard
+        if: github.event_name == 'pull_request'
+        run: python gh_pages/scoreboard.py --print >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Update scoreboard
+        if: github.event_name != 'pull_request'
+        run: python gh_pages/scoreboard.py
+
+      - name: Commit scoreboard
+        if: github.event_name != 'pull_request'
+        run: |
+          if [ -z "$(git status --porcelain docs/results/scoreboard)" ]; then
+            echo "Scoreboard already up to date"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/results/scoreboard
+          git commit -m "Update scoreboard"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push

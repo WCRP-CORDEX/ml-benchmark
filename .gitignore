@@ -1,11 +1,47 @@
 *.nc
 *.pt
 *.zip
-**/models/
+*.zarr
+training/models/
 **/__pycache__/
-**/models/
-**/Bench-data/
+**/Bench-data
 **/.ipynb_checkpoints/
 !format_predictions/templates/*.nc
 format_predictions/generate_templates.py
 **/submission_files/
+CLAUDE.md
+# Pixi environments (pixi.toml and pixi.lock are versioned)
+.pixi/
+
+# --- Heavy output trees ------------------------------------------------------
+# Ignored at directory level so git never walks these very large trees.
+models/*/predictions
+# AI_READY_DATASETS/files/
+# SOURCE_FILES/train/
+# SOURCE_FILES/test/
+
+# Exception: the evaluation metric zarr stores ARE versioned — they are the
+# benchmark results the FIGURES plotting scripts consume. Checkpoints
+# (outputs/models) and predictions (outputs/predictions) stay excluded above.
+#!models/*/evaluation/
+#!models/*/evaluation/**
+models/*/evaluation/**/*.nc
+models/*/evaluation/**/*.zarr
+
+
+# --- Logs ---------------------------------------------------------------------
+**/logs/
+*.err
+*.out
+*.log
+
+# --- Discarded development path (kept locally, not versioned) --------------
+evaluation_master.sh
+plot_master.sh
+figures/
+
+# MkDocs build output (`pixi run docs-build`)
+site/
+
+# copy of images/ made for the docs build (`pixi run docs`, .github/workflows/docs.yml)
+docs/images/

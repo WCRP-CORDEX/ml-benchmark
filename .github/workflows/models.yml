@@ -1,0 +1,67 @@
+# Rebuild the table of contributing models of docs/results/models.md from the
+# models' metadata (models/<MODEL>/metadata.yaml).
+#
+# - Pull requests: preview the table in the job summary; the job fails if a metadata
+#   file is invalid (nothing is committed; pull requests from forks only get a
+#   read-only token).
+# - Push to main (e.g. after merging a model submission) or manual run: regenerate
+#   the table and commit docs/results/models.md if it changed.
+name: Models table
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "models/*/metadata.yaml"
+      - "gh_pages/models_table.py"
+      - ".github/workflows/models.yml"
+  pull_request:
+    paths:
+      - "models/*/metadata.yaml"
+      - "gh_pages/models_table.py"
+      - ".github/workflows/models.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# the scoreboard workflow also commits to the repository: share its group so
+# that the two never push at the same time
+concurrency:
+  group: readme-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  models-table:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Preview models table
+        if: github.event_name == 'pull_request'
+        run: python gh_pages/models_table.py --print >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Update models table
+        if: github.event_name != 'pull_request'
+        run: python gh_pages/models_table.py
+
+      - name: Commit models table
+        if: github.event_name != 'pull_request'
+        run: |
+          if git diff --quiet docs/results/models.md; then
+            echo "Models table already up to date"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/results/models.md
+          git commit -m "Update models table"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push

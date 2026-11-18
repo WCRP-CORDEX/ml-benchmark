@@ -1,0 +1,83 @@
+# Configuration of the CORDEX ML-Bench documentation site (GitHub Pages), built
+# with Zensical (it reads this MkDocs-style file). Preview: `pixi run docs`.
+
+site_name: CORDEX-ML-Bench
+site_description: >-
+  A benchmark for Machine Learning-Based Regional Climate Downscaling
+site_url: https://casadoj.github.io/ml-benchmark/
+repo_url: https://github.com/casadoj/ml-benchmark
+repo_name: ml-benchmark
+edit_uri: edit/main/
+
+docs_dir: docs
+
+theme:
+  name: material
+  features:
+    - navigation.tabs        # top-level nav entries as tabs
+    - navigation.sections    # second level shown as sections in the sidebar
+    - navigation.top         # "back to top" button
+    - navigation.indexes     # a section can have its own index page
+    - toc.follow
+    - search.highlight
+    - content.code.copy      # copy button on code blocks
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+extra_css:
+  - stylesheets/extra.css    # custom styles (e.g. scoreboard pages)
+
+extra_javascript:
+  - javascripts/scoreboard.js  # sortable scoreboard tables
+  # LaTeX math (`$...$`): configuration, then MathJax itself
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+plugins:
+  - search
+
+markdown_extensions:
+  - md_in_html               # markdown inside the HTML tables of the scoreboard
+  - tables
+  - attr_list
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.superfences     # fenced code blocks
+  - pymdownx.details         # collapsible admonitions
+  # LaTeX math (`$...$`, `$$...$$`), rendered by MathJax (extra_javascript)
+  - pymdownx.arithmatex:
+      generic: true
+  # Snippets let docs pages pull in the READMEs that live in their own folders
+  # (`--8<-- "data/README.md"`), or a marked section of one
+  # (`--8<-- "README.md:citation"`), so the markdown is not duplicated.
+  # Paths are relative to the repository root; a missing file fails the build.
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+
+nav:
+  - Home: index.md
+  - Introduction: introduction.md
+  - Contributing:
+      - contributing/index.md
+      - Dataset overview: contributing/data.md
+      - Train your model: contributing/training.md
+      - Submit your model: contributing/submission.md
+      - Evaluate your model: contributing/evaluation.md
+  - Results:
+      - results/index.md
+      - Contributing models: results/models.md
+      - Scoreboards:
+          - results/scoreboard/index.md
+          - ESD pseudo-reality: results/scoreboard/esd_pseudo_reality.md
+          - Emulator hist+future: results/scoreboard/emulator_hist_future.md

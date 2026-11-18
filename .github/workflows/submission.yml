@@ -1,0 +1,115 @@
+# Register approved submissions and clean up their branches.
+#
+# - Job `register`: when a maintainer adds the label "Approved submission" to a
+#   submission issue, write models/<MODEL>/metadata.yaml and models/<MODEL>/config.yaml
+#   from the issue (submission/register.py), commit them to a new branch
+#   `submission/<MODEL>` and comment on the issue with the next steps. If the
+#   registration fails (invalid issue, existing model or branch), the comment links
+#   to the log instead.
+# - Job `cleanup`: after a push to main that adds or changes a model's metadata
+#   (i.e. a merged submission), delete the branches `submission/<MODEL>` of the
+#   models now on main.
+name: Submission
+
+on:
+  issues:
+    types: [labeled]
+  push:
+    branches: [main]
+    paths:
+      - "models/*/metadata.yaml"
+
+jobs:
+  register:
+    if: github.event_name == 'issues' && github.event.label.name == 'Approved submission'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      # the issue body is user input: pass it through the environment, never
+      # write ${{ ... }} expressions of it into the script
+      - name: Write metadata and configuration
+        id: register
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_CREATED_AT: ${{ github.event.issue.created_at }}
+        run: python submission/register.py --comment-file "$RUNNER_TEMP/comment.md"
+
+      - name: Commit to the submission branch
+        env:
+          MODEL: ${{ steps.register.outputs.emulator_id }}
+        run: |
+          branch="submission/${MODEL}"
+          if git ls-remote --exit-code --heads origin "${branch}" > /dev/null; then
+            echo "::error::Branch ${branch} already exists"
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "${branch}"
+          git add "models/${MODEL}/metadata.yaml" "models/${MODEL}/config.yaml"
+          git commit -m "Register ${MODEL} (#${ISSUE_NUMBER})"
+          git push origin "${branch}"
+
+      - name: Comment next steps
+        run: gh issue comment "${ISSUE_NUMBER}" --repo "${GITHUB_REPOSITORY}" --body-file "$RUNNER_TEMP/comment.md"
+
+      - name: Comment failure
+        if: failure()
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue comment "${ISSUE_NUMBER}" --repo "${GITHUB_REPOSITORY}" --body \
+            "The automatic registration of this submission failed. A maintainer will check the [workflow log](${RUN_URL}), fix the issue and add the label again."
+
+  cleanup:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Close issues and delete branches of merged submissions
+        run: |
+          git ls-remote --heads origin 'refs/heads/submission/*' | while read -r _ ref; do
+            branch="${ref#refs/heads/}"
+            model="${branch#submission/}"
+            metadata="models/${model}/metadata.yaml"
+            [ -f "${metadata}" ] || continue
+
+            issue="$(sed -n 's/^issue:[[:space:]]*\([0-9][0-9]*\).*/\1/p' "${metadata}")"
+            if [ -n "${issue}" ]; then
+              echo "Relabelling issue #${issue} of ${model}"
+              gh issue edit "${issue}" --repo "${GITHUB_REPOSITORY}" \
+                --add-label "Processed submission" --remove-label "Approved submission"
+              state="$(gh issue view "${issue}" --repo "${GITHUB_REPOSITORY}" --json state --jq .state)"
+              if [ "${state}" = "OPEN" ]; then
+                gh issue close "${issue}" --repo "${GITHUB_REPOSITORY}" --comment \
+                  "The model ${model} has been added to the benchmark. Thank you for your contribution!"
+              fi
+            else
+              echo "::warning::No issue number in ${metadata}"
+            fi
+
+            echo "Deleting ${branch} (models/${model} is on main)"
+            git push origin --delete "${branch}"
+          done
